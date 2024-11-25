@@ -27,6 +27,7 @@ const NavBar = () => {
                         <li>About Us</li>
                       </ul>
                     </div>
+      <div>wioedjewo</div>
      </div> 
   )
 }
