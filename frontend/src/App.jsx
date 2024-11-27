@@ -57,6 +57,9 @@ import axios from 'axios';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 import Heading from './components/Heading/Heading';
+import HomePage from './pages/HomePage';
+import Cards from './components/Card/Cards';
+import EditorsChoiceCard from './components/EditorsChoiceCard/EditorsChoiceCard';
 
 function App() {
   const [ingredients, setIngredients] = useState('');
@@ -109,8 +112,9 @@ function App() {
   return (
     <div className="App">
 
-    <NavBar/>
-    <Heading/>
+    <HomePage/>
+    {/* <Cards/> */}
+    {/* <EditorsChoiceCard/> */}
       {/* <h1>Recipe Finder</h1>
       <div>
         <input

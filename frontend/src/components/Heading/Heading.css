@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     color: black;
+    width: 100%;
 }
 
 .heading{
@@ -13,6 +14,7 @@
     border-bottom-right-radius: 4rem;
     min-width: 100%;
     min-height: 30rem;
+    padding-bottom: 1rem;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -57,7 +59,31 @@
 .heading .home-image {
     display: flex;
     justify-content: flex-end;
+    /* flex-direction: column;
+    align-items: flex-end; */
 }
 .heading .home-image img{
     height: 35rem;
+}
+
+
+@media screen and (max-width:760px){
+    .heading{
+        flex-direction: column-reverse;
+       }
+    .heading .home-image{
+        min-width: 100%;
+    } 
+    .heading .details h1{
+        font-weight: 600 ;
+        font-size: 4rem;
+        line-height: 0.8;
+        letter-spacing: 0.1em;
+    }
+    .heading .details .recipe-button {
+        font-size: large;
+        padding: 1rem;
+        margin-right: 2rem;
+    }
+  
 }
