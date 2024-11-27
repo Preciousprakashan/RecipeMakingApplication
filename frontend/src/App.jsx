@@ -56,6 +56,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
+import Heading from './components/Heading/Heading';
 
 function App() {
   const [ingredients, setIngredients] = useState('');
@@ -109,7 +110,7 @@ function App() {
     <div className="App">
 
     <NavBar/>
-
+    <Heading/>
       {/* <h1>Recipe Finder</h1>
       <div>
         <input

@@ -19,7 +19,7 @@
     border-top-left-radius: 20rem;
     border-top-right-radius: 20rem;
     min-width: 100%;
-    /* min-height: 10%; */
+    /* min-height: 100%; */
 }
 .logo{
     width: 2.4rem;
@@ -35,7 +35,7 @@
     display: flex;
     justify-content: space-between;
     /* padding: 1rem; */
-    padding-left: 1rem;
+    padding: 1rem;
 }
 
 .ul-list{
@@ -57,6 +57,18 @@
     display:none;
 }
 
+.ul-list-hidden hr{
+    border:1px solid#fff;
+}
+
+.menu-bar{
+    display: none;
+    padding-right: 1rem;
+}
+.link{
+    color: rgb(209, 169, 95);
+}
+
 @media screen and (max-width:700px) {
     .ul-list{
         display: none;
@@ -71,12 +83,17 @@
         display:block;
         list-style-type: none;
         min-width: 100%;
-        background-color: rgb(250, 197, 100);
+        background-color: #F7F7F7;
     }
     .ul-list-hidden ul{
         display:block;
         list-style-type: none;
         /* min-width: 100%; */
         /* background-color: orange; */
+    }
+    .menu-bar{
+        display: flex;
+        align-items: center;
+        padding-right: 1rem;
     }
 }
