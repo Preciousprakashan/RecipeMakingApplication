@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Card, Image, Text } from "@chakra-ui/react"
 import './EditorsChoiceCard.css'
 import { IoTimerSharp } from "react-icons/io5";
@@ -15,8 +15,9 @@ const EditorsChoiceCard = () => {
               alt="Green double couch with wooden legs"
               borderRadius={'1rem'}
               />
-              <MdOutlineFavoriteBorder className='like-icon' size={'1.8rem'}/>
-              {/* <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='red' /> */}
+              {/* <MdOutlineFavoriteBorder className='like-icon' size={'1.8rem'} /> */}
+              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='red'/>
+              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='#EFEFEF'/>
      </div>
       <Card.Body gap="2">
         <Card.Title fontSize={'medium'}>Mixed Tropical Fruit Salad with Superfood Boosts </Card.Title>
@@ -31,7 +32,7 @@ const EditorsChoiceCard = () => {
       <Card.Footer gap="2">
         <div className='recipe-info'>
             <div>
-                <IoTimerSharp />
+                <IoTimerSharp/>
                 <p>30 minutes</p>
             </div>
             <div>
