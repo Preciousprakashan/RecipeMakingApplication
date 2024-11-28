@@ -81,6 +81,27 @@ app.post("/api/get-recipe", async (req, res) => {
   }
 });
 
+//
+app.get('/get-recipe-by-id/:id',async(req,res)=>{
+  try{
+    const { id } = req.params;
+    console.log(id)
+    const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`,{
+      
+        params: {
+          // ingredients: ingredients,
+         // number: 10, // Number of recipes to return
+          apiKey: SPOONACULAR_API_KEY
+        },
+    });
+    res.send(response.data);
+  }catch(err){
+    console.log(err);
+    res.send("Error in fetching recipe details")
+  }
+})
+
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

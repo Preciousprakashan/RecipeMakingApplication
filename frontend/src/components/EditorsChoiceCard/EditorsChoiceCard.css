@@ -1,0 +1,24 @@
+
+.editors-card {
+    padding: 1rem;
+}
+.recipe-info {
+    display: flex;
+    flex-direction: row;
+}
+.recipe-info div {
+    display: flex;
+    padding-right: 1rem;
+    align-items: center;
+}
+.image-container {
+    position: relative;
+}
+.like-icon {
+    background-color: white;
+    padding: 0.1rem;
+    border-radius: 10rem;
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+}

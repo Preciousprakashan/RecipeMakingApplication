@@ -1,0 +1,89 @@
+
+.outer-head{
+    padding: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    width: 100%;
+}
+
+.heading{
+    background-color: #F7F7F7;
+    border-bottom-left-radius: 4rem;
+    border-bottom-right-radius: 4rem;
+    min-width: 100%;
+    min-height: 30rem;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background: radial-gradient(circle 15rem, #FFCC8E, #F7F7F7) 50% 50% no-repeat, #F7F7F7; /*Gradient on left with solid background
+    /* background: radial-gradient(circle at left, #FFCC8E, #F7F7F7); */
+    /* background: radial-gradient(circle, #FFCC8E, #FFFFFF) 50% 50% no-repeat, #F7F7F7; Gradient on left with solid background */
+  /* background-size: 100px 100px;  Size of the gradient */
+}
+.heading .details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    row-gap: 2rem;
+    /* padding-left: 8rem; */
+    /* padding-right: 5rem; */
+} 
+.heading .details h1{
+    font-weight: 600 ;
+    font-size: 5rem;
+    line-height: 0.8;
+    letter-spacing: 0.1em;
+}
+.heading .details h1 span{
+    padding-left: 5rem;
+}
+  /* background-size: 100px 100px;  Size of the gradient */
+
+.heading .details p {
+    /* padding-top: 2rem; */
+    align-content: center;
+    width: 66%;
+}
+.heading .details .recipe-button {
+    font-size: x-large;
+    padding: 1.4rem;
+}
+
+.heading div{
+    flex: 1;
+}
+
+.heading .home-image {
+    display: flex;
+    justify-content: flex-end;
+    /* flex-direction: column;
+    align-items: flex-end; */
+}
+.heading .home-image img{
+    height: 35rem;
+}
+
+
+@media screen and (max-width:760px){
+    .heading{
+        flex-direction: column-reverse;
+       }
+    .heading .home-image{
+        min-width: 100%;
+    } 
+    .heading .details h1{
+        font-weight: 600 ;
+        font-size: 4rem;
+        line-height: 0.8;
+        letter-spacing: 0.1em;
+    }
+    .heading .details .recipe-button {
+        font-size: large;
+        padding: 1rem;
+        margin-right: 2rem;
+    }
+  
+}
