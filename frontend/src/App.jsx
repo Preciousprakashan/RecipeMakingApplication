@@ -66,7 +66,7 @@ function App() {
   return (
     <div className="App">
       {/* <RecipeTable /> */}
-        <AdminPage />
+        {/* <AdminPage /> */}
       {/* <HomePage /> */}
 
     <Routes>
@@ -76,6 +76,7 @@ function App() {
       <Route path='/sign-up' element={<SignUppage/>}/>
       <Route path='/wishlist' element={<Wishlist/>}/>
       <Route path='/recipe-by-category' element={<RecipeByCategory/>}/>
+      <Route path='/admin-page' element={<AdminPage/>}/>
     </Routes>
     {/* <HomePage/> */}
     {/* <RecipeDetailsPage/> */}
