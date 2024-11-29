@@ -3,12 +3,15 @@ import NavBar from '../components/NavBar/NavBar'
 import Heading from '../components/Heading/Heading'
 import Cards from '../components/Card/Cards'
 import EditorsChoiceCard from '../components/EditorsChoiceCard/EditorsChoiceCard'
-
+import Footer from '../components/Foooter/Footer'
+import '../styles/style.css'
 const HomePage = () => {
   return (
     <div className='home-page'>
         <NavBar/>
         <Heading/>
+
+        <div className="grp-cards">
         <h2>Categories</h2>
         <div className="card-collection">
         <Cards/>
@@ -27,7 +30,8 @@ const HomePage = () => {
             <EditorsChoiceCard/>
             <EditorsChoiceCard/>
         </div>
-        <div>kjwefhkeslhesjn</div>
+        </div>
+        <Footer/>
     </div>
   )
 }

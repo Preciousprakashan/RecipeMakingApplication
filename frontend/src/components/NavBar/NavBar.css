@@ -38,6 +38,14 @@
     padding: 1rem;
 }
 
+.navbar-contents .logo-name {
+    display: flex;
+}
+.navbar-contents .logo-name b {
+    color: #FFAD65;
+    font-size: x-large;
+}
+
 .ul-list{
     list-style-type: none;
     display: flex;

@@ -2,24 +2,35 @@ import React, { useState } from 'react'
 import './NavBar.css'
 import { IoSearch, IoClose } from "react-icons/io5";
 import { FiAlignJustify } from "react-icons/fi";
+import { Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
   }
-
+  const navigate = useNavigate();
   return (
      <div className='outer-nav'>
         {/* <div className='cap'></div> */}
         <div className='navbar'>
               <div className='navbar-contents'>
-                    <div className='logo'><img src="/assets/recipe-logo.png" alt="logo"/></div>
+                          <div className="logo-name">
+                              <div className='logo'><img src="/assets/recipe-logo.png" alt="logo"/></div>
+                              <b>Delizia</b>
+                         </div>
+                    
                           <div >
                             <ul className='ul-list'>
-                              <li><a href="#" className='link'>Home</a></li>
-                              <li><a href="#" className='link'>Recipies</a></li>
+                              <li><a href="/" className='link'>Home</a></li>
+                              <li><a href="/recipe-details" className='link'>Recipies</a></li>
+                              <li><a href="/wishlist" className='link'>Wishlist</a></li>
                               <li><a href="#" className='link'>About Us</a></li>
                             </ul>
+                          </div>
+
+                          <div className="login">
+                            <Button colorPalette={'orange'} borderRadius={'10rem'} onClick={()=>navigate('/login')}>Login</Button>
                           </div>
 
                           <div className='search-icon'>
@@ -39,8 +50,9 @@ const NavBar = () => {
         <div className='ul-list-hidden'>
           <hr />
             <ul>
-                <li><a href="#" className='link'>Home</a></li>
-                <li><a href="#" className='link'>Recipies</a></li>
+                <li><a href="/" className='link'>Home</a></li>
+                <li><a href="/recipe-details" className='link'>Recipies</a></li>
+                <li><a href="/wishlist" className='link'>Wishlist</a></li>
                 <li><a href="#" className='link'>About Us</a></li>
             </ul>
         </div>

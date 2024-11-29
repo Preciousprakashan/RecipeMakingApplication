@@ -60,7 +60,14 @@ import Heading from './components/Heading/Heading';
 import HomePage from './pages/HomePage';
 import Cards from './components/Card/Cards';
 import EditorsChoiceCard from './components/EditorsChoiceCard/EditorsChoiceCard';
-
+import Footer from './components/Foooter/Footer';
+import RecipeDetailsPage from './pages/RecipeDetailsPage';
+import RecipeCard from './components/RecipeCard/RecipeCard';
+import { Routes, Route } from 'react-router-dom';
+import Loginpage from './pages/Login';
+import SignUppage from './pages/SignUp';
+import Wishlist from './pages/Wishlist';
+import RecipeByCategory from './pages/RecipeByCategory';
 function App() {
   const [ingredients, setIngredients] = useState('');
   const [recipes, setRecipes] = useState([]);
@@ -107,14 +114,24 @@ function App() {
       }
     }
    
-  
-
   return (
     <div className="App">
 
-    <HomePage/>
+    <Routes>
+      <Route path='/' element={<HomePage/>}/>
+      <Route path='/recipe-details' element={<RecipeDetailsPage/>}/>
+      <Route path='/login' element={<Loginpage/>}/>
+      <Route path='/sign-up' element={<SignUppage/>}/>
+      <Route path='/wishlist' element={<Wishlist/>}/>
+      <Route path='/recipe-by-category' element={<RecipeByCategory/>}/>
+    </Routes>
+    {/* <HomePage/> */}
+    {/* <RecipeDetailsPage/> */}
+    {/* <RecipeCard/> */}
+
     {/* <Cards/> */}
     {/* <EditorsChoiceCard/> */}
+    {/* <Footer/> */}
       {/* <h1>Recipe Finder</h1>
       <div>
         <input
