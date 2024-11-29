@@ -1,27 +1,16 @@
-// server.js
+// // server.js
+// const express = require('express');
+// const axios = require('axios');
+// const cors = require('cors');
+// require('dotenv').config();
 
+// const app = express();
+// app.use(cors());
+// app.use(express.json());
 
-// import fs from "fs";
-// import path from "path";
-// import OpenAI from "openai";
-const fs = require('fs');
-const path = require('path');
-const OpenAI = require('openai');
+// const PORT = '5000';
+// const OPENAI_API_KEY = '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';
 
-const express = require('express');
-const axios = require('axios');
-const cors = require('cors');
-require('dotenv').config();
-const PORT=process.env.PORT
-// const OPENAI_API_KEY=process.env.OPENAI_API_KEY
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-
-const SPOONACULAR_API_KEY = '39be80ffc28747debcb2daf663fe6aac';
-console.log(SPOONACULAR_API_KEY)
 // app.post('/chat', async (req, res) => {
 //   try {
 //     const response = await axios.post(
@@ -34,56 +23,61 @@ console.log(SPOONACULAR_API_KEY)
 //         },
 //       }
 //     );
-//     console.error('OpenAI API Error:', error.response?.data || error.message);
 //     res.json(response.data);
 //   } catch (error) {
 //     res.status(500).send('Error with OpenAI API');
-//     console.error('OpenAI API Error:', error.response?.data || error.message);
 //   }
 // });
 
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
 
-// const openai = new OpenAI();
+const express = require("express");
+const axios = require("axios");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-// const speechFile = path.resolve("./speech.mp3");
+const app = express();
+const PORT = 5000;
 
-// async function main() {
-//   const mp3 = await openai.audio.speech.create({
-//     model: "tts-1",
-//     voice: "alloy",
-//     input: "Today is a wonderful day to build something people love!",
-//   });
-//   console.log(speechFile);
-//   const buffer = Buffer.from(await mp3.arrayBuffer());
-//   await fs.promises.writeFile(speechFile, buffer);
-// }
-// main();
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
 
-// Endpoint to get recipes by ingredients
-app.get('/recipes', async (req, res) => {
-  const { ingredients } = req.query;
+// Your API key
+const API_KEY = "AIzaSyBZ-kSBfB39N_jztCk_szBgtxuFYoft2W8";
 
-  if (!ingredients) {
-    return res.status(400).json({ error: 'Please provide ingredients' });
-  }
+// Route to handle recipe requests
+app.post("/api/get-recipe", async (req, res) => {
+  const { prompt } = req.body; // Get the prompt from the frontend
 
   try {
-    const response = await axios.get(
-      `https://api.spoonacular.com/recipes/findByIngredients`,
+    const response = await axios.post(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
       {
-        params: {
-          ingredients: ingredients,
-         // number: 10, // Number of recipes to return
-          apiKey: SPOONACULAR_API_KEY,
+        contents: [
+          {
+            parts: [
+              {
+                text: prompt, // Pass the user prompt, e.g., "Give me a recipe for chocolate cake"
+              },
+            ],
+          },
+        ],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
         },
       }
     );
 
-    // Return the recipes to the frontend
-    res.json(response.data);
+    // Send the generated recipe back to the frontend
+    res.json(response.data.results[0].generatedText);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Something went wrong with the API request' });
+    console.error("Error fetching recipe:", error.message);
+    res.status(500).json({ error: "Failed to fetch recipe" });
   }
 });
 
@@ -109,5 +103,5 @@ app.get('/get-recipe-by-id/:id',async(req,res)=>{
 
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
