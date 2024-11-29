@@ -1,2 +1,6 @@
 node_modules
 .env
+
+
+#mac Desktop Services Store
+.DS_Store
