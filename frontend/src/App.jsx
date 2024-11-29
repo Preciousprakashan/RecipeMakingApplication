@@ -16,6 +16,7 @@ import Wishlist from './pages/Wishlist';
 import RecipeByCategory from './pages/RecipeByCategory';
 import AdminPage from './pages/AdminPage';
 import RecipeTable from './components/DbRecipeTable/RecipeTable';
+import Recipe from './pages/Recipe';
 
 function App() {
   const [ingredients, setIngredients] = useState('');
@@ -77,6 +78,7 @@ function App() {
       <Route path='/wishlist' element={<Wishlist/>}/>
       <Route path='/recipe-by-category' element={<RecipeByCategory/>}/>
       <Route path='/admin-page' element={<AdminPage/>}/>
+      <Route path='/recipe' element={<Recipe/>}/>
     </Routes>
     {/* <HomePage/> */}
     {/* <RecipeDetailsPage/> */}
