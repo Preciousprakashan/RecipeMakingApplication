@@ -42,6 +42,10 @@ const recipeData = mongoose.Schema({
     servings:  {
         type:Number,
         required:true
+    },
+    veryPopular:  {
+        type:Number,
+        required:true
     }
 
 })
