@@ -40,7 +40,7 @@ const cors = require("cors");
 
 const app = express();
 const PORT = 5000;
-
+let SPOONACULAR_API_KEY = '39be80ffc28747debcb2daf663fe6aac';
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -49,37 +49,37 @@ app.use(bodyParser.json());
 const API_KEY = "AIzaSyBZ-kSBfB39N_jztCk_szBgtxuFYoft2W8";
 
 // Route to handle recipe requests
-app.post("/api/get-recipe", async (req, res) => {
-  const { prompt } = req.body; // Get the prompt from the frontend
+// app.post("/api/get-recipe", async (req, res) => {
+//   const { prompt } = req.body; // Get the prompt from the frontend
 
-  try {
-    const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
-      {
-        contents: [
-          {
-            parts: [
-              {
-                text: prompt, // Pass the user prompt, e.g., "Give me a recipe for chocolate cake"
-              },
-            ],
-          },
-        ],
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+//   try {
+//     const response = await axios.post(
+//       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
+//       {
+//         contents: [
+//           {
+//             parts: [
+//               {
+//                 text: prompt, // Pass the user prompt, e.g., "Give me a recipe for chocolate cake"
+//               },
+//             ],
+//           },
+//         ],
+//       },
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     );
 
-    // Send the generated recipe back to the frontend
-    res.json(response.data.results[0].generatedText);
-  } catch (error) {
-    console.error("Error fetching recipe:", error.message);
-    res.status(500).json({ error: "Failed to fetch recipe" });
-  }
-});
+//     // Send the generated recipe back to the frontend
+//     res.json(response.data.results[0].generatedText);
+//   } catch (error) {
+//     console.error("Error fetching recipe:", error.message);
+//     res.status(500).json({ error: "Failed to fetch recipe" });
+//   }
+// });
 
 //
 app.get('/get-recipe-by-id/:id',async(req,res)=>{
