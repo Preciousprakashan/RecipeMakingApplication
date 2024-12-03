@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import "./HeartAnimation.css";
 
-const HeartAnimation = () => {
+const HeartAnimation = ({id, liked, onLikeToggle}) => {
   const [checked, setChecked] = useState(false);
 
   return (
       <div className="Boxshadow">
         <input
           type="checkbox"
-          id="checkbox"
-          checked={checked}
-          onChange={() => setChecked(!checked)}
+          id={id}
+          // key={id}
+          className="checkbox"
+          checked={liked}
+          onChange={() => onLikeToggle(!liked)}
         />
-        <label htmlFor="checkbox">
+        
+        <label htmlFor={id}>
           <svg
             id="heart-svg"
             viewBox="467 392 58 57"

@@ -5,7 +5,8 @@ import { IoTimerSharp } from "react-icons/io5";
 import { PiForkKnifeFill } from "react-icons/pi";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import './RecipeCard.css'
-const RecipeCard = () => {
+import HeartAnimation from '../HeartAnimation/HeartAnimation';
+const RecipeCard = ({id}) => {
   return (
     <div className='editors-card recipe-card'>
         <Card.Root maxW="sm" overflow="hidden" border={'none'} boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"  width={'20rem'} display={'flex'} justifyContent={'center'} alignItems={'center'}>
@@ -18,8 +19,11 @@ const RecipeCard = () => {
               paddingTop={'1rem'}
               />
               {/* <MdOutlineFavoriteBorder className='like-icon' size={'1.8rem'} /> */}
-              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='red'/>
-              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='#EFEFEF'/>
+              {/* <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='red'/>
+              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='#EFEFEF'/> */}
+              <div className='like-icon'>
+                    <HeartAnimation id={id} />
+              </div>  
      </div>
       <Card.Body>
         <Card.Title fontSize={'medium'}>Fruit Salad </Card.Title>
@@ -39,7 +43,7 @@ const RecipeCard = () => {
             </div>
             <div>
                 <PiForkKnifeFill/>
-                <p>Vegitarian</p>
+                <p>Vegetarian</p>
             </div>
         </div>
       </Card.Footer>

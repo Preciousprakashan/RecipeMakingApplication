@@ -54,7 +54,7 @@ const Recipe = () => {
                 {/* Container for Close button and Favorite Button */}
                 <div className="button-container">
                     <a className="close-button" href="/">Close</a>
-                    <HeartAnimation />
+                    <HeartAnimation id='1' />
                 </div>
             </div>
             <div className="recipe-main-conatiner-description">

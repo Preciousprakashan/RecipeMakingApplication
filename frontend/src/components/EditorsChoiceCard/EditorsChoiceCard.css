@@ -15,9 +15,8 @@
     position: relative;
 }
 .like-icon {
-    background-color: white;
     padding: 0.1rem;
-    border-radius: 10rem;
+    display: block;
     position: absolute;
     top: 0.3rem;
     right: 0.3rem;

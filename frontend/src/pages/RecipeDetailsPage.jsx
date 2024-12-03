@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavBar from '../components/NavBar/NavBar'
 import '../styles/style.css'
 // import { Input, Button, InputLeftElement, Icon } from '@chakra-ui/react';
@@ -9,6 +9,32 @@ import RecipeCard from '../components/RecipeCard/RecipeCard';
 import { Button } from '@chakra-ui/react';
 import Footer from '../components/Foooter/Footer';
 const RecipeDetailsPage = () => {
+  const [recipe, setRecipe] = useState([
+    {
+      id:1,
+      name:'biriyani'
+    },
+    {
+      id:2,
+      name:'biriyani'
+    },
+    {
+      id:3,
+      name:'biriyani'
+    },
+    {
+      id:4,
+      name:'biriyani'
+    },
+    {
+      id:5,
+      name:'biriyani'
+    },
+    {
+      id:6,
+      name:'biriyani'
+    }
+  ])
   return (
     <div>
         <div className="search-page">
@@ -58,12 +84,12 @@ const RecipeDetailsPage = () => {
         </div>
 
         <div className="recipies">
-           <RecipeCard/>
-           <RecipeCard/>
-           <RecipeCard/>
-           <RecipeCard/>
-           <RecipeCard/>
-           <RecipeCard/>
+          {
+            recipe.map((recipe, index)=>{
+              return  <RecipeCard key={index} id={recipe.id}/>
+            })
+          }
+           
 
         </div>
         <Footer/>
