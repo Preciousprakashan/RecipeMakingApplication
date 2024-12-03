@@ -1,0 +1,393 @@
+:root {
+    --Dark: #0A2533;
+}
+
+
+body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.recipe-main-conatiner {
+    width: 100%;
+    background: white;
+    overflow: hidden;
+}
+
+.recipe-main-conatiner-image {
+    position: relative;
+    /* Required for positioning the overlay */
+}
+
+.recipe-main-conatiner-image img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+
+.recipe-main-conatiner-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+    pointer-events: none;
+    /* Makes the overlay non-interactive */
+}
+
+/* New container for Close and Favorite buttons */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 100px;
+    /* Top margin */
+    width: 90%;
+    /* Container takes 90% width */
+    left: 50%;
+    transform: translateX(-50%);
+    /* Center the container */
+    z-index: 10;
+    /* Ensure buttons are on top */
+}
+
+/* Close Button */
+.close-button {
+    width: 50px;
+    height: 50px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    background: white;
+    text-indent: -9999px;
+    display: block;
+    position: relative;
+    z-index: 200;
+}
+
+/* Close Button Cross */
+.close-button:before,
+.close-button:after {
+    content: '';
+    width: 55%;
+    height: 2px;
+    background: black;
+    position: absolute;
+    top: 48%;
+    left: 22%;
+}
+
+.close-button:before {
+    transform: rotate(-45deg);
+    transition: transform 0.3s ease;
+}
+
+.close-button:after {
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for close button */
+.close-button:hover:before,
+.close-button:hover:after {
+    transform: rotate(180deg);
+}
+
+
+
+.favorite-button {
+    width: 50px;
+    height: 50px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 10px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    z-index: 200;
+    overflow: hidden;
+}
+
+.favorite-heart {
+    fill: lightgray;
+    width: 24px;
+    height: 24px;
+    transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+.favorite-heart.liked {
+    fill: #ff4d4d;
+    transform: scale(1.2);
+}
+
+.burst-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+}
+
+.burst {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 77, 77, 0.7);
+    border-radius: 50%;
+    margin: 3px;
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.favorite-button.liked .burst-container {
+    opacity: 1;
+    animation: burst-animation 0.6s ease-out forwards;
+}
+
+@keyframes burst-animation {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}
+
+
+.recipe-main-conatiner-description {
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    width: 75%;
+    border-radius: 40px;
+    height: auto;
+    padding: 50px;
+    position: absolute;
+    top: calc(450px);
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.recipe-main-description-title {
+    color: var(--Dark, #0A2533);
+    font-family: "Sofia Sans";
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: -20px;
+}
+
+.recipe-main-description {
+    color: #748189;
+    font-family: "Sofia Sans";
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.recipe-main-description-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--Dark, #0A2533);
+}
+
+
+
+
+.recipe-main-description-spec {
+    color: #0A2533;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    width: auto;
+    height: auto;
+    background-color: #ffffff;
+    display: flex;
+    align-content: space-around;
+    position: relative;
+    padding: 10px 10px 10px 0;
+    margin-top: 20px;
+}
+
+.recipe-main-description-spec .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Creates 2 equal-width columns */
+    gap: 16px;
+    /* 16px gap between grid items (like gap-4 in Tailwind) */
+}
+
+.recipe-box-ds {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: #E6EBF2;
+    /* Neutral Grey color */
+    display: flex;
+    /* Enables flexbox */
+    align-items: center;
+    /* Vertically centers the icon */
+    justify-content: center;
+    /* Horizontally centers the icon */
+}
+
+
+/* Flexbox styling for the individual items */
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.gap-4 {
+    gap: 16px;
+    /* Adds spacing between elements inside flex */
+}
+
+
+.recipe-box-ds i {
+    font-size: 18px;
+    /* Adjust icon size */
+    color: #0A2533;
+    /* Change icon color */
+}
+
+.recipe-main-description-ingredients{
+    /* color: #042628;
+    font-family: "Sofia Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 135%;
+    margin-top: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center; */
+}
+
+.recipe-main-description-ingredients-title{
+    color: #042628;
+    font-family: "Sofia Sans";
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 135%;
+    margin-top: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+
+.underline {
+    margin-top:5px;
+    width: 40px;
+    height: 3px;
+    background: #042628;
+    border-radius: 16px;
+}
+
+
+
+
+
+
+.container-recipe {
+    display: flex;
+    gap: 10px;
+    padding: 16px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .ingredient {
+    border-radius: 5px;
+    padding: 16px; /* Added padding */
+    margin: 5px;
+    width: calc(25% - 20px);
+    background-color: #ffffff;
+    box-shadow: 0px 2px 16px rgba(6, 51, 54, 0.10);
+    color: var(--Neutral-Dark, #0A2533);
+    
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Centered the items vertically */
+    justify-content: space-between; /* Ensures space between items */
+    gap: 10px;
+  }
+  
+  
+  .ingredient img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    object-fit: cover;
+  }
+  
+  .ingredient p {
+    margin: 0;
+  }
+
+  .recipe-main-description-instructions{
+    color: #000;
+    font-family: "Sofia Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 135%;
+    padding: 0 21px 0 21px;
+  }
+
+
+  .typography-instructions-heading{
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.96px;
+}
+
+.typography-instructions-subh{
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.96px;
+}
+
+
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-top: 10px;
+    padding-left: 0;
+  }
+  
+  ul li {
+    margin: 5px 0;
+  }

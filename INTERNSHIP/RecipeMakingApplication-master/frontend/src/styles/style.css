@@ -1,0 +1,125 @@
+
+
+
+/* Home Page */
+
+.home-page{
+  background-image: 
+  url('/assets/pan.svg'),
+  url('/assets/grass.svg');
+  background-repeat: no-repeat;
+  background-position: left center, right center;
+  background-size: 30% auto;
+  background-attachment: fixed;
+}
+
+.card-collection {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: xx-large;
+  text-align: center;
+}
+
+.grp-cards {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Recipe Details Page */
+
+.search-page {
+    width: 100%;
+    height: 28rem;
+    padding: 0;
+    margin: 0;
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),  /* semi-transparent black overlay */
+    url('/assets/recipe-details-img.png');  /* The background image */
+    /* background-image: url('/assets/recipe-details-img.png'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+.searchbar-contents {
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    align-items: center;
+    justify-content: center;
+}
+.searchbar-contents h1 {
+    color: #fff;
+}
+/* SearchBar.css */
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 20px;
+    width: 50%;
+    background-color: #fff;
+  }
+  
+  .search-input {
+    border: none;
+    padding: 5px;
+    width: 100%;
+    /* width: 250px; */
+    outline: none;
+    border-radius: 10px;
+  }
+  
+  .search-button {
+    background-color: orange;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    transition: border-color 0.25s;
+  }
+
+  .recipies {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ingredients {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+ 
+  /*  Wishlist Page */
+
+  .wishlist-page {
+    width: 100%;
+    /* height: 28rem; */
+    padding: 0;
+    margin: 0;
+    
+}
+.wishlist-page .wishlist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 4rem;
+}
