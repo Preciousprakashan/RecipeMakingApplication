@@ -39,7 +39,7 @@ const RecipeCard = () => {
             </div>
             <div>
                 <PiForkKnifeFill/>
-                <p>Vegitarian</p>
+                <p>Vegetarian</p>
             </div>
         </div>
       </Card.Footer>

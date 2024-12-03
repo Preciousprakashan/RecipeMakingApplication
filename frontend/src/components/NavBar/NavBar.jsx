@@ -30,8 +30,18 @@ const NavBar = () => {
                           </div>
 
                           <div className="login">
-                            <Button colorPalette={'orange'} borderRadius={'10rem'} onClick={()=>navigate('/login')}>Login</Button>
+                                <Button 
+                                  style={{
+                                    backgroundColor: '#FFAD65', 
+                                    color: '#FFFFFF',          
+                                    borderRadius: '0.5rem',
+                                  }}
+                                  onClick={() => navigate('/login')}
+                                >
+                                  Login
+                                </Button>
                           </div>
+
 
                           <div className='search-icon'>
                             {/* <p>search</p> */}

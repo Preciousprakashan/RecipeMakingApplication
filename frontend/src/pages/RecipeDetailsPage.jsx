@@ -31,28 +31,28 @@ const RecipeDetailsPage = () => {
     
         </div>
         <div className="ingredients">
-        <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} >
+        <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} background={'white'} >
             coffee powder
           </Button>
-          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} >
+          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} background={'white'}>
             coffee powder
           </Button>
-          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} >
+          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} background={'white'} >
             coffee powder
           </Button>
-          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} >
+          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} background={'white'} >
             coffee powder
           </Button>
-          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} >
+          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} background={'white'} >
             coffee powder
           </Button>
-          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} >
+          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} background={'white'} >
             coffee powder
           </Button>
-          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} >
+          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} background={'white'} >
             coffee powder
           </Button>
-          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} >
+          <Button variant="outline" color={'#EA6A12'} border={'1px solid #EA6A12'} borderRadius={'2rem'} background={'white'} >
             coffee powder
           </Button>
         </div>
