@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "../styles/Recipe.css";
-import HeartAnimation from "../Components/HeartAnimation/HeartAnimation";
+import HeartAnimation from "../components/HeartAnimation/HeartAnimation";
 
 
 
