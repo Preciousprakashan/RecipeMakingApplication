@@ -66,7 +66,7 @@ function App() {
   return (
     <div className="App">
       {/* <RecipeTable /> */}
-        <AdminPage />
+        {/* <AdminPage /> */}
       {/* <HomePage /> */}
 
     <Routes>
