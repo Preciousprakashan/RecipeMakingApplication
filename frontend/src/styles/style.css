@@ -106,6 +106,134 @@ h2 {
     align-items: center;
     justify-content: center;
   }
+  
+.related-ingredients {
+  margin-top: 10px; /* Spacing below search bar */
+  width: 100%; /* Take full width for alignment */
+  max-width: 600px; /* Limit the width */
+  background-color: #f9f9f9; /* Light background for contrast */
+  border: 1px solid #ddd; /* Border for separation */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Inner spacing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.related-ingredients ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+}
+
+.related-ingredients li {
+  display: flex;
+  justify-content: space-between; /* Space between text and button */
+  align-items: center; /* Align vertically */
+  padding: 8px; /* Inner padding */
+  border-bottom: 1px solid #ddd; /* Divider between items */
+}
+
+.related-ingredients li:last-child {
+  border-bottom: none; /* Remove divider for last item */
+}
+
+.add-ingredient-button {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #38a169;
+  color: white;
+}
+/* Container Styling */
+.filter-container {
+  display: flex;
+  justify-content: center;  /* Centers the dropdown horizontally */
+  margin-bottom: 20px;      /* Adds spacing between the filter and other elements */
+}
+
+/* Dropdown Styling */
+.filter-dropdown {
+  width: 200px;             /* Adjust width as needed */
+  padding: 10px;            /* Adds internal spacing for better clickability */
+  font-size: 16px;          /* Font size for readability */
+  border: 2px solid #ccc;   /* Border color and thickness */
+  border-radius: 5px;       /* Rounds the corners */
+  background-color: #f9f9f9; /* Light background for contrast */
+  color: #333;              /* Text color */
+  cursor: pointer;          /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover and Focus Effects */
+.filter-dropdown:hover {
+  border-color: #007BFF;    /* Change border color on hover */
+}
+
+.filter-dropdown:focus {
+  outline: none;            /* Removes default outline */
+  border-color: #007BFF;    /* Border color when focused */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect */
+}
+
+/* Mobile Responsive (Optional) */
+@media (max-width: 600px) {
+  .filter-dropdown {
+    width: 100%;            /* Full width on small screens */
+  }
+}
+
+  
+  /* Container for ingredients list */
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px; /* Spacing between items */
+  margin-top: 20px;
+  padding: 15px;
+  background: #f8f9fa; /* Light background for better contrast */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Each ingredient "chip" */
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 15px;
+  background: white;
+  border: 1px solid #EA6A12;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default; /* To prevent pointer icon */
+}
+
+/* Hover effect for ingredient item */
+.ingredient-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* "×" Remove button */
+.remove-ingredient {
+  margin-left: 10px;
+  color: #ff4d4f; /* Red color for remove icon */
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+/* Hover effect for "×" sign */
+.remove-ingredient:hover {
+  color: #d63031; /* Darker red on hover */
+}
+
+  
+
  
   /*  Wishlist Page */
 
