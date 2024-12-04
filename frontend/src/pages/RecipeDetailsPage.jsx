@@ -134,6 +134,7 @@ const RecipeDetailsPage = () => {
       {/* List of selected ingredients */}
       {searchType === 'ingredients' && (
         <div className="ingredients">
+
           {ingredients.map((ingredient, index) => (
             <div key={index} className="ingredient-item">
               {ingredient}
@@ -145,6 +146,7 @@ const RecipeDetailsPage = () => {
               </span>
             </div>
           ))}
+
         </div>
       )}
 

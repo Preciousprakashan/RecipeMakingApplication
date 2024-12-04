@@ -4,7 +4,7 @@ import './EditorsChoiceCard.css'
 import { IoTimerSharp } from "react-icons/io5";
 import { PiForkKnifeFill } from "react-icons/pi";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
-
+import HeartAnimation from '../HeartAnimation/HeartAnimation'
 const EditorsChoiceCard = () => {
   return (
     <div className='editors-card'>
@@ -16,8 +16,9 @@ const EditorsChoiceCard = () => {
               borderRadius={'1rem'}
               />
               {/* <MdOutlineFavoriteBorder className='like-icon' size={'1.8rem'} /> */}
-              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='red'/>
-              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='#EFEFEF'/>
+              {/* <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='red'/>
+              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='#EFEFEF'/> */}
+              <HeartAnimation/>
      </div>
       <Card.Body gap="2">
         <Card.Title fontSize={'medium'}>Mixed Tropical Fruit Salad with Superfood Boosts </Card.Title>
