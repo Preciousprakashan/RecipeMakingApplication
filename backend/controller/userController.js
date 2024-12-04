@@ -46,8 +46,9 @@ const login = async (req,res) => {
                 if(err) {
                     return res.status(404).send({ message:"Error comparing passwords" });
                 }else if(result) {
-                    const token = jwt.sign({email:user.emailId},'secret',{expiresIn: '1hr'});
-                    return res.status(200).send({ message:"Login successfull",token:token});
+                    const accessToken = jwt.sign({email:user.emailId}, process.env.JWT_SECRET_KEY,{expiresIn: '1hr'});
+                    const refreshToken = jwt.sign({email:user.emailId},process.env.JWT_SECRET_KEY);
+                    return res.status(200).send({ message:"Login successfull", access_token:accessToken, refresh_token:refreshToken});
                 }else {
                     return res.status(404).send({ message:"Invalid Password" });
                 }
@@ -58,4 +59,16 @@ const login = async (req,res) => {
         res.status(404).send("Error logging in");
     }
 }
+//update profile
+// const updateProfile = async(req, res) => {
+//     try{
+//         const { emailId, userName, password }
+//     }catch(err) {
+
+//     }
+// }
+
+//logout
+
+
 module.exports = {userRegistration, login};

@@ -123,3 +123,40 @@ h2 {
   flex-direction: column;
   padding: 4rem;
 }
+
+/* recipe by category */
+
+.category-page {
+    width: 100%;
+    height: 28rem;
+    padding: 0;
+    margin: 0;
+    background-color: orange;
+    border-bottom-left-radius: 40rem;
+    border-bottom-right-radius: 40rem;
+    
+    margin-bottom: 1rem;
+}
+
+.category-container {
+    /* background-color: red; */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 80%;
+    padding: 4rem;
+    /* padding: 4rem; */
+    /* margin-top: 12rem; */
+    
+}
+
+.category-container img {
+
+  border-radius: 40rem;
+  /* align-self: start; */
+  height: 14rem;
+  width: 14rem;
+  /* margin: 10rem; */
+}
