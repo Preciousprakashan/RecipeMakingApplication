@@ -44,8 +44,12 @@ const recipeData = mongoose.Schema({
         required:true
     },
     veryPopular:  {
-        type:Number,
-        required:true
+        type:Boolean,
+        // required:true
     }
 
 })
+
+const recipeModel = mongoose.model('/recipe', recipeData);
+
+module.exports = recipeModel;

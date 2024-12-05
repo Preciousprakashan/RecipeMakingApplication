@@ -46,8 +46,8 @@ const login = async (req,res) => {
                 if(err) {
                     return res.status(404).send({ message:"Error comparing passwords" });
                 }else if(result) {
-                    const accessToken = jwt.sign({email:user.emailId}, process.env.JWT_SECRET_KEY,{expiresIn: '1hr'});
-                    const refreshToken = jwt.sign({email:user.emailId},process.env.JWT_SECRET_KEY);
+                    const accessToken = jwt.sign({user}, process.env.JWT_SECRET_KEY,{expiresIn: '1hr'});
+                    const refreshToken = jwt.sign({user},process.env.JWT_SECRET_KEY);
                     return res.status(200).send({ message:"Login successfull", access_token:accessToken, refresh_token:refreshToken});
                 }else {
                     return res.status(404).send({ message:"Invalid Password" });
