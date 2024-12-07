@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RecipeTable from '../components/DbRecipeTable/RecipeTable';
 import '../components/DbRecipeTable/RecipeTable.css';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import '../styles/AdminPage.css';
 
 const AdminPage = () => {
+    const [open, setOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State to toggle sidebar
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const recipes = [
-        { name: 'Salad', time: '10 min', likes: 60 },
-        { name: 'Soup', time: '30 min', likes: 50 },
-    ];
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
     return (
-        <div className="manage-recipes">
-            <aside className="sidebar">
+        <div className={`manage-recipes ${isSidebarOpen ? '' : 'collapsed-sidebar'}`}>
+            <aside className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
                 <div className="profile">
                     <div className="avatar"></div>
                     <h3>John</h3>
@@ -28,16 +35,36 @@ const AdminPage = () => {
             </aside>
 
             <main className="content">
-                <header>
+                <header className="header">
+                    <div className="menu-toggle">
+                        {isSidebarOpen ? (
+                            <CloseIcon onClick={toggleSidebar} />
+                        ) : (
+                            <MenuIcon onClick={toggleSidebar} />
+                        )}
+                    </div>
                     <h1>Recipe List</h1>
-                    <button className="add-recipe-btn">Add New Recipe</button>
+                    <Button onClick={handleOpen} variant="contained" color="primary">
+                        Add New Recipe
+                    </Button>
                 </header>
-                <div className='recipe-table'>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-title"
+                    aria-describedby="modal-description"
+                >
+                    <Box className="modal-box">
+                        <iframe
+                            src="/Add" // Replace with your URL
+                            title="Add New Recipe"
+                            style={{ width: '100%', height: '100%', border: 'none' }}
+                        ></iframe>
+                    </Box>
+                </Modal>
+                <div className="recipe-table">
                     <RecipeTable />
                 </div>
-
-
-
             </main>
         </div>
     );

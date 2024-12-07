@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 const userRoute = require('./routes/routes.js');
 app.use('/recipe',userRoute);
 
+
 app.get('/get-recipe-by-id/:id',async(req,res)=>{
   try{
     const { id } = req.params;
@@ -25,8 +26,6 @@ app.get('/get-recipe-by-id/:id',async(req,res)=>{
     const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`,{
       
         params: {
-          // ingredients: ingredients,
-         // number: 10, // Number of recipes to return
           apiKey: SPOONACULAR_API_KEY
         },
     });

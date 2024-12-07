@@ -13,11 +13,16 @@ const RecipeByCategory = () => {
   return (
     <div>
         <div className="category-page">
-            <NavBar/>
             {/* <div className='category-contents'> */}
-                
+                <div className='box'>
+                      <NavBar/>
+
+                  <div className='category-name'>
+                      <h1>Category</h1>
+                  </div>
+                </div>
                 <div className="category-container">
-                      <img src="/assets/1.png" alt="1.png" />
+                      <img className='img-center' src="/assets/soup.png" alt="1.png" />
                  </div>
     {/* </div> */}
     

@@ -17,6 +17,8 @@ import RecipeByCategory from './pages/RecipeByCategory';
 import AdminPage from './pages/AdminPage';
 import RecipeTable from './components/DbRecipeTable/RecipeTable';
 import Recipe from './pages/Recipe';
+import AddRecipe from './pages/AddRecipe';
+import SearchRecipe from './pages/SearchRecipe';
 
 function App() {
   const [ingredients, setIngredients] = useState('');
@@ -66,9 +68,6 @@ function App() {
    
   return (
     <div className="App">
-      {/* <RecipeTable /> */}
-        {/* <AdminPage /> */}
-      {/* <HomePage /> */}
 
     <Routes>
       <Route path='/' element={<HomePage/>}/>
@@ -79,59 +78,9 @@ function App() {
       <Route path='/recipe-by-category' element={<RecipeByCategory/>}/>
       <Route path='/admin-page' element={<AdminPage/>}/>
       <Route path='/recipe' element={<Recipe/>}/>
+      <Route path="/searchRecipe" element={<SearchRecipe />} />
+      <Route path="/add" element={<AddRecipe />} />
     </Routes>
-    {/* <HomePage/> */}
-    {/* <RecipeDetailsPage/> */}
-    {/* <RecipeCard/> */}
-
-    {/* <Cards/> */}
-    {/* <EditorsChoiceCard/> */}
-    {/* <Footer/> */}
-      {/* <h1>Recipe Finder</h1>
-      <div>
-        <input
-          type="text"
-          value={ingredients}
-          onChange={(e) => setIngredients(e.target.value)}
-          placeholder="Enter ingredients (e.g., apples, flour)"
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
-
-      {loading && <p>Loading...</p>}
-
-      {error && <p>{error}</p>}
-
-      <div>
-        {recipes.length > 0 && (
-          <ul>
-            {recipes.map((recipe) => (
-              <li key={recipe.id} style={{border:"1px solid gray", margin:"0.6rem", textDecoration:"none"}}>
-                <h3>{recipe.title}</h3>
-                <img src={recipe.image} alt="recipe" width={400} />
-                <div style={{display:"flex",flexDirection:"row" }}>
-                <ul>
-                  <b>Available ingredients</b>
-                  {recipe.usedIngredients.map((ingredient) => (
-                    <li key={ingredient.id}>{ingredient.name}</li>
-                  ))}
-                </ul>
-                <ul>
-                  <b>Missing ingredients</b>
-                  {recipe.missedIngredients.map((ingredient) => (
-                    <li key={ingredient.id} style={{color:"red"}}>{ingredient.name}</li>
-                  ))}
-                </ul>
-                </div>
-                <button type="button" onClick={() => handleViewRecipe(recipe.id)}>View Recipe Details</button>
-                <a href={`https://spoonacular.com/recipes/${recipe.title}-${recipe.id}`} target="_blank" rel="noopener noreferrer">
-                  View Recipe
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div> */}
     </div>
   );
 }
