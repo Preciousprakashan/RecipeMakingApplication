@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import "../styles/Recipe.css";
-import HeartAnimation from "../components/HeartAnimation/HeartAnimation";
-import TextToSpeech from '../components/TextToSpeech/TextToSpeech';
-import CopyToClipboard from '../components/CopytoClipboard/CopyToClipboard';
+import "./Recipe.css";
+import HeartAnimation from "../HeartAnimation/HeartAnimation";
+import TextToSpeech from '../TextToSpeech/TextToSpeech';
+import CopyToClipboard from '../CopytoClipboard/CopyToClipboard';
 
 const Ingredient = ({ name, count, image }) => {
     return (
