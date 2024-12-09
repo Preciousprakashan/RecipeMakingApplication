@@ -14,6 +14,7 @@ body {
     width: 100%;
     background: white;
     overflow: hidden;
+    
 }
 
 .recipe-main-conatiner-image {
@@ -182,6 +183,11 @@ body {
     top: calc(450px);
     left: 50%;
     transform: translate(-50%);
+    background-color: rgba(255, 255, 255, 0.8); /* Adds transparency to the white background */
+    background-image: url('ingredients.svg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire div */
+    background-blend-mode: overlay; /* Blends the background color and image */
+    
 }
 
 .recipe-main-description-title {
@@ -219,7 +225,7 @@ body {
     font-weight: 400;
     width: auto;
     height: auto;
-    background-color: #ffffff;
+    background-color: transparent;
     display: flex;
     align-content: space-around;
     position: relative;
@@ -334,6 +340,7 @@ body {
     align-items: center; /* Centered the items vertically */
     justify-content: space-between; /* Ensures space between items */
     gap: 10px;
+    
   }
   
   
@@ -356,6 +363,7 @@ body {
     font-weight: 400;
     line-height: 135%;
     padding: 0 21px 0 21px;
+    
   }
 
 
@@ -391,3 +399,28 @@ ul {
   ul li {
     margin: 5px 0;
   }
+
+
+  @media (max-width: 768px) {
+    .ingredient {
+        width: calc(100% - 20px); /* Full width on smaller screens */
+    }
+
+    .container-recipe {
+        justify-content: center; /* Center items on smaller screens */
+    }
+}
+
+/* Media query for very small screens (e.g., phones) */
+@media (max-width: 480px) {
+    .ingredient {
+        flex-direction: row; /* Stack content vertically */
+        align-items: center; /* Align items to the start */
+        
+        gap: 8px;
+    }
+
+    .ingredient img {
+        margin-right: 0;
+    }
+}

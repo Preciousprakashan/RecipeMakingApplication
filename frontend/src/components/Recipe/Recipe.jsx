@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Recipe.css";
 import HeartAnimation from "../HeartAnimation/HeartAnimation";
-
-
+import TextToSpeech from '../TextToSpeech/TextToSpeech';
+import CopyToClipboard from '../CopytoClipboard/CopyToClipboard';
 
 const Ingredient = ({ name, count, image }) => {
     return (
@@ -19,12 +19,27 @@ const Ingredient = ({ name, count, image }) => {
 };
 
 const Recipe = () => {
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+    const [isIngredientsExpanded, setIsIngredientsExpanded] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Check initial screen size
+    // Update isMobile state on window resize
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleToggleDescription = () => {
-        setIsExpanded(!isExpanded);
+        setIsDescriptionExpanded(!isDescriptionExpanded);
     };
 
+    const handleToggleIngredients = () => {
+        setIsIngredientsExpanded(!isIngredientsExpanded);
+    };
 
     const ingredients = [
         { name: 'Tortilla Chips', count: 2, image: 'trotilla-chips.jpg' },
@@ -43,8 +58,9 @@ const Recipe = () => {
         { name: 'Cilantro', count: 1, image: 'Cilantro.jpg' }
     ];
 
-
     const columns = 3;
+
+    const ingredientsToShow = isIngredientsExpanded ? ingredients : ingredients.slice(0, isMobile ? 7 : ingredients.length); // Show only 5 ingredients initially
 
     return (
         <div id="recipe-main-conatiner">
@@ -65,7 +81,7 @@ const Recipe = () => {
                 <div className="recipe-main-description">
                     <p>
                         A refreshing twist on a classic favorite! This Healthy Taco Salad combines
-                        {isExpanded ? (
+                        {isDescriptionExpanded ? (
                             <>
                                 {""}
                                 crisp greens, juicy tomatoes, creamy avocado, and zesty taco-seasoned protein for a wholesome and flavorful meal. Perfect for lunch or dinner, it's topped with a light dressing to keep things guilt-free. Quick, delicious, and packed with nutrients—this salad will be your go-to for taco night or any time you crave bold flavors!
@@ -78,16 +94,13 @@ const Recipe = () => {
                                 </button>
                             </span>
                         )}
-                        {isExpanded && (
+                        {isDescriptionExpanded && (
                             <button onClick={handleToggleDescription} className='recipe-main-description-button' style={{ color: 'var(--Dark)', }}>
                                 Less
                             </button>
                         )}
                     </p>
                 </div>
-
-
-
                 <div className="recipe-main-description-spec">
                     <div className="grid">
 
@@ -133,13 +146,14 @@ const Recipe = () => {
 
                     </div>
                 </div>
+                {/* Ingredients Section */}
                 <div className='recipe-main-description-ingredients'>
                     <div className='recipe-main-description-ingredients-title'>
                         Ingredients
                     </div>
 
                     <div className="container-recipe">
-                        {ingredients.map((ingredient, index) => (
+                        {ingredientsToShow.map((ingredient, index) => (
                             <Ingredient
                                 key={index}
                                 name={ingredient.name}
@@ -149,41 +163,51 @@ const Recipe = () => {
                         ))}
                     </div>
 
-                    <div className='recipe-main-description-ingredients-title'>
-                        Instructions
-                    </div>
+                    {isMobile && (
+                        <button onClick={handleToggleIngredients} className='recipe-main-description-button' style={{ color: 'var(--Dark)' }}>
+                            {isIngredientsExpanded ? 'Show Less Ingredients' : 'Show All Ingredients'}
+                        </button>
+                    )}
+                </div>
 
-                    <p className="typography-instructions-heading">For main dish</p>
-                    <div className='recipe-main-description-instructions'>
-                        <p className="typography-instructions-subh">Cook the Meat:</p>
-                        <ul>
-                            <li>In a skillet, cook the ground turkey or beef over medium heat until fully browned.</li>
-                            <li>Add taco seasoning and 1/4 cup of water. Stir well and simmer for 3-5 minutes. Set aside to cool slightly.</li>
-                        </ul>
+                {/* Instructions Section */}
+                <div className='recipe-main-description-ingredients-title'>
+                    Instructions
+                </div>
+                <TextToSpeech targetSelector="#instructions" />
 
-                        <p className="typography-instructions-subh">Prepare the Salad Base:</p>
-                        <ul>
-                            <li>In a large salad bowl, arrange the chopped romaine lettuce as the base.</li>
-                        </ul>
+                <p className="typography-instructions-heading">For main dish</p>
+                <div className="recipe-main-description-instructions" id="instructions">
+                    <p className="typography-instructions-subh">Cook the Meat:</p>
+                    <ul>
+                        <li>In a skillet, cook the ground turkey or beef over medium heat until fully browned.</li>
+                        <li>
+                            Add taco seasoning and 1/4 cup of water. Stir well and simmer for 3-5 minutes. Set aside to cool slightly.
+                        </li>
+                    </ul>
 
-                        <p className="typography-instructions-subh">Add Toppings:</p>
-                        <ul>
-                            <li>Layer the salad with cherry tomatoes, black beans, corn, avocado, shredded cheese, and black olives.</li>
-                        </ul>
+                    <p className="typography-instructions-subh">Prepare the Salad Base:</p>
+                    <ul>
+                        <li>In a large salad bowl, arrange the chopped romaine lettuce as the base.</li>
+                    </ul>
 
-                        <p className="typography-instructions-subh">Assemble the Protein:</p>
-                        <ul>
-                            <li>Add the cooked taco-seasoned meat to the salad.</li>
-                        </ul>
+                    <p className="typography-instructions-subh">Add Toppings:</p>
+                    <ul>
+                        <li>Layer the salad with cherry tomatoes, black beans, corn, avocado, shredded cheese, and black olives.</li>
+                    </ul>
 
-                        <p className="typography-instructions-subh">Garnish and Serve:</p>
-                        <ul>
-                            <li>Sprinkle chopped cilantro over the top.</li>
-                            <li>Serve with lime wedges, Greek yogurt or sour cream, and salsa or your preferred dressing.</li>
-                        </ul>
-                    </div>
+                    <p className="typography-instructions-subh">Assemble the Protein:</p>
+                    <ul>
+                        <li>Add the cooked taco-seasoned meat to the salad.</li>
+                    </ul>
 
-
+                    <p className="typography-instructions-subh">Garnish and Serve:</p>
+                    <ul>
+                        <li>Sprinkle chopped cilantro over the top.</li>
+                        <li>
+                            Serve with lime wedges, Greek yogurt or sour cream, and salsa or your preferred dressing.
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
