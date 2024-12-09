@@ -1,13 +1,15 @@
 
-// add recipe
 const RecipeModel = require('../models/recipeData')
+const axios = require('axios');
+//for admin
+// add recipe
 const addRecipe = async (req, res) => {
     try {
       const recipeData = req.body;
       console.log(recipeData)
       // Validate required fields
       if (
-        !recipeData.recipe ||
+        !recipeData.title ||
         !recipeData.category ||
         !recipeData.descriptions ||
         !recipeData.instructions ||
@@ -27,18 +29,73 @@ const addRecipe = async (req, res) => {
     }
   }
 
-
+//for admin
 // edit a recipe
+const editRecipe = async(req, res) => {
+  try {
+    const requestData = req.body;
+    const id = req.params.id;
+    const recipe = await RecipeModel.findById(id);
+    if(!recipe) {
+      return res.status(403).send({message:"Recipe does not exist"});
+    } 
+    const updatedRecipe = await RecipeModel.findByIdAndUpdate(id, requestData);
+    res.status(200).send({message:"Recipe successfully updated"});
+  }catch (err) {
+    res.status(404).send({message:"error in updation"});
+  }
+  }
 
-
+//admin, user
 // get all recipies
 
+const listRecipies = async (req, res) => {
+  try {
+      const recipies = await RecipeModel.find();
+      res.status(200).send({message:"successfull", recipies});
+  }catch(err) {
+      res.status(404).send({message:"Error in getting recipies"});
+  }
+}
 
 
 // get recipies by id 
 
-
-// get recipies by category 
+const getRecipeById = async(req, res) => {
+  try {
+      const id = req.params.id;
+      let recipe, response, relatedRecipes;
+        // MongoDB ObjectId: 24-character hexadecimal string
+      if(!/^[a-fA-F0-9]{24}$/.test(id)) {// Checks if it's a valid MongoDB ObjectId
+          response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`,{
+      
+          params: {
+            apiKey: process.env.SPOONACULAR_API_KEY
+          },
+      });
+      recipe = response.data;
+      }else{
+         recipe = await RecipeModel.findById(id);
+         // Find other related recipes in the same category
+         console.log(recipe)
+         relatedRecipes = await RecipeModel.find({
+          category: recipe.category,  // Same category as the current recipe
+          _id: { $ne: id }      // Exclude the current recipe
+        }).limit(5);  // Limit to 5 related recipes
+        }
+        // recipe.push(relatedRecipes);
+        Object.assign(recipe, { relatedRecipes: relatedRecipes});
+        console.log(recipe)
+      if(!recipe) {
+        return res.status(403).send({message:"Recipe does not exist"});
+      } 
+       
+      res.status(200).send({message:"successfull",recipe});
+  }catch(err) {
+    console.log(err)
+      res.status(404).send({message:"error in getting recipe details"});
+  }
+}
 
 
 // get recipies by incredients
@@ -47,10 +104,7 @@ const getRecipeByIngredients = async (req, res) => {
     const { ingredients } = req.body; // Array of ingredient names
     
     try {
-      // Find recipes that match all provided ingredients
-      // const matchingRecipes = await RecipeModel.find({
-      //   'ingredients.name': { $all: ingredients },
-      // });
+     
       const recipes = await RecipeModel.aggregate([
         {
           // Match recipes where the ingredients array contains at least one of the input ingredients
@@ -65,7 +119,7 @@ const getRecipeByIngredients = async (req, res) => {
         {
           // Project to include the list of matched ingredients and calculate missed ingredients
           $project: {
-            recipe: 1,
+            title: 1,
             ingredients: 1,
             usedIngredients: {
               $filter: {
@@ -130,21 +184,74 @@ const getRecipeByIngredients = async (req, res) => {
         }
         }
       ]);
-      
-  
-      // Suggest recipes that contain at least one of the provided ingredients
-      // const suggestedRecipes = await RecipeModel.find({
-      //   'ingredients.name': { $in: ingredients },
-      // }).limit(5);
-  
-      res.json({ recipes });
+      // Convert the array to a comma-separated string
+      const ingredients_ = ingredients.join(',');
+      const response = await axios.get(
+        `https://api.spoonacular.com/recipes/findByIngredients`,
+        {
+          params: {
+            ingredients: ingredients_,
+            number: 10, // Number of recipes to return
+            apiKey: process.env.SPOONACULAR_API_KEY,
+          },
+        }
+      );
+      console.log(response)
+      const recipeFromAPI = response.data;
+      res.json({ recipes, recipeFromAPI });
     } catch (error) {
       res.status(500).json({ error: 'Error searching for recipes' });
     }
   }
 
 
+// get recipies by category 
+
+const getRecipeByCategory = async(req, res) => {
+  try {
+      const category = req.body.category;
+      const recipeDetails = await RecipeModel.find({category :category});
+      if(!recipeDetails) {
+        return res.status(403).send({message:"No recipies available"})
+      }
+      res.status(200).send({message:"successfull", recipeDetails});
+  }catch(err) {
+      res.status(404).send({message:"error in getting recipies"});
+  }
+}
+
 // get popular recipies
 
+const getRecipesPopular = async(req, res) => {
+  try {
+      // const popular = req.body.veryPopular;
+      const recipeDetails = await RecipeModel.find({veryPopular : true});
+      if(!recipeDetails) {
+        return res.status(403).send({message:"No recipies available"})
+      }
+      res.status(200).send({message:"successfull", recipeDetails});
+  }catch(err) {
+      res.status(404).send({message:"error in getting recipies"});
+  }
+}
 
-module.exports = {addRecipe, getRecipeByIngredients}
+//get recipe by name
+
+const getRecipeByName = async(req, res) => {
+  try {
+      // const popular = req.body.veryPopular;
+      const recipeDetails = await RecipeModel.find({title : req.body.title});
+      if(!recipeDetails) {
+        return res.status(403).send({message:"No recipies available"})
+      }
+      res.status(200).send({message:"successfull", recipeDetails});
+  }catch(err) {
+      res.status(404).send({message:"error in getting recipies"});
+  }
+}
+
+
+
+module.exports = {addRecipe, getRecipeByIngredients, editRecipe, listRecipies,
+                   getRecipeById, getRecipeByCategory, getRecipesPopular,
+                    getRecipeByName}

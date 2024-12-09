@@ -2,12 +2,13 @@
 const mongoose = require("mongoose");
 
 const recipeData = mongoose.Schema({
-    recipe: {
+    title: {
         type:String,
         required:true
     },
     category: {
-        type:String,
+        type:[String],
+        default:[],
         required:true
     },
     descriptions: {
@@ -48,8 +49,11 @@ const recipeData = mongoose.Schema({
         // required:true
     }
 
+}
+,{
+    timestamps:true
 })
 
-const recipeModel = mongoose.model('/recipe', recipeData);
+const recipeModel = mongoose.model('recipe', recipeData);
 
 module.exports = recipeModel;

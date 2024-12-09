@@ -23,6 +23,9 @@ const userData = mongoose.Schema({
         required: true
     }
     
+}
+,{
+    timestamps:true
 })
 
 const userModel = mongoose.model('user',userData);

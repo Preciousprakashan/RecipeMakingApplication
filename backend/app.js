@@ -26,7 +26,7 @@ app.get('/get-recipe-by-id/:id',async(req,res)=>{
     const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`,{
       
         params: {
-          apiKey: SPOONACULAR_API_KEY
+          apiKey: process.env.SPOONACULAR_API_KEY
         },
     });
     res.send(response.data);
