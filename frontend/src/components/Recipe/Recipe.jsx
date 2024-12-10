@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./Recipe.css";
 import HeartAnimation from "../HeartAnimation/HeartAnimation";
 import TextToSpeech from '../TextToSpeech/TextToSpeech';
-import CopyToClipboard from '../CopytoClipboard/CopyToClipboard';
+import recipeBGImage from '../../../public/assets/1.png';
 
 const Ingredient = ({ name, count, image }) => {
     return (
@@ -65,7 +65,7 @@ const Recipe = () => {
     return (
         <div id="recipe-main-conatiner">
             <div className="recipe-main-conatiner-image">
-                <img src="1.png" alt="Recipe" />
+                <img src="./assets/1.png" alt="Recipe" />
 
                 {/* Container for Close button and Favorite Button */}
                 <div className="button-container">
