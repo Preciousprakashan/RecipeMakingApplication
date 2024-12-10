@@ -65,7 +65,7 @@ const Recipe = () => {
     return (
         <div id="recipe-main-conatiner">
             <div className="recipe-main-conatiner-image">
-                <img src="1.png" alt="Recipe" />
+                <img src="/assets/1.png" alt="Recipe" />
 
                 {/* Container for Close button and Favorite Button */}
                 <div className="button-container">
