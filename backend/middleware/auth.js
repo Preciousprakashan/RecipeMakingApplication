@@ -10,7 +10,6 @@ const authMiddleware = (requiredRole) => {
                 try {
                     console.log(token)
                     jwt.verify(token, process.env.JWT_SECRET_KEY,  (err, decoded) => {
-                        console.log(decoded)
                         if(err) {
                             return res.status(403).json({message:'Invalid or Expired token'});
                         }

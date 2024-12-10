@@ -8,8 +8,6 @@ const axios = require('axios');
 const addWishlistRecipe = async(req, res) => {
     try {
         const user = req.user.user;
-        console.log(req.body)
-        console.log(user)
         const id = req.body.recipeId;
         let recipeId,recipe;
         if (Number.isInteger(id)) {
@@ -94,7 +92,6 @@ const addWishlistRecipe = async(req, res) => {
           res.status(200).send({message:"successfull", updatedWishlist});
         }else{
               const wishlistingRecipe = new WishlistModel(recipe);
-              console.log(wishlistingRecipe)
               const savedData =  await wishlistingRecipe.save();
               res.status(200).send({message:"successfull", savedData});
         }

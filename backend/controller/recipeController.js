@@ -6,7 +6,6 @@ const axios = require('axios');
 const addRecipe = async (req, res) => {
     try {
       const recipeData = req.body;
-      console.log(recipeData)
       // Validate required fields
       if (
         !recipeData.title ||
@@ -85,14 +84,12 @@ const getRecipeById = async(req, res) => {
         }
         // recipe.push(relatedRecipes);
         Object.assign(recipe, { relatedRecipes: relatedRecipes});
-        console.log(recipe)
       if(!recipe) {
         return res.status(403).send({message:"Recipe does not exist"});
       } 
        
       res.status(200).send({message:"successfull",recipe});
   }catch(err) {
-    console.log(err)
       res.status(404).send({message:"error in getting recipe details"});
   }
 }
@@ -196,7 +193,6 @@ const getRecipeByIngredients = async (req, res) => {
           },
         }
       );
-      console.log(response)
       const recipeFromAPI = response.data;
       res.json({ recipes, recipeFromAPI });
     } catch (error) {
@@ -224,7 +220,6 @@ const getRecipeByCategory = async(req, res) => {
 
 const getRecipesPopular = async(req, res) => {
   try {
-      // const popular = req.body.veryPopular;
       const recipeDetails = await RecipeModel.find({veryPopular : true});
       if(!recipeDetails) {
         return res.status(403).send({message:"No recipies available"})
@@ -239,7 +234,7 @@ const getRecipesPopular = async(req, res) => {
 
 const getRecipeByName = async(req, res) => {
   try {
-      // const popular = req.body.veryPopular;
+      
       const recipeDetails = await RecipeModel.find({title : req.body.title});
       if(!recipeDetails) {
         return res.status(403).send({message:"No recipies available"})

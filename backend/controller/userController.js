@@ -59,16 +59,36 @@ const login = async (req,res) => {
         res.status(404).send("Error logging in");
     }
 }
-//update profile
-// const updateProfile = async(req, res) => {
-//     try{
-//         const { emailId, userName, password }
-//     }catch(err) {
 
-//     }
-// }
+//user details
+const viewProfile = async(req, res) => {
+    try{
+        const id = req.user.user._id;
+        const userDetails = await userModel.findById(id);
+        res.status(200).send({message:"successfull",profile:{
+            fullName:userDetails.fullName,
+            userName:userDetails.userName,
+            emailId:userDetails.emailId,
+            role:userDetails.role
+        }});
+    }catch(err) {
+        res.status(404).send({message:"error in viewing profile"});
+    }
+}
+
+//update profile
+const updateProfile = async(req, res) => {
+    try{
+        const { emailId, userName, fullName } = req.body;
+        const id = req.user.user;
+        const updatedData = await userModel.findByIdAndUpdate(id, {emailId, userName, fullName});
+        res.status(200).send({message:"updation successfull"});
+    }catch(err) {
+        res.status(404).send({message:"Error in viewing profile"});
+    }
+}
 
 //logout
 
 
-module.exports = {userRegistration, login};
+module.exports = {userRegistration, login, viewProfile, updateProfile};
