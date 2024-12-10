@@ -54,10 +54,11 @@ const HomePage = () => {
           </div>
         </div>
         <div className="grp-cards">
-          <h2>Editor Choice</h2>
+          <h2>Editor's Choice</h2>
           <div className='card-collection'>
             {recipeData.map((recipe, index) =>
-              <EditorsChoiceCard key={index} id={recipe.id} isLiked={recipe.liked} onLikeToggle={() => handleLikeToggle(recipe.id, recipe.liked)} />
+              <EditorsChoiceCard
+              key={index} id={recipe.id} isLiked={recipe.liked} onLikeToggle={() => handleLikeToggle(recipe.id, recipe.liked)} />
             )}
             {/* <EditorsChoiceCard/>
             <EditorsChoiceCard/>
