@@ -8,7 +8,9 @@ const Cards = () => {
   return (
     <div className='card-layout'>
         <Card.Root 
+        padding={"1.5rem"}
               width="14rem"
+              height="20rem"
               backgroundColor={'#EFEFEF'} 
               _hover={{ bg: "#FFAD65", 
                         // transform: "scale(1.05)", // Slightly scale the card
@@ -21,14 +23,15 @@ const Cards = () => {
       <Card.Body gap="2">
 
 
-      <img src="/assets/breakfast.png" alt="food image" />
+      <img className="cardImage" src="/assets/breakfast.png" alt="food image" />
         {/* <AvatarRoot size="2xl" borderRadius="full">
             <AvatarImage src="/assets/image.png" alt="Nue Camp" />
             <AvatarFallback>NC</AvatarFallback>
         </AvatarRoot> */}
 
-        <Card.Title mt="2">Nue Camp</Card.Title>
-        <Card.Description>
+        <Card.Title mt="2" marginTop={"11rem"}>Nue Camp</Card.Title>
+        <Card.Description
+        >
           This is the card body. Lorem ipsum dolor sit amet, consectetur
           adipiscing elit.
         </Card.Description>
