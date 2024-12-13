@@ -82,13 +82,14 @@ const getRecipeById = async(req, res) => {
           _id: { $ne: id }      // Exclude the current recipe
         }).limit(5);  // Limit to 5 related recipes
         }
-        // recipe.push(relatedRecipes);
+        // recipe['relatedRecipies'] = relatedRecipes ;
+        // console.log(relatedRecipes);
         Object.assign(recipe, { relatedRecipes: relatedRecipes});
       if(!recipe) {
         return res.status(403).send({message:"Recipe does not exist"});
-      } 
+      }
        
-      res.status(200).send({message:"successfull",recipe});
+      res.status(200).send({message:"successfull", recipeData:{recipe,relatedRecipes}});
   }catch(err) {
       res.status(404).send({message:"error in getting recipe details"});
   }
@@ -222,7 +223,7 @@ const getRecipesPopular = async(req, res) => {
   try {
       const recipeDetails = await RecipeModel.find({veryPopular : true});
       if(!recipeDetails) {
-        return res.status(403).send({message:"No recipies available"})
+        return res.status(403).send({message:"No recipies available"});
       }
       res.status(200).send({message:"successfull", recipeDetails});
   }catch(err) {
@@ -237,14 +238,13 @@ const getRecipeByName = async(req, res) => {
       
       const recipeDetails = await RecipeModel.find({title : req.body.title});
       if(!recipeDetails) {
-        return res.status(403).send({message:"No recipies available"})
+        return res.status(403).send({message:"No recipies available"});
       }
       res.status(200).send({message:"successfull", recipeDetails});
   }catch(err) {
       res.status(404).send({message:"error in getting recipies"});
   }
 }
-
 
 
 module.exports = {addRecipe, getRecipeByIngredients, editRecipe, listRecipies,
