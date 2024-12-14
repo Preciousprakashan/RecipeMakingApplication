@@ -47,8 +47,10 @@ const recipeData = mongoose.Schema({
     veryPopular:  {
         type:Boolean,
         // required:true
+    },
+    image:{
+        type:String
     }
-
 }
 ,{
     timestamps:true

@@ -119,20 +119,39 @@ const RecipeDetailsPage = () => {
 
           {/* Single Search Bar */}
           <div className="search-container">
-            <input
-              type="text"
-              className="search-input"
-              placeholder={
-                searchType === 'ingredients'
-                  ? 'Search or add an ingredient...'
-                  : 'Search recipes by name...'
-              }
-              value={query}
-              onChange={handleInputChange}
-            />
-            <button className="search-button">
-              <IoSearch />
-            </button>
+          {searchType === 'ingredients' && (
+        <div className="ingredients">
+
+          {ingredients.map((ingredient, index) => (
+            <div key={index} className="ingredient-item">
+              {ingredient}
+              <span
+                className="remove-ingredient"
+                onClick={() => handleRemoveIngredient(ingredient)}
+              >   
+                ×
+              </span>
+            </div>
+          ))}
+
+        </div>
+      )} 
+            <div className='searching-details'>
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder={
+                    searchType === 'ingredients'
+                      ? 'Search or add an ingredient...'
+                      : 'Search recipes by name...'
+                  }
+                  value={query}
+                  onChange={handleInputChange}
+                />
+                <button className="search-button">
+                  <IoSearch />
+                </button>
+            </div>
           </div>
 
           {/* Related Ingredients or Filtered Recipes */}
@@ -158,7 +177,7 @@ const RecipeDetailsPage = () => {
       </div>
 
       {/* List of selected ingredients */}
-      {searchType === 'ingredients' && (
+      {/* {searchType === 'ingredients' && (
         <div className="ingredients">
 
           {ingredients.map((ingredient, index) => (
@@ -174,7 +193,7 @@ const RecipeDetailsPage = () => {
           ))}
 
         </div>
-      )}
+      )} */}
 
       {/* Recipe cards when searching by ingredients */}
       {searchType === 'ingredients' && (
