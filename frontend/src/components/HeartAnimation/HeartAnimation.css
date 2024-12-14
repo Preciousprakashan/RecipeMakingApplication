@@ -33,7 +33,7 @@ body {
   text-align: center;
 }
 
-svg {
+svg:not(.icon){
   cursor: pointer;
   overflow: visible;
   width: 50px;
