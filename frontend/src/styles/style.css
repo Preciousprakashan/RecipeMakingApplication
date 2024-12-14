@@ -166,9 +166,9 @@ h2 {
 .related-ingredients {
   margin-top: 10px;
   /* Spacing below search bar */
-  width: 100%;
+  width: 80%;
   /* Take full width for alignment */
-  max-width: 600px;
+  max-width: 34rem;
   /* Limit the width */
   background-color: #f9f9f9;
   /* Light background for contrast */
@@ -180,6 +180,10 @@ h2 {
   /* Inner spacing */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   /* Subtle shadow for depth */
+  max-height: 30rem;
+  overflow-y: auto;
+  /* position: relative;
+  z-index: 9999; */
 }
 
 .related-ingredients ul {
@@ -189,6 +193,7 @@ h2 {
   /* Remove padding */
   margin: 0;
   /* Remove margin */
+  height: fit-content;
 }
 
 .related-ingredients li {
@@ -201,6 +206,7 @@ h2 {
   /* Inner padding */
   border-bottom: 1px solid #ddd;
   /* Divider between items */
+  width: 100%;
 }
 
 .related-ingredients li:last-child {
@@ -214,6 +220,7 @@ h2 {
   border-radius: 20px;
   background-color: #38a169;
   color: white;
+  max-width: 4rem ;
 }
 
 /* Container Styling */
