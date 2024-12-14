@@ -52,8 +52,7 @@ const HomePage = () => {
             <Cards />
 
           </div>
-        </div>
-        <div className="grp-cards">
+
           <h2>Editor's Choice</h2>
           <div className='card-collection'>
             {recipeData.map((recipe, index) =>
