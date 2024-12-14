@@ -20,8 +20,19 @@ const userData = mongoose.Schema({
     },
     password: {
         type:String,
-        required: true
-    }
+        required: function() {
+            return !this.googleId; // Password is only required if the Google ID is not set
+          }
+    },
+    googleToken: {
+        type: String, // Stores the Google OAuth token, if necessary (you can use it to make requests to Google APIs)
+      },
+      name: {
+        type: String, // Store user's name (from Google or normal signup)
+      },
+      profileImage: {
+        type: String, // Optional field for storing the profile image (Google may provide it)
+      }
     
 }
 ,{
