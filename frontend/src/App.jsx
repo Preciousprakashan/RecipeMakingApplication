@@ -19,6 +19,7 @@ import RecipeTable from './components/DbRecipeTable/RecipeTable';
 import Recipe from './pages/Recipe';
 import AddRecipe from './pages/AddRecipe';
 import SearchRecipe from './pages/SearchRecipe';
+import AboutUs from './pages/AboutUs';
 
 function App() {
   const [ingredients, setIngredients] = useState('');
@@ -80,6 +81,7 @@ function App() {
       <Route path='/recipe' element={<Recipe/>}/>
       <Route path="/searchRecipe" element={<SearchRecipe />} />
       <Route path="/add" element={<AddRecipe />} />
+      <Route path="/aboutus" element={<AboutUs/>} />
     </Routes>
     </div>
   );
