@@ -27,7 +27,7 @@ const NavBar = () => {
               <li><a href="/" className='link'>Home</a></li>
               <li><a href="/recipe-details" className='link'>Recipies</a></li>
               <li><a href="/wishlist" className='link'>Wishlist</a></li>
-              <li><a href="#" className='link'>About Us</a></li>
+              <li><a href="/aboutus" className='link'>About Us</a></li>
             </ul>
           </div>
 
@@ -65,7 +65,7 @@ const NavBar = () => {
             <li><a href="/" className='link'>Home</a></li>
             <li><a href="/recipe-details" className='link'>Recipies</a></li>
             <li><a href="/wishlist" className='link'>Wishlist</a></li>
-            <li><a href="#" className='link'>About Us</a></li>
+            <li><a href="/aboutus" className='link'>About Us</a></li>
           </ul>
         </div>
       }
