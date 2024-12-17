@@ -5,6 +5,7 @@ import { IoSearch } from "react-icons/io5";
 import RecipeCard from '../components/RecipeCard/RecipeCard';
 import { Button } from '@chakra-ui/react';
 import Footer from '../components/Foooter/Footer';
+import axios from 'axios';
 
 const RecipeDetailsPage = () => {
   // const [recipe, setRecipe] = useState([
@@ -35,37 +36,49 @@ const RecipeDetailsPage = () => {
   // ])
   const [query, setQuery] = useState(''); // State for the search bar value
   const [searchType, setSearchType] = useState('ingredients'); // State for the filter type ('ingredients' or 'recipes')
-  const [ingredients, setIngredients] = useState([
-    'Coffee Powder',
-    'Milk',
-    'Sugar',
-    'Cocoa',
-    'Flour',
-    'Butter',
-    'Eggs',
-    'Salt',
-  ]);
-  const [relatedIngredients, setRelatedIngredients] = useState([
-    'Cinnamon',
-    'Coffee Powder',
-    'Honey',
-    'Vanilla Extract',
-    'Almonds',
-    'Chocolate Chips',
-    'Whipped Cream',
-  ]);
+  const [ingredients, setIngredients] = useState([]);
+  //   'Coffee Powder',
+  //   'Milk',
+  //   'Sugar',
+  //   'Cocoa',
+  //   'Flour',
+  //   'Butter',
+  //   'Eggs',
+  //   'Salt',
+  // ]);
+  const [relatedIngredients, setRelatedIngredients] = useState([]);
+  // const [relatedIngredients, setRelatedIngredients] = useState([
+  //   'Cinnamon',
+  //   'Coffee Powder',
+  //   'Honey',
+  //   'Vanilla Extract',
+  //   'Almonds',
+  //   'Chocolate Chips',
+  //   'Whipped Cream',
+  // ]);
   const [recipes, setRecipes] = useState([
-    { id: 1, name: 'Fruit Salad', time: '30 minutes', type: 'Vegetarian', ingredients: ['Cinnamon', 'Honey'] },
-    { id: 2, name: 'Chocolate Cake', time: '1 hour', type: 'Dessert', ingredients: ['Cocoa', 'Butter', 'Sugar'] },
-    { id: 3, name: 'Pasta', time: '45 minutes', type: 'Vegetarian', ingredients: ['Milk', 'Flour', 'Butter'] },
-    { id: 4, name: 'Pancakes', time: '20 minutes', type: 'Breakfast', ingredients: ['Flour', 'Eggs', 'Milk'] },
-    { id: 5, name: 'Pancakes', time: '20 minutes', type: 'Breakfast', ingredients: ['Flour', 'Eggs', 'Milk'] },
-    { id: 6, name: 'Pancakes', time: '20 minutes', type: 'Breakfast', ingredients: ['Flour', 'Eggs', 'Milk'] },
-    { id: 7, name: 'Pancakes', time: '20 minutes', type: 'Breakfast', ingredients: ['Flour', 'Eggs', 'Milk'] },
+    // { id: 1, name: 'Fruit Salad', time: '30 minutes', type: 'Vegetarian', ingredients: ['Cinnamon', 'Honey'] },
+    // { id: 2, name: 'Chocolate Cake', time: '1 hour', type: 'Dessert', ingredients: ['Cocoa', 'Butter', 'Sugar'] },
+    // { id: 3, name: 'Pasta', time: '45 minutes', type: 'Vegetarian', ingredients: ['Milk', 'Flour', 'Butter'] },
+    // { id: 4, name: 'Pancakes', time: '20 minutes', type: 'Breakfast', ingredients: ['Flour', 'Eggs', 'Milk'] },
+    // { id: 5, name: 'Pancakes', time: '20 minutes', type: 'Breakfast', ingredients: ['Flour', 'Eggs', 'Milk'] },
+    // { id: 6, name: 'Pancakes', time: '20 minutes', type: 'Breakfast', ingredients: ['Flour', 'Eggs', 'Milk'] },
+    // { id: 7, name: 'Pancakes', time: '20 minutes', type: 'Breakfast', ingredients: ['Flour', 'Eggs', 'Milk'] },
   ]);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = async (event) => {
     setQuery(event.target.value);
+    const val = event.target.value;
+    try{
+      //fetching ingredients from the spoonacular api
+      const data = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=39be80ffc28747debcb2daf663fe6aac&query=${val}&number=10`);
+      const ingredientName = data.data.results.map((item,key) => item.name);
+      setRelatedIngredients(ingredientName);
+      console.log(ingredientName);
+    }catch(err) {
+      console.log(err);
+    }
+
   };
 
   const handleAddIngredient = (ingredient) => {
@@ -119,20 +132,39 @@ const RecipeDetailsPage = () => {
 
           {/* Single Search Bar */}
           <div className="search-container">
-            <input
-              type="text"
-              className="search-input"
-              placeholder={
-                searchType === 'ingredients'
-                  ? 'Search or add an ingredient...'
-                  : 'Search recipes by name...'
-              }
-              value={query}
-              onChange={handleInputChange}
-            />
-            <button className="search-button">
-              <IoSearch />
-            </button>
+          {searchType === 'ingredients' && (
+        <div className="ingredients">
+
+          {ingredients.map((ingredient, index) => (
+            <div key={index} className="ingredient-item">
+              {ingredient}
+              <span
+                className="remove-ingredient"
+                onClick={() => handleRemoveIngredient(ingredient)}
+              >   
+                ×
+              </span>
+            </div>
+          ))}
+
+        </div>
+      )} 
+            <div className='searching-details'>
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder={
+                    searchType === 'ingredients'
+                      ? 'Search or add an ingredient...'
+                      : 'Search recipes by name...'
+                  }
+                  value={query}
+                  onChange={handleInputChange}
+                />
+                <button className="search-button">
+                  <IoSearch />
+                </button>
+            </div>
           </div>
 
           {/* Related Ingredients or Filtered Recipes */}
@@ -158,7 +190,7 @@ const RecipeDetailsPage = () => {
       </div>
 
       {/* List of selected ingredients */}
-      {searchType === 'ingredients' && (
+      {/* {searchType === 'ingredients' && (
         <div className="ingredients">
 
           {ingredients.map((ingredient, index) => (
@@ -174,7 +206,7 @@ const RecipeDetailsPage = () => {
           ))}
 
         </div>
-      )}
+      )} */}
 
       {/* Recipe cards when searching by ingredients */}
       {searchType === 'ingredients' && (
