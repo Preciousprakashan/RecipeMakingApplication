@@ -5,6 +5,7 @@ import "../styles/AboutUs.css";
 import Team from "../components/Team/Team";
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Foooter/Footer";
+import { useNavigate } from 'react-router-dom';
 
 
 const AboutUs = () => {
@@ -14,6 +15,7 @@ const AboutUs = () => {
       nextSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  const navigate = useNavigate();
 
   return (
     <>
@@ -52,12 +54,12 @@ const AboutUs = () => {
 
           {/* Left Section for Text */}
           <div className="story-left">
-            <h2>What Makes Us <span className="love">Unique?</span></h2>
+            <h2 className="aboutus-h2">What Makes Us <span className="love">Unique?</span></h2>
             <div className="story-content">
               <div className="story-item">
                 <span className="number">1</span>
                 <div className="text">
-                  <h3>Search by Recipe Name</h3>
+                  <h3 className="mission-card-h3">Search by Recipe Name</h3>
                   <p>
                     Know exactly what you want to cook? Simply type the recipe name, and we’ll show you step-by-step instructions along with the ingredients you need. Whether it’s a Classic Chicken Curry or Homemade Chocolate Cake, your favorite dishes are just a search away!
                   </p>
@@ -66,7 +68,7 @@ const AboutUs = () => {
               <div className="story-item">
                 <span className="number">2</span>
                 <div className="text">
-                  <h3>Search by Ingredients</h3>
+                  <h3 className="mission-card-h3">Search by Ingredients</h3>
                   <p>
                     Don’t know what to cook, but have ingredients sitting in your kitchen? Use our Ingredient Search feature! Just select the ingredients you have, and we’ll suggest recipes that you can whip up right now. No more food waste, and no more guessing what to make!
                   </p>
@@ -87,7 +89,7 @@ const AboutUs = () => {
         {/* Our Mission Section */}
         <section className="our-mission">
           <div className="mission-header">
-            <h2>Our Mission</h2>
+            <h2 className="aboutus-h2">Our Mission</h2>
             <p>
               Our mission is to inspire everyone to cook delicious meals without the stress.
             </p>
@@ -96,15 +98,15 @@ const AboutUs = () => {
           {/* Mission Cards */}
           <div className="mission-cards">
             <div className="mission-card">
-              <h3>Discover New Recipes</h3>
-              <p>Find exciting and diverse recipes that match your taste and preferences.</p>
+              <h3 className="mission-card-h3">Discover New Recipes</h3>
+              <p> Find exciting and diverse recipes that match your taste and preferences.</p>
             </div>
             <div className="mission-card">
-              <h3>Save Time with Easy-to-Find Dishes</h3>
+              <h3 className="mission-card-h3">Save Time with Easy-to-Find Dishes</h3>
               <p>Quick and simple recipes that are easy to follow for any skill level.</p>
             </div>
             <div className="mission-card">
-              <h3>Reduce Food Waste</h3>
+              <h3 className="mission-card-h3">Reduce Food Waste</h3>
               <p>Make use of ingredients you already have and create delicious meals.</p>
             </div>
           </div>
@@ -112,13 +114,13 @@ const AboutUs = () => {
 
         {/* Why we love delizia  */}
         <section className="why-love-delizia">
-          <h2>Why You’ll <span className="love">Love</span> Delizia</h2>
+          <h2 className="aboutus-h2">Why You’ll <span className="love">Love</span> Delizia</h2>
           <div className="features-grid">
             <div className="feature-card" data-scroll>
               <div className="icon-aboutus">
                 <FaSearch />
               </div>
-              <h3>Easy-to-Use Search</h3>
+              <h3 className="mission-card-h3">Easy-to-Use Search</h3>
               <p>Find the perfect recipe, your way.</p>
             </div>
 
@@ -126,7 +128,7 @@ const AboutUs = () => {
               <div className="icon-aboutus">
                 <FaClipboardList />
               </div>
-              <h3>Step-by-Step Instructions</h3>
+              <h3 className="mission-card-h3">Step-by-Step Instructions</h3>
               <p>Clear, easy-to-follow recipes for all skill levels.</p>
             </div>
 
@@ -134,7 +136,7 @@ const AboutUs = () => {
               <div className="icon-aboutus">
                 <FaLightbulb />
               </div>
-              <h3>Smart Suggestions</h3>
+              <h3 className="mission-card-h3">Smart Suggestions</h3>
               <p>Recipes tailored to the ingredients you have.</p>
             </div>
 
@@ -142,7 +144,7 @@ const AboutUs = () => {
               <div className="icon-aboutus">
                 <FaUtensils />
               </div>
-              <h3>Endless Options</h3>
+              <h3 className="mission-card-h3">Endless Options</h3>
               <p>From quick weekday meals to indulgent weekend treats.</p>
             </div>
           </div>
@@ -167,13 +169,13 @@ const AboutUs = () => {
 
       {/* Header Section */}
       <div className="newsletter-header">
-        <h2>Join Our <span className="love">Food-Loving</span> Community</h2>
+        <h2 className="aboutus-h2">Join Our <span className="love">Food-Loving</span> Community</h2>
         <p>Thousands of users have already joined our community to discover and share their favorite recipes.</p>
       </div>
 
       {/* Sign-in Button */}
       <div className="newsletter-button">
-        <button className="sign-in-btn">Join Now</button>
+        <button className="sign-in-btn" onClick={() => navigate('/login')}>Join Now</button>
       </div>
     </section>
 
