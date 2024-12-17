@@ -106,3 +106,9 @@
     color: #666;
   }
   
+
+
+  .aboutus-member-image {
+    display: inline-block !important; /* or inline-flex / block / none, depending on what you want */
+  }
+  

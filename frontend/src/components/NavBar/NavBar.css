@@ -1,11 +1,10 @@
 
 .outer-nav{
-    padding: 0.4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     color: black;
-    background-color: rgb(255, 255, 255);
+    background-color:transparent;
 }
 .cap{
     background-color: rgb(164, 93, 93);
@@ -16,12 +15,15 @@
     display: block;
 }
 .navbar{
-
+    margin-top: 5px;
     background-color: #F7F7F7;
-    border-radius: 160px 160px 0px 0px;
-    min-width: 100%;
+    border-radius: 160px;
+    min-width: 98%;
     padding:0 36px 0 36px ;
     /* min-height: 100%; */
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    z-index: 6;
+    position: fixed;
 
 }
 .logo{

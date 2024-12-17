@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from "react";
 import "./Team.css";
 
 const teamMembers = [
-  { id: 1, name: "Precious P P", role: "Designer", img: "./assets/1.jpg" },
-  { id: 2, name: "Akhil V", role: "Developer", img: "./assets/2.jpg" },
-  { id: 3, name: "Divya Sree Kala", role: "Project Manager", img: "./assets/3.jpg" },
-  { id: 4, name: "Ajmi M", role: "QA Lead", img: "./assets/4.jpg" },
-  { id: 5, name: "Gowri N", role: "Content Writer", img: "./assets/5.jpg" },
+  { id: 1, name: "Precious P P", role: "Designer", img: "./assets/precious.jpg" },
+  { id: 2, name: "Akhil V", role: "Developer", img: "./assets/akhil.jpeg" },
+  { id: 3, name: "Divya Sree Kala", role: "Project Manager", img: "./assets/divyask.jpeg" },
+  { id: 4, name: "Ajmi M", role: "QA Lead", img: "./assets/ajmi.jpeg" },
+  { id: 5, name: "Gowri N", role: "Content Writer", img: "./assets/gowri.jpeg" },
 ];
 
 const Team = () => {
@@ -49,10 +49,11 @@ const Team = () => {
           {teamMembers.map((member) => (
             <div key={member.id} className="team-card">
               <div className="team-image">
-                <img src={member.img} alt={member.name} />
+              <img src={member.img} alt={member.name} className="aboutus-member-image" />
+
               </div>
               <div className="team-info">
-                <h3>{member.name}</h3>
+                <h3 className="mission-card-h3">{member.name}</h3>
                 <p>{member.role}</p>
               </div>
             </div>

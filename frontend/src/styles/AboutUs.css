@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Molle:400i|Open+Sans+Condensed:300,700');
+
+
 /* General Container */
 .about-us-container {
   font-family: Arial, sans-serif;
@@ -167,13 +170,13 @@ span[data-scrolldown="true"] {
   justify-content: space-between;
   align-items: center;
   background-color: #f8f9fa;
-  margin: -10% auto 50px auto;
+  margin: -12% auto 50px auto;
   width: 60%;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   position: relative;
   z-index: 3;
-  padding: 0 20px;
+  padding: 2%;
 }
 
 /* Left Section for Text */
@@ -183,7 +186,7 @@ span[data-scrolldown="true"] {
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  padding: 0px 50px 20px 50px;
+  padding: 20px 50px;
   /* Add padding to create spacing */
 }
 
@@ -194,6 +197,7 @@ span[data-scrolldown="true"] {
   font-weight: bold;
   text-align: center;
   position: relative;
+  padding: 1%;
 }
 
 .story-left h2::after {
@@ -208,6 +212,7 @@ span[data-scrolldown="true"] {
 }
 
 .story-content {
+  margin-top: 2.5%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -329,7 +334,7 @@ span[data-scrolldown="true"] {
   color: #ed8936;
 }
 
-.mission-header h2 {
+.aboutus-h2{
   font-size: 2.5rem;
   margin-bottom: 15px;
   font-weight: bold;
@@ -370,7 +375,7 @@ span[data-scrolldown="true"] {
   color: #333;
 }
 
-.mission-card h3 {
+.mission-card-h3 {
   font-size: 1.3rem;
   /* Reduced font size */
   margin-bottom: 12px;
@@ -461,6 +466,7 @@ span[data-scrolldown="true"] {
   overflow: hidden;
   /* Hide the <p> initially */
   transition: transform 0.3s ease;
+  
 }
 
 /* Hover effect on entire feature card */
@@ -481,6 +487,7 @@ span[data-scrolldown="true"] {
   color: #404040;
   margin-bottom: 15px;
   transition: color 0.3s ease;
+  display: inline-block !important; 
 }
 
 .feature-card h3 {
@@ -535,13 +542,14 @@ span[data-scrolldown="true"] {
   background-repeat: no-repeat;
 }
 
-.newsletter-logo svg {
+.newsletter-logo svg{
   width: 50px;
   /* Adjust size of the SVG */
   height: auto;
   /* Maintain aspect ratio */
   margin-bottom: 20px;
   /* Space below the logo */
+  display: inline-block !important; 
 }
 
 
