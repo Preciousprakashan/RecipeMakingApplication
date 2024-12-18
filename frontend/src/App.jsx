@@ -20,6 +20,7 @@ import Recipe from './pages/Recipe';
 import AddRecipe from './pages/AddRecipe';
 import SearchRecipe from './pages/SearchRecipe';
 import AboutUs from './pages/AboutUs';
+import SettingPage from './pages/SettingPage';
 
 function App() {
   const [ingredients, setIngredients] = useState('');
@@ -82,6 +83,7 @@ function App() {
       <Route path="/searchRecipe" element={<SearchRecipe />} />
       <Route path="/add" element={<AddRecipe />} />
       <Route path="/aboutus" element={<AboutUs/>} />
+      <Route path="/settings" element={<SettingPage/>} />
     </Routes>
     </div>
   );
