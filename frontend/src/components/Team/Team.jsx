@@ -31,39 +31,43 @@ const Team = () => {
   }, []);
 
   return (
-    <section className="team-container">
-      {/* Header Section */}
-      <div className="team-header">
-        <h2>
-          Meet the <span>Team</span>
-        </h2>
-        <p>
-        We’re a team of passionate food lovers, chefs, and tech enthusiasts who came together to create a solution for everyone who loves cooking but struggles to find recipes easily. From testing recipes to perfecting our app’s features, we’re here to make your cooking experience seamless and joyful.
+    <>
+      <div>
+        <section className="team-container">
+          {/* Header Section */}
+          <div className="team-header">
+            <h2>
+              Meet the <span>Team</span>
+            </h2>
+            <p>
+              We’re a team of passionate food lovers, chefs, and tech enthusiasts who came together to create a solution for everyone who loves cooking but struggles to find recipes easily. From testing recipes to perfecting our app’s features, we’re here to make your cooking experience seamless and joyful.
 
-        </p>
-      </div>
+            </p>
+          </div>
 
-      {/* Scrollable Team Cards */}
-      <div className="team-cards-container" ref={scrollRef}>
-        <div className="team-cards">
-          {teamMembers.map((member) => (
-            <div key={member.id} className="team-card">
-              <div className="team-image">
-              <img src={member.img} alt={member.name} className="aboutus-member-image" />
+          {/* Scrollable Team Cards */}
+          <div className="team-cards-container" ref={scrollRef}>
+            <div className="team-cards">
+              {teamMembers.map((member) => (
+                <div key={member.id} className="team-card">
+                  <div className="team-image">
+                    <img src={member.img} alt={member.name} className="aboutus-member-image" />
 
-              </div>
-              <div className="team-info">
-                <h3 className="mission-card-h3">{member.name}</h3>
-                <p>{member.role}</p>
-              </div>
+                  </div>
+                  <div className="team-info">
+                    <h3 className="mission-card-h3">{member.name}</h3>
+                    <p>{member.role}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Scroll Toggler */}
-      <div className="scroll-toggler"></div>
-    </section>
+          {/* Scroll Toggler */}
+          <div className="scroll-toggler"></div>
+        </section>
+      </div>
+    </>
   );
 };
 
