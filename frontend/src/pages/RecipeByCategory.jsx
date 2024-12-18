@@ -21,7 +21,7 @@ const RecipeByCategory = () => {
     try{
       const fetchRecipeByCategory = async() => {
         console.log(category)
-        const response = await axios.get('http://localhost:5000/recipe/recipe-by-category',
+        const response = await axios.get('http://localhost:5001/recipe/recipe-by-category',
         {params:{category}});
           console.log(response.data.recipeDetails);
           setRecipes(response.data.recipeDetails);

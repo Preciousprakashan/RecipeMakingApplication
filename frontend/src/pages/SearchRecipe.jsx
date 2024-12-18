@@ -9,7 +9,7 @@ const SearchRecipes = () => {
 
   const handleSearch = async () => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/recipes/search', {
+      const { data } = await axios.post('http://localhost:5001/api/recipes/search', {
         ingredients: ingredients.split(',').map((ing) => ing.trim()),
       });
       setRecipes(data.matchingRecipes);

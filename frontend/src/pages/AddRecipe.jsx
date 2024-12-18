@@ -44,7 +44,7 @@ const AddRecipe = () => {
         e.preventDefault();
 
         try {
-            const { data } = await axios.post('http://localhost:5000/api/recipes/add', recipeData);
+            const { data } = await axios.post('http://localhost:5001/api/recipes/add', recipeData);
             setMessage(data.message);
             setRecipeData({
                 recipe: '',

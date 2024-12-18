@@ -38,7 +38,7 @@ function App() {
 
     try {
       // Make a request to the Node.js backend
-      const response = await axios.get(`http://localhost:5000/recipes`, {
+      const response = await axios.get(`http://localhost:5001/recipes`, {
         params: { ingredients },
       });
 
@@ -56,7 +56,7 @@ function App() {
   const handleViewRecipe = async(id) => {
     console.log(id);
     try{
-      const response = await axios.get('http://localhost:5000/get-recipe-by-id/'+id);
+      const response = await axios.get('http://localhost:5001/get-recipe-by-id/'+id);
       // if(response){
         console.log("hii")
         console.log(response)
