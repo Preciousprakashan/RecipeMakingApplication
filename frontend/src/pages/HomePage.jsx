@@ -23,7 +23,7 @@ const HomePage = () => {
       recipeId = apiId
     console.log(recipeId)
     try{
-        await axios.post('http://localhost:5000/recipe/add-wishlist',
+        await axios.post('http://localhost:5001/recipe/add-wishlist',
           {recipeId},
         // Pass headers as the third argument
         {
@@ -96,7 +96,7 @@ const HomePage = () => {
               
                   const userId = user ? user.user._id : null;
               console.log(userId)
-              const response = await axios.get('http://localhost:5000/recipe/popular-recipies',{
+              const response = await axios.get('http://localhost:5001/recipe/popular-recipies',{
                 params:{userId}
               });
               setRecipes(response.data.recipeDetails)

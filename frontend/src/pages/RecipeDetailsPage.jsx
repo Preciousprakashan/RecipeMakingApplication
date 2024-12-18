@@ -19,7 +19,7 @@ const RecipeDetailsPage = () => {
 
   useEffect(() => {
       const fetchAllRecipies = async() => {
-          const data = await axios.get('http://localhost:5000/recipe/list-recipies');
+          const data = await axios.get('http://localhost:5001/recipe/list-recipies');
           console.log(data.data.recipes);
           setRecipes(data.data.recipes);
       }
@@ -66,7 +66,7 @@ const RecipeDetailsPage = () => {
     //   recipeId = apiId
     // console.log(recipeId)
     try{
-        await axios.post('http://localhost:5000/recipe/add-wishlist',
+        await axios.post('http://localhost:5001/recipe/add-wishlist',
           // Pass headers as the third argument
           {recipeId:id},
           {
@@ -98,7 +98,7 @@ const RecipeDetailsPage = () => {
     const userId = user ? user.user._id : null;
     if(searchType === 'ingredients'){ 
       console.log(ingredients);
-      const data = await axios.get('http://localhost:5000/recipe/search-recipies',{
+      const data = await axios.get('http://localhost:5001/recipe/search-recipies',{
           params:{
             ingredients,
             userId:userId
@@ -110,7 +110,7 @@ const RecipeDetailsPage = () => {
     }
     else{
       console.log(query);
-      const data = await axios.get('http://localhost:5000/recipe/recipe-by-name',{
+      const data = await axios.get('http://localhost:5001/recipe/recipe-by-name',{
         params:{
           title:query,
           userId:userId

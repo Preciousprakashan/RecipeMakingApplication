@@ -17,7 +17,7 @@ const Wishlist = () => {
     const Token = localStorage.getItem('access_token');
     
     const fetchAllRecipies = async() => {
-        const data = await axios.get('http://localhost:5000/recipe/wishlist-recipies',
+        const data = await axios.get('http://localhost:5001/recipe/wishlist-recipies',
             {
             // params:{userId},
             headers: {
@@ -43,7 +43,7 @@ const handleLikeToggle = async(id) => {
     //   recipeId = apiId
     // console.log(recipeId)
     try{
-        const data = await axios.post('http://localhost:5000/recipe/add-wishlist',
+        const data = await axios.post('http://localhost:5001/recipe/add-wishlist',
           {recipeId},
         // Pass headers as the third argument
         {
@@ -55,7 +55,7 @@ const handleLikeToggle = async(id) => {
         } );
         console.log(data)
         if(data){
-          const response = await axios.get('http://localhost:5000/recipe/wishlist-recipies',
+          const response = await axios.get('http://localhost:5001/recipe/wishlist-recipies',
             {
             // params:{userId},
             headers: {
