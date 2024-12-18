@@ -3,6 +3,8 @@ import "../styles/Recipe.css";
 import HeartAnimation from "../components/HeartAnimation/HeartAnimation";
 import TextToSpeech from '../components/TextToSpeech/TextToSpeech';
 import CopyToClipboard from '../components/CopytoClipboard/CopyToClipboard';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Ingredient = ({ name, count, image }) => {
     return (
@@ -23,8 +25,18 @@ const Recipe = () => {
     const [isIngredientsExpanded, setIsIngredientsExpanded] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Check initial screen size
     // Update isMobile state on window resize
-
+    const location = useLocation();
+    console.log(location.state)
+    const id = location.state;
+    const [recipe, setRecipe] = useState({});
     useEffect(() => {
+        //get recipe  by id
+        const getRecipeById = async() => {
+            const response = await axios.get(`http://localhost:5000/recipe/recipe-details/${id}`);
+            console.log(response.data.recipeData.recipe)
+            setRecipe(response.data.recipeData.recipe)
+        }
+        getRecipeById();
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 768);
         };
@@ -65,7 +77,7 @@ const Recipe = () => {
     return (
         <div id="recipe-main-conatiner">
             <div className="recipe-main-conatiner-image">
-                <img src="/assets/1.png" alt="Recipe" />
+                <img src={recipe.image} alt="Recipe" />
 
                 {/* Container for Close button and Favorite Button */}
                 <div className="button-container">
@@ -75,16 +87,17 @@ const Recipe = () => {
             </div>
             <div className="recipe-main-conatiner-description">
                 <div className="recipe-main-description-title">
-                    <p>Healthy Taco Salad</p>
+                    <p>{recipe.title}</p>
                 </div>
 
                 <div className="recipe-main-description">
                     <p>
-                        A refreshing twist on a classic favorite! This Healthy Taco Salad combines
+                        {recipe.descriptions}
+                        {/* A refreshing twist on a classic favorite! This Healthy Taco Salad combines */}
                         {isDescriptionExpanded ? (
                             <>
                                 {""}
-                                crisp greens, juicy tomatoes, creamy avocado, and zesty taco-seasoned protein for a wholesome and flavorful meal. Perfect for lunch or dinner, it's topped with a light dressing to keep things guilt-free. Quick, delicious, and packed with nutrients—this salad will be your go-to for taco night or any time you crave bold flavors!
+                                {/* crisp greens, juicy tomatoes, creamy avocado, and zesty taco-seasoned protein for a wholesome and flavorful meal. Perfect for lunch or dinner, it's topped with a light dressing to keep things guilt-free. Quick, delicious, and packed with nutrients—this salad will be your go-to for taco night or any time you crave bold flavors! */}
                             </>
                         ) : (
                             <span>

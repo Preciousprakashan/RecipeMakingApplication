@@ -12,6 +12,7 @@
 
 .card-collection {
   display: flex;
+  width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
   
@@ -371,22 +372,26 @@ h2 {
 .category-page {
   width: 100%;
   height: 30rem;
-  padding: 0;
+  padding-bottom: 4rem;
   margin: 0;
-  /* background-color: orange; */
+  background-color: #FFAD65;
   border-bottom-left-radius: 40rem;
   border-bottom-right-radius: 40rem;
-
-  margin-bottom: 1rem;
+  
+  margin-bottom: 8rem;
 }
 
 .category-container {
   /* background-color: red; */
   padding: 0;
   margin: 0;
+  padding-top: 5rem;
   display: flex;
-  justify-content: center;
-  margin-top: -150px;
+  width: 100%;
+  height: 80%;
+  flex-direction: column;
+  align-items: center;
+  /* margin-top: -150px; */
   /* display: flex;
     justify-content: center;
     align-items: flex-end; */
@@ -397,35 +402,41 @@ h2 {
 
 }
 
-.box {
-  height: 74%;
-  background: #FFAD65;
+.nav-heading-container {
+  /* height: 74%;
+  width: 100%; */
+  /* background: #FFAD65; */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
   /* margin: 10px; */
   /* padding-top: 70px; */
   /* curved edge at the bottom */
   /* mask: radial-gradient(80% 100% at 50% -78%,#0000 calc(100% - 2px),#000); */
   /* rounded edge at the top */
-  clip-path: ellipse(80% 100% at top);
+  /* clip-path: ellipse(80% 100% at top); */
 }
 
 .category-container img {
 
   border-radius: 40rem;
   /* align-self: start; */
-  height: 20rem;
-  width: 20rem;
-
+  height: 16rem;
+  width: 16rem;
   position: relative;
 
   /* margin: 10rem; */
 }
 
-.category-page .category-name {
-  padding-top: 3rem;
+.nav-heading-container .category-name {
+  padding-top: 6rem;
   display: flex;
   justify-content: center;
 }
 
-.category-page .category-name h1 {
+.nav-heading-container .category-name h1 {
   color: white;
 }

@@ -37,12 +37,12 @@ const userRegistration = async (req, res) => {
 const login = async (req,res) => {
     try {
         const { emailId, password } = req.body;
-        const user = await userModel.findOne({emailId});
-        if(!user) {
+        const userDetails = await userModel.findOne({emailId});
+        if(!userDetails) {
            return res.status(400).send({ message:"User does not exist" });
         }
-
-        bcrypt.compare(password, user.password, (err, result) => {
+        const user = {_id:userDetails.id,role:userDetails.role};
+        bcrypt.compare(password, userDetails.password, (err, result) => {
                 if(err) {
                     return res.status(404).send({ message:"Error comparing passwords" });
                 }else if(result) {

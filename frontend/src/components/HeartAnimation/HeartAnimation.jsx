@@ -3,7 +3,6 @@ import "./HeartAnimation.css";
 
 const HeartAnimation = ({id, liked, onLikeToggle}) => {
   const [checked, setChecked] = useState(false);
-
   return (
       <div className="Boxshadow">
         <input
@@ -12,7 +11,7 @@ const HeartAnimation = ({id, liked, onLikeToggle}) => {
           // key={id}
           className="checkbox"
           checked={liked}
-          onChange={() => onLikeToggle(!liked)}
+          onChange={() => onLikeToggle(id, !liked)}
         />
         
         <label htmlFor={id}>

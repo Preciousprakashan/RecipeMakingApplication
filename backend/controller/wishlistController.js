@@ -9,9 +9,9 @@ const addWishlistRecipe = async(req, res) => {
     try {
         const user = req.user.user;
         const id = req.body.recipeId;
-        let recipeId,recipe;
-        if (Number.isInteger(id)) {
-            // If the ID is an integer, use it as is
+        let recipeId='',recipe=[];
+        if (Number.isInteger(parseInt(id)) && id.length < 10) {
+          // If the provided recipeId is a valid integer, handle external API IDs (integers)
             recipeId = id;
             const responseData = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`,{
       
@@ -37,8 +37,21 @@ const addWishlistRecipe = async(req, res) => {
           };
           } else {
             // Otherwise, convert the string to an ObjectId
-            recipeId = new mongoose.Types.ObjectId(id);  // This works only if it's a valid ObjectId
+            // Convert string recipeId to ObjectId (Mongoose uses this type)
+            console.log(id)
+            console.log('hello')
+  if (typeof id == 'string') {
+    
+    recipeId = new mongoose.Types.ObjectId(id);  // Convert string to ObjectId
+  }
+            // recipeId = new mongoose.Types.ObjectId(id);  // This works only if it's a valid ObjectId
+            console.log(recipeId)
+          
             responseData = await recipeModel.findById(recipeId);
+            if (!responseData) {
+              return res.status(404).send('Recipe not found');
+            }
+            console.log(responseData)
             recipe = {
               userId:user._id,
               savedRecipies:[
@@ -61,13 +74,15 @@ const addWishlistRecipe = async(req, res) => {
           }
         
         const wishlist = await WishlistModel.findOne({userId:user._id.toString()});
+
         if (wishlist){//if user has an entry in wishlist 
           // Assuming recipe._id is the ID of the recipe you want to remove
         const recipeIdToRemove = recipe.savedRecipies[0].recipeId;
 
-        // Check if the recipe exists in the savedRecipies array before attempting to remove it
-        const recipeExists = wishlist.savedRecipies.some(rec => rec.recipeId === recipeIdToRemove);
+        // Checking if the recipe exists in the savedRecipies array before attempting to remove it
+        const recipeExists = wishlist.savedRecipies.some(rec => rec.recipeId == recipeIdToRemove);
         let updatedWishlist;
+        // console.log(recipeExists)
         if (recipeExists) {
           // Recipe exists, now remove it
            updatedWishlist = await WishlistModel.updateOne(
@@ -88,16 +103,21 @@ const addWishlistRecipe = async(req, res) => {
             }
           );
         }
+          // updatedWishlist.savedRecipies.push({isLiked:true});
           
+        
           res.status(200).send({message:"successfull", updatedWishlist});
         }else{
               const wishlistingRecipe = new WishlistModel(recipe);
               const savedData =  await wishlistingRecipe.save();
+               const wishlist = await WishlistModel.find({userId:user._id});
+
               res.status(200).send({message:"successfull", savedData});
         }
 
         
     }catch (err) {
+      console.log(err)
         res.status(404).send({message:"error in saving"});
     }
 } 
@@ -107,12 +127,16 @@ const addWishlistRecipe = async(req, res) => {
 const listWishlistRecipe = async(req, res) => {
   try {
     const user = req.user.user;
-    const recipies = await WishlistModel.find({userId:user._id});
+    console.log(user)
+    let recipies = await WishlistModel.findOne({userId:user._id});
     if(!recipies){
       return res.status(403).send({message:"No saved recipies"});
     }
+           
+    console.log(recipies);
     res.status(200).send({message:"successfull",recipies});
   }catch(err) {
+    console.log(err);
     res.status(404).send({message:"error in getting recipies"});
   }
 }

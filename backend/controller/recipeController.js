@@ -1,5 +1,6 @@
 
 const RecipeModel = require('../models/recipeData')
+const Wishlist = require('../models/wishlistData');
 const axios = require('axios');
 //for admin
 // add recipe
@@ -13,7 +14,7 @@ const addRecipe = async (req, res) => {
         !recipeData.descriptions ||
         !recipeData.instructions ||
         !recipeData.ingredients ||
-        !recipeData.cookingTime ||
+        !recipeData.readyInMinutes ||
         !recipeData.servings
       ) {
         return res.status(400).json({ error: 'All fields are required.' });
@@ -50,9 +51,23 @@ const editRecipe = async(req, res) => {
 
 const listRecipies = async (req, res) => {
   try {
-      const recipies = await RecipeModel.find();
-      res.status(200).send({message:"successfull", recipies});
+      const recipes = await RecipeModel.find();
+      const recipeFromApi = await axios.get(`https://api.spoonacular.com/recipes/random`,{
+      
+        params: {
+          number:2,
+          apiKey: process.env.SPOONACULAR_API_KEY
+        },
+    });
+    // Normalize the DB recipes (MongoDB _id to id)
+    const normalizedDbRecipes = recipes.map(recipe => ({
+      id: recipe._id.toString(),  // Ensure the _id is converted to `id`
+      ...recipe.toObject(),  // Spread the rest of the fields
+    }));
+    normalizedDbRecipes.push(...recipeFromApi.data.recipes);
+      res.status(200).send({message:"successfull", recipes:normalizedDbRecipes });
   }catch(err) {
+    console.log(err)
       res.status(404).send({message:"Error in getting recipies"});
   }
 }
@@ -99,7 +114,7 @@ const getRecipeById = async(req, res) => {
 // get recipies by incredients
 //???get recipies closer to avaibale ingredients
 const getRecipeByIngredients = async (req, res) => {
-    const { ingredients } = req.body; // Array of ingredient names
+    const { ingredients } = req.query; // Array of ingredient names
     
     try {
      
@@ -119,6 +134,7 @@ const getRecipeByIngredients = async (req, res) => {
           $project: {
             title: 1,
             ingredients: 1,
+            image:1,
             usedIngredients: {
               $filter: {
                 input: "$ingredients",
@@ -189,13 +205,14 @@ const getRecipeByIngredients = async (req, res) => {
         {
           params: {
             ingredients: ingredients_,
-            number: 10, // Number of recipes to return
+            number: 4, // Number of recipes to return
             apiKey: process.env.SPOONACULAR_API_KEY,
           },
         }
       );
       const recipeFromAPI = response.data;
-      res.json({ recipes, recipeFromAPI });
+      recipes.push(...recipeFromAPI);
+      res.json({ message:'successfull', recipes });
     } catch (error) {
       res.status(500).json({ error: 'Error searching for recipes' });
     }
@@ -206,13 +223,26 @@ const getRecipeByIngredients = async (req, res) => {
 
 const getRecipeByCategory = async(req, res) => {
   try {
-      const category = req.body.category;
-      const recipeDetails = await RecipeModel.find({category :category});
+      const category = req.query.category;
+      const recipeDetails = await RecipeModel.find({category :{ $elemMatch: { $regex: new RegExp('^' + category + '$', 'i') }}});
+      // const recipesFromApi = await axios.get(
+      //   `https://api.spoonacular.com/recipes/complexSearch/`,
+      //   {
+      //     params: {
+      //       type:category,
+      //       addRecipeInformation:true,
+      //       number: 5, // Number of recipes to return
+      //       apiKey: process.env.SPOONACULAR_API_KEY,
+      //     },
+      //   }
+      // );
       if(!recipeDetails) {
-        return res.status(403).send({message:"No recipies available"})
+        return res.status(403).send({message:"No recipies available"});
       }
-      res.status(200).send({message:"successfull", recipeDetails});
+      // recipeDetails.push(...recipesFromApi.data.results);
+      res.status(200).send({message:"successfull", recipeDetails });
   }catch(err) {
+    console.log(err)
       res.status(404).send({message:"error in getting recipies"});
   }
 }
@@ -221,12 +251,37 @@ const getRecipeByCategory = async(req, res) => {
 
 const getRecipesPopular = async(req, res) => {
   try {
+    const userId = req.query.userId;
+    console.log(userId)
+      if(userId){
+          let recipeDetails = await RecipeModel.find({veryPopular : true});
+          if(!recipeDetails) {
+            return res.status(403).send({message:"No recipies available"});
+          }
+          // For each recipe, check if it is liked by the user
+          const recipesWithLikeStatus = await Promise.all(
+            recipeDetails.map(async (recipe) => {
+                // Check if the recipe is in the wishlist
+                console.log(recipe)
+                const isLiked = await Wishlist.exists({ userId, savedRecipies: { $elemMatch: { recipeId: recipe._id } } });// Match recipeId in the array of objects
+                return {
+                    ...recipe.toObject(),
+                    isLiked: !!isLiked, // Add a boolean flag to show if it's liked
+                };
+            })
+        );
+          recipeDetails = recipesWithLikeStatus;
+          console.log(recipeDetails)
+          return res.status(200).send({message:"successfull", recipeDetails});
+  }else{
       const recipeDetails = await RecipeModel.find({veryPopular : true});
       if(!recipeDetails) {
         return res.status(403).send({message:"No recipies available"});
       }
-      res.status(200).send({message:"successfull", recipeDetails});
+      return res.status(200).send({message:"successfull", recipeDetails});
+  }
   }catch(err) {
+    console.log(err)
       res.status(404).send({message:"error in getting recipies"});
   }
 }
@@ -235,12 +290,36 @@ const getRecipesPopular = async(req, res) => {
 
 const getRecipeByName = async(req, res) => {
   try {
-      
-      const recipeDetails = await RecipeModel.find({title : req.body.title});
+      // const userId = req.user.user._id;
+      const {userId, title} = req.query;
+      if(userId){
+      let recipeDetails = await RecipeModel.find({title : { $regex: new RegExp('.*' + title + '.*', 'i') }});
       if(!recipeDetails) {
         return res.status(403).send({message:"No recipies available"});
       }
-      res.status(200).send({message:"successfull", recipeDetails});
+      console.log(recipeDetails)
+      // For each recipe, check if it is liked by the user
+      const recipesWithLikeStatus = await Promise.all(
+        recipeDetails.map(async (recipe) => {
+            // Check if the recipe is in the wishlist
+            console.log(recipe)
+            const isLiked = await Wishlist.exists({ userId, savedRecipies: { $elemMatch: { recipeId: recipe._id } } });// Match recipeId in the array of objects
+            return {
+                ...recipe.toObject(),
+                isLiked: !!isLiked, // Add a boolean flag to show if it's liked
+            };
+        })
+    );
+      recipeDetails = recipesWithLikeStatus;
+      console.log(recipeDetails)
+      return res.status(200).send({message:"successfull", recipeDetails});
+  }else {
+    const recipeDetails = await RecipeModel.find({title : { $regex: new RegExp('.*' + title + '.*', 'i') }});
+    if(!recipeDetails) {
+      return res.status(403).send({message:"No recipies available"});
+    }
+    return res.status(200).send({message:"successfull", recipeDetails});
+  }
   }catch(err) {
       res.status(404).send({message:"error in getting recipies"});
   }
