@@ -29,10 +29,16 @@ const Recipe = () => {
     console.log(location.state)
     const id = location.state;
     const [recipe, setRecipe] = useState({});
+    const [ingredients, setIngredients] = useState([]); 
+    const [instructions, setInstructions] = useState([]);
+    const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+    
     useEffect(() => {
         //get recipe  by id
         const getRecipeById = async() => {
-            const response = await axios.get(`http://localhost:5000/recipe/recipe-details/${id}`);
+            const response = await axios.get(`${baseUrl}/recipe/recipe-details/${id}`);
+            setIngredients(response.data.recipeData.recipe.ingredients)
+            setInstructions(response.data.recipeData.recipe.analyzedInstructions)
             console.log(response.data.recipeData.recipe)
             setRecipe(response.data.recipeData.recipe)
         }
@@ -53,22 +59,22 @@ const Recipe = () => {
         setIsIngredientsExpanded(!isIngredientsExpanded);
     };
 
-    const ingredients = [
-        { name: 'Tortilla Chips', count: 2, image: 'trotilla-chips.jpg' },
-        { name: 'Avocado', count: 1, image: 'Avocado.jpg' },
-        { name: 'Red Cabbage', count: 1, image: 'RedCabbage.jpg' },
-        { name: 'Peanuts', count: 1, image: 'peanut.jpg' },
-        { name: 'Red Onions', count: 1, image: 'Red Onions.jpg' },
-        { name: 'Ground Beef or Chicken', count: 200, image: 'ground_beef.jpg' },
-        { name: 'Lettuce', count: 1, image: 'Lettuce.jpg' },
-        { name: 'Tomatoes', count: 2, image: 'tomatos.jpg' },
-        { name: 'Cheddar Cheese', count: 50, image: 'CheddarCheese.jpg' },
-        { name: 'Sour Cream', count: 1, image: 'SourCream.jpg' },
-        { name: 'Lime', count: 1, image: 'Lime.jpg' },
-        { name: 'Taco Seasoning', count: 1, image: 'Taco_Seasoning.jpg' },
-        { name: 'Olives', count: 1, image: 'Olives.jpg' },
-        { name: 'Cilantro', count: 1, image: 'Cilantro.jpg' }
-    ];
+    // [
+    //     { name: 'Tortilla Chips', count: 2, image: 'trotilla-chips.jpg' },
+    //     { name: 'Avocado', count: 1, image: 'Avocado.jpg' },
+    //     { name: 'Red Cabbage', count: 1, image: 'RedCabbage.jpg' },
+    //     { name: 'Peanuts', count: 1, image: 'peanut.jpg' },
+    //     { name: 'Red Onions', count: 1, image: 'Red Onions.jpg' },
+    //     { name: 'Ground Beef or Chicken', count: 200, image: 'ground_beef.jpg' },
+    //     { name: 'Lettuce', count: 1, image: 'Lettuce.jpg' },
+    //     { name: 'Tomatoes', count: 2, image: 'tomatos.jpg' },
+    //     { name: 'Cheddar Cheese', count: 50, image: 'CheddarCheese.jpg' },
+    //     { name: 'Sour Cream', count: 1, image: 'SourCream.jpg' },
+    //     { name: 'Lime', count: 1, image: 'Lime.jpg' },
+    //     { name: 'Taco Seasoning', count: 1, image: 'Taco_Seasoning.jpg' },
+    //     { name: 'Olives', count: 1, image: 'Olives.jpg' },
+    //     { name: 'Cilantro', count: 1, image: 'Cilantro.jpg' }
+    // ];
 
     const columns = 3;
 
@@ -114,51 +120,51 @@ const Recipe = () => {
                         )}
                     </p>
                 </div>
-                <div className="recipe-main-description-spec">
-                    <div className="grid">
+                {/* <div className="recipe-main-description-spec">
+                    <div className="grid"> */}
 
                         {/* Carbs */}
-                        <div className="flex gap-4">
-                            <div className="recipe-box-ds">
-                                <i className="fas fa-bread-slice"></i> {/* Icon for Carbs */}
-                            </div>
+                        {/* <div className="flex gap-4">
+                            <div className="recipe-box-ds"> */}
+                                {/* <i className="fas fa-bread-slice"></i> Icon for Carbs */}
+                            {/* </div>
                             <span>100g Carbs</span>
-                        </div>
+                        </div> */}
 
                         {/* Protein */}
-                        <div className="flex gap-4">
+                        {/* <div className="flex gap-4">
                             <div className="recipe-box-ds">
                                 <i className="fas fa-dumbbell"></i> {/* Icon for Protein */}
-                            </div>
+                            {/* </div>
                             <span>20g Protein</span>
-                        </div>
+                        </div> */} 
 
                         {/* Calories */}
-                        <div className="flex gap-4">
+                        {/* <div className="flex gap-4">
                             <div className="recipe-box-ds">
                                 <i className="fas fa-fire"></i> {/* Icon for Calories */}
-                            </div>
+                            {/* </div>
                             <span>20g Cal</span>
-                        </div>
+                        </div> */}
 
                         {/* Fats */}
-                        <div className="flex gap-4">
-                            <div className="recipe-box-ds">
-                                <i className="fas fa-pizza-slice"></i> {/* Icon for Fats */}
-                            </div>
+                        {/* <div className="flex gap-4">
+                            <div className="recipe-box-ds"> */}
+                                {/* <i className="fas fa-pizza-slice"></i> Icon for Fats */}
+                            {/* </div>
                             <span>10g Fats</span>
-                        </div>
+                        </div> */}
 
                         {/* Fiber */}
-                        <div className="flex gap-4">
-                            <div className="recipe-box-ds">
-                                <i className="fas fa-leaf"></i> {/* Icon for Fiber */}
-                            </div>
-                            <span>5g Fiber</span>
-                        </div>
+                        {/* <div className="flex gap-4"> */}
+                            {/* <div className="recipe-box-ds"> */}
+                                {/* <i className="fas fa-leaf"></i> Icon for Fiber */}
+                            {/* </div> */}
+                            {/* <span>5g Fiber</span> */}
+                        {/* </div> */}
 
-                    </div>
-                </div>
+                    {/* </div> */}
+                {/* </div> */}
                 {/* Ingredients Section */}
                 <div className='recipe-main-description-ingredients'>
                     <div className='recipe-main-description-ingredients-title'>
@@ -166,11 +172,11 @@ const Recipe = () => {
                     </div>
 
                     <div className="container-recipe">
-                        {ingredientsToShow.map((ingredient, index) => (
+                        {ingredients.map((ingredient, index) => (
                             <Ingredient
                                 key={index}
                                 name={ingredient.name}
-                                count={ingredient.count}
+                                count={ingredient.amount}
                                 image={ingredient.image}
                             />
                         ))}
@@ -187,11 +193,24 @@ const Recipe = () => {
                 <div className='recipe-main-description-ingredients-title'>
                     Instructions
                 </div>
+                {recipe.instructions}
                 <TextToSpeech targetSelector="#instructions" />
 
-                <p className="typography-instructions-heading">For main dish</p>
                 <div className="recipe-main-description-instructions" id="instructions">
-                    <p className="typography-instructions-subh">Cook the Meat:</p>
+                {/* if detailed instructions are available for the recipe */}
+                { instructions &&
+                    <>{console.log(instructions)}
+                        <p className="typography-instructions-heading">Step By Step Instructions</p>
+                        {instructions.map((instruction, index) => {
+                            return <ol key={index} >
+                             <li><b>Step{instruction.number}.</b></li>
+                             <li>{instruction.step}</li>
+                             
+                         </ol>
+                        })}
+                    </>
+                }
+                    {/* <p className="typography-instructions-subh">Cook the Meat:</p>
                     <ul>
                         <li>In a skillet, cook the ground turkey or beef over medium heat until fully browned.</li>
                         <li>
@@ -220,7 +239,7 @@ const Recipe = () => {
                         <li>
                             Serve with lime wedges, Greek yogurt or sour cream, and salsa or your preferred dressing.
                         </li>
-                    </ul>
+                    </ul> */}
                 </div>
             </div>
         </div>

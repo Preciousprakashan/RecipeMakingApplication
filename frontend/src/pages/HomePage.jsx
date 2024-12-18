@@ -5,13 +5,13 @@ import Cards from '../components/Card/Cards'
 import EditorsChoiceCard from '../components/EditorsChoiceCard/EditorsChoiceCard'
 import Footer from '../components/Foooter/Footer'
 import '../styles/style.css'
-import { use } from 'react'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 const HomePage = () => {
   // const [likes, setLikes] = useState([]);
+  const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const handleLikeToggle = async(id,apiId, currentLikeStatus) => {
-    const Token = localStorage.getItem('access_token');
+    const Token = localStorage.getItem('accessToken');
     if(!Token){
       alert('Login First to like recipies');
       return
@@ -23,7 +23,7 @@ const HomePage = () => {
       recipeId = apiId
     console.log(recipeId)
     try{
-        await axios.post('http://localhost:5000/recipe/add-wishlist',
+        await axios.post(`${baseUrl}/add-wishlist`,
           {recipeId},
         // Pass headers as the third argument
         {
@@ -89,14 +89,13 @@ const HomePage = () => {
   useEffect( () => {
       try {
         const getPopularRecipes = async () => {
-              const token = localStorage.getItem('access_token');
+              const token = localStorage.getItem('accessToken');
                   let user = "";
                   if (token) 
                      user = jwtDecode(token);
-              
                   const userId = user ? user.user._id : null;
               console.log(userId)
-              const response = await axios.get('http://localhost:5000/recipe/popular-recipies',{
+              const response = await axios.get(`${baseUrl}/popular-recipies`,{
                 params:{userId}
               });
               setRecipes(response.data.recipeDetails)

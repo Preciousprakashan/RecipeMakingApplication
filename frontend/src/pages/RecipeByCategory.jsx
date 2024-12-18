@@ -16,12 +16,13 @@ const RecipeByCategory = () => {
   const [category, setCategory] = useState(location.state.name);
   const [image, setImage] = useState(location.state.image);
   const [recipes, setRecipes] = useState([]);
-  // console.log(location.state)
+  const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+
   useEffect(() => {
     try{
       const fetchRecipeByCategory = async() => {
         console.log(category)
-        const response = await axios.get('http://localhost:5000/recipe/recipe-by-category',
+        const response = await axios.get(`${baseUrl}/recipe-by-category`,
         {params:{category}});
           console.log(response.data.recipeDetails);
           setRecipes(response.data.recipeDetails);

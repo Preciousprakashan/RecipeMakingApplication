@@ -13,11 +13,12 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 const Wishlist = () => {
     const [recipes, setRecipes] = useState([]);
+    const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   useEffect(() => {
-    const Token = localStorage.getItem('access_token');
+    const Token = localStorage.getItem('accessToken');
     
     const fetchAllRecipies = async() => {
-        const data = await axios.get('http://localhost:5000/recipe/wishlist-recipies',
+        const data = await axios.get(`${baseUrl}/wishlist-recipies`,
             {
             // params:{userId},
             headers: {
@@ -32,7 +33,7 @@ const Wishlist = () => {
 },[]);
 
 const handleLikeToggle = async(id) => {
-  const Token = localStorage.getItem('access_token');
+  const Token = localStorage.getItem('accessToken');
     if(!Token){
       alert('Login First to like recipies');
       return
@@ -43,7 +44,7 @@ const handleLikeToggle = async(id) => {
     //   recipeId = apiId
     // console.log(recipeId)
     try{
-        const data = await axios.post('http://localhost:5000/recipe/add-wishlist',
+        const data = await axios.post(`${baseUrl}/add-wishlist`,
           {recipeId},
         // Pass headers as the third argument
         {
@@ -55,7 +56,7 @@ const handleLikeToggle = async(id) => {
         } );
         console.log(data)
         if(data){
-          const response = await axios.get('http://localhost:5000/recipe/wishlist-recipies',
+          const response = await axios.get(`${baseUrl}/wishlist-recipies`,
             {
             // params:{userId},
             headers: {

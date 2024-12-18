@@ -1,16 +1,44 @@
 import React, { useState } from 'react';
 import { TextField, Button, Checkbox, Typography, Box, Grid, Link } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Loginpage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-
-  const handleLogin = (e) => {
+  const [error, setError] = useState('');
+  const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const navigate = useNavigate();
+  const handleLogin = async(e) => {
     e.preventDefault();
-    console.log('Email:', email, 'Password:', password, 'Remember Me:', rememberMe);
+    console.log('Email:', email, 'Password:', password);
+    try{
+
+      const response = await axios.post(`${baseUrl}/login`,{
+        emailId:email,
+        password
+      });
+      // If login is successful, save the token and navigate
+      if (response.data.access_token) {
+        const access_token = response.data.access_token;
+        localStorage.clear();  // Clears all items in localStorage
+        localStorage.setItem('accessToken', encodeURIComponent(String(access_token)));
+        alert("Login Successfull")
+        
+        console.log(response.data.role)
+        if(response.data.role === 'admin') {
+            navigate('/admin-page'); // Redirect to protected route after login
+        } else {
+            navigate('/')
+        }
+      }
+      localStorage.setItem('access_token',response.access_token);
+
+    } catch (err) {
+      setError('Invalid credentials. Please try again.');
+    }
+
   };
 
   return (
@@ -91,13 +119,14 @@ const Loginpage = () => {
           >
             LOGIN
           </Typography>
-
+          {error && <p style={{ color: 'red' }}>{error}</p>}
           <TextField
             label="Email"
             variant="outlined"
             fullWidth
             margin="normal"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
             sx={{
               backgroundColor: '#E7E4AB',
@@ -112,6 +141,7 @@ const Loginpage = () => {
             fullWidth
             margin="normal"
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
             sx={{
               backgroundColor: '#E7E4AB',
@@ -127,7 +157,7 @@ const Loginpage = () => {
               mt: 2,
             }}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Checkbox
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
@@ -136,7 +166,7 @@ const Loginpage = () => {
               <Typography sx={{ ml: 1, fontSize: '14px', color: '#555' }}>
                 Remember me
               </Typography>
-            </Box>
+            </Box> */}
             <Link
               href="#"
               underline="none"

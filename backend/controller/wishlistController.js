@@ -9,8 +9,11 @@ const addWishlistRecipe = async(req, res) => {
     try {
         const user = req.user.user;
         const id = req.body.recipeId;
+        console.log(id);
         let recipeId='',recipe=[];
-        if (Number.isInteger(parseInt(id)) && id.length < 10) {
+        // console.log(id.toString().length);
+        // console.log(Number.isInteger(parseInt(id)))
+        if (Number.isInteger(parseInt(id)) && (id.toString().length < 10)) {
           // If the provided recipeId is a valid integer, handle external API IDs (integers)
             recipeId = id;
             const responseData = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`,{
@@ -35,14 +38,16 @@ const addWishlistRecipe = async(req, res) => {
             ]
 
           };
+          // console.log(recipe)
           } else {
             // Otherwise, convert the string to an ObjectId
             // Convert string recipeId to ObjectId (Mongoose uses this type)
             
-  if (typeof id == 'string') {
-    
-    recipeId = new mongoose.Types.ObjectId(id);  // Convert string to ObjectId
-  }
+            if (typeof id == 'string') {
+              
+              recipeId = new mongoose.Types.ObjectId(id);  // Convert string to ObjectId
+            }
+            console.log(recipeId)
           
             responseData = await recipeModel.findById(recipeId);
             if (!responseData) {
@@ -112,6 +117,7 @@ const addWishlistRecipe = async(req, res) => {
 
         
     }catch (err) {
+      console.log(err);
         res.status(404).send({message:"error in saving"});
     }
 } 

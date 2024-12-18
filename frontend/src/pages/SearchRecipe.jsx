@@ -6,10 +6,10 @@ const SearchRecipes = () => {
   const [ingredients, setIngredients] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
-
+  const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const handleSearch = async () => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/recipes/search', {
+      const { data } = await axios.post(`${baseUrl}/search-recipies`,{ //'http://localhost:5000/api/recipes/search', {
         ingredients: ingredients.split(',').map((ing) => ing.trim()),
       });
       setRecipes(data.matchingRecipes);

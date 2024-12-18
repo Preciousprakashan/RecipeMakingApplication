@@ -10,6 +10,12 @@ const NavBar = () => {
     setIsMenuOpen(prev => !prev);
   }
   const navigate = useNavigate();
+//   const handleLogout = () => {
+//     localStorage.removeItem('access_token');  // Clear the token
+//     localStorage.removeItem('user');  // Optionally remove user info
+//     setIsLoggedIn(false);  // Update the state to reflect that user is logged out
+//     history.push('/login');  // Redirect to login page
+// };
   return (
     <div className='outer-nav'>
       {/* <div className='cap'></div> */}
