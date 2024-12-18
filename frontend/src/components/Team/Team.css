@@ -1,0 +1,114 @@
+/* General Team Section */
+.team-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 5%;
+    background-color: #f9f9f9;
+    color: #333;
+    box-sizing: border-box;
+  }
+  
+  .team-header {
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+  
+  .team-header h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .team-header h2 span {
+    color: #ed8936;
+  }
+  
+  .team-header p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #666;
+  }
+  
+  /* Scrollable Cards Container */
+  .team-cards-container {
+    position: relative;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 1rem 0;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .team-cards-container::-webkit-scrollbar {
+    margin-top: 50px;
+    height: 2px;
+  }
+  
+  .team-cards-container::-webkit-scrollbar-thumb {
+    background-color: #ed8936;
+    border-radius: 10px;
+  }
+  
+  .team-cards {
+    display: inline-flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  /* Individual Team Card */
+  .team-card {
+    flex: 0 0 auto;
+    width: 250px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    scroll-snap-align: center;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .team-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    background-color: rgba(237, 137, 54, 0.25); /* 50% transparency */
+  }
+  
+  .team-card:hover::before {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 60%;
+    height: 4px;
+    background-color: #ed8936;
+    transform: translateX(-50%);
+    border-radius: 2px;
+  }
+  
+  .team-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+  
+  .team-info h3 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+  }
+  
+  .team-info p {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+
+
+  .aboutus-member-image {
+    display: inline-block !important; /* or inline-flex / block / none, depending on what you want */
+  }
+  

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Box, Grid, Link } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
-import { Link as RouterLink } from 'react-router-dom'; // Import React Router Link
+import { Link as RouterLink } from 'react-router-dom';
 
 const SignUppage = () => {
   const [username, setUsername] = useState('');
@@ -18,23 +18,21 @@ const SignUppage = () => {
     <Grid container sx={{ height: '100vh', width: '100%' }}>
       {/* Left Side - Image Section */}
       <Grid
-      
         item
         xs={12}
         md={6}
         sx={{
           backgroundColor: '#ebe8c0',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           position: 'relative',
         }}
       >
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: { xs: '50%', md: 'calc(90%)' },
-            transform: 'translate(-50%, -50%)',
-            width: '320px',
-            height: '320px',
+            width: { xs: '200px', sm: '300px', md: '320px' },
+            height: { xs: '200px', sm: '300px', md: '320px' },
             backgroundColor: '#fff',
             borderRadius: '50%',
             display: 'flex',
@@ -45,12 +43,13 @@ const SignUppage = () => {
           }}
         >
           <img
-            src="/assets/image1.svg" // Replace with actual image URL
+            src="/assets/image1.svg"
             alt="Salad"
             style={{
               width: '100%',
               height: '100%',
               objectFit: 'cover',
+              borderRadius: '50%',
             }}
           />
         </Box>
@@ -66,17 +65,18 @@ const SignUppage = () => {
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#f9f8e9',
+          padding: { xs: '2rem', md: '0' },
         }}
       >
         <Box
           component="form"
           onSubmit={handleSignUp}
           sx={{
-            width: '80%',
-            maxWidth: 400,
+            width: { xs: '100%', sm: '90%', md: '80%' },
+            maxWidth: 446,
             padding: '2rem',
             backgroundColor: '#ebe8c0',
-            borderRadius: '16px',
+            borderRadius: '18px',
             textAlign: 'center',
             boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
           }}
@@ -101,7 +101,7 @@ const SignUppage = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             sx={{
-              backgroundColor: '#ffffff',
+              backgroundColor: '#E7E4AB',
               borderRadius: '8px',
             }}
           />
@@ -114,7 +114,7 @@ const SignUppage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             sx={{
-              backgroundColor: '#ffffff',
+              backgroundColor: '#E7E4AB',
               borderRadius: '8px',
             }}
           />
@@ -128,7 +128,7 @@ const SignUppage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             sx={{
-              backgroundColor: '#ffffff',
+              backgroundColor: '#E7E4AB',
               borderRadius: '8px',
             }}
           />
@@ -142,7 +142,7 @@ const SignUppage = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             sx={{
-              backgroundColor: '#ffffff',
+              backgroundColor: '#E7E4AB',
               borderRadius: '8px',
             }}
           />
@@ -187,9 +187,20 @@ const SignUppage = () => {
             Sign in with Google
           </Button>
 
-          <Typography sx={{ fontSize: '14px', color: '#666', mt: 2 }}>
+          <Typography
+            sx={{
+              fontSize: '14px',
+              color: '#666',
+              mt: 2,
+            }}
+          >
             Already have an account?{' '}
-            <Link component={RouterLink} to="/login" underline="none" sx={{ color: '#1976d2', fontWeight: 'bold' }}>
+            <Link
+              component={RouterLink}
+              to="/login"
+              underline="none"
+              sx={{ color: '#1976d2', fontWeight: 'bold' }}
+            >
               Login for free!
             </Link>
           </Typography>
@@ -200,4 +211,5 @@ const SignUppage = () => {
 };
 
 export default SignUppage;
+
 
