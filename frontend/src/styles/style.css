@@ -343,14 +343,83 @@ h2 {
 
 
 
+
+
+
+
+
 /*  Wishlist Page */
 
-.wishlist-page {
-  width: 100%;
-  /* height: 28rem; */
-  padding: 0;
-  margin: 0;
+/* General container styles */
+.wishlist-container {
+  margin-top: 15px;
+  font-family: Arial, sans-serif; /* Set font */
+  line-height: 1.6; /* Line height for readability */
+  color: #333; /* Text color */
+}
 
+.wishlist-page {
+  padding-top: 125px;
+  width: 100%;
+  height: auto;
+}
+
+/* Header Title */
+.wishlist h1 {
+  font-size: 3.5rem; /* Large font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 20px; /* Margin below */
+  letter-spacing: 2px; /* Space between letters */
+  animation: fadeInDown 1s ease-in-out; /* Animation */
+  text-align: center; /* Center the heading */
+}
+
+/* Responsive header for smaller devices */
+@media (max-width: 768px) {
+  .wishlist h1 {
+    font-size: 2.5rem; /* Reduce font size for smaller screens */
+    letter-spacing: 1px; /* Reduce spacing */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist h1 {
+    font-size: 2rem; /* Reduce font size further for mobile */
+  }
+}
+
+.wishlist-h2 {
+  text-align: center;
+  font-size: 2.5rem; /* Large font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 20px; /* Margin below */
+  color: #ed8936;
+  position: relative; /* For positioning the pseudo-element */
+}
+
+.wishlist-h2::after {
+  content: ''; 
+  position: absolute;
+  left: 50%; 
+  bottom: -3px; /* Distance from the text */
+  transform: translateX(-50%); /* Center it horizontally */
+  width: 30%; /* Width of the underline (adjust as needed) */
+  height: 4px; /* Thickness of the underline */
+  background-color: #ed8936; /* Color of the underline */
+  border-radius: 2px; /* Rounds the edges of the underline */
+}
+
+/* Responsive font size for H2 */
+@media (max-width: 768px) {
+  .wishlist-h2 {
+    font-size: 2rem; /* Adjust font size for tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-h2 {
+    font-size: 1.8rem; /* Smaller font size for mobile */
+  }
 }
 
 .wishlist-page .wishlist {
@@ -360,6 +429,68 @@ h2 {
   flex-direction: column;
   padding: 4rem;
 }
+
+/* Adjust padding for smaller devices */
+@media (max-width: 768px) {
+  .wishlist-page .wishlist {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-page .wishlist {
+    padding: 1rem;
+  }
+}
+
+/* Default style for the icon */
+.wishlist-icon {
+  transition: color 0.3s ease; /* Smooth transition for color change */
+  font-size: 3.8rem; 
+  color: #e36a6a;
+  animation: fadeInDown 1.5s ease-in-out; /* Animation */ 
+}
+
+/* Hover effect to fill the color */
+.wishlist-icon:hover {
+  color: #ff0400; /* Change to the color you desire on hover */
+}
+
+/* Make the icon responsive */
+@media (max-width: 768px) {
+  .wishlist-icon {
+    font-size: 3rem; /* Slightly smaller icon size for tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-icon {
+    font-size: 2.5rem; /* Smaller icon size for mobile */
+  }
+}
+
+/* Responsive container layout */
+.wishlist-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .wishlist-container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-container {
+    padding: 0 10px;
+  }
+}
+
+
+
 
 
 
