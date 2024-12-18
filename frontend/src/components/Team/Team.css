@@ -1,114 +1,142 @@
-/* General Team Section */
+/* General Team Section Styles */
+
+/* Main container for the team section */
 .team-container {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem 5%;
-    background-color: #f9f9f9;
-    color: #333;
-    box-sizing: border-box;
-  }
-  
-  .team-header {
-    max-width: 600px;
-    margin-bottom: 2rem;
-  }
-  
-  .team-header h2 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .team-header h2 span {
-    color: #ed8936;
-  }
-  
-  .team-header p {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #666;
-  }
-  
-  /* Scrollable Cards Container */
-  .team-cards-container {
-    position: relative;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 1rem 0;
-    scroll-snap-type: x mandatory;
-  }
-  
-  .team-cards-container::-webkit-scrollbar {
-    margin-top: 50px;
-    height: 2px;
-  }
-  
-  .team-cards-container::-webkit-scrollbar-thumb {
-    background-color: #ed8936;
-    border-radius: 10px;
-  }
-  
-  .team-cards {
-    display: inline-flex;
-    gap: 1rem;
-    justify-content: center;
-  }
-  
-  /* Individual Team Card */
-  .team-card {
-    flex: 0 0 auto;
-    width: 250px;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: center;
-    padding: 1.5rem 1rem;
-    box-sizing: border-box;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    scroll-snap-align: center;
-    position: relative;
-    cursor: pointer;
-  }
-  
-  .team-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
-    background-color: rgba(237, 137, 54, 0.25); /* 50% transparency */
-  }
-  
-  .team-card:hover::before {
-    content: "";
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    width: 60%;
-    height: 4px;
-    background-color: #ed8936;
-    transform: translateX(-50%);
-    border-radius: 2px;
-  }
-  
-  .team-image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 1rem;
-  }
-  
-  .team-info h3 {
-    font-size: 1.2rem;
-    margin: 0.5rem 0;
-  }
-  
-  .team-info p {
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
+  display: flex; /* Allows for flexible layout */
+  flex-direction: column; /* Aligns children vertically */
+  padding: 2rem 5%; /* Space around the content */
+  background-color: #f9f9f9; /* Light background color */
+  color: #333; /* Text color */
+  box-sizing: border-box; /* Ensures padding is included in width/height */
+  margin: 0 auto; /* Centers the container horizontally */
+  max-width: fit-content; /* Container fits to its content size */
+}
 
+/* Team Section Header Styles */
 
-  .aboutus-member-image {
-    display: inline-block !important; /* or inline-flex / block / none, depending on what you want */
-  }
-  
+/* Header section for team title and description */
+.team-header {
+  max-width: 600px; /* Limits width for better readability */
+  margin-bottom: 2rem; /* Space below the header */
+}
+
+/* Main heading of the team section */
+.team-header h2 {
+  font-size: 2.5rem; /* Large heading size */
+  font-weight: bold; /* Bold font style */
+  margin-bottom: 0.5rem; /* Space below the heading */
+}
+
+/* Highlighted part of the team header */
+.team-header h2 span {
+  color: #ed8936; /* Highlight color */
+}
+
+/* Subheading or description text for the team section */
+.team-header p {
+  font-size: 1rem; /* Standard font size */
+  line-height: 1.5; /* Improves readability */
+  color: #666; /* Light gray color for subtle appearance */
+}
+
+/* Scrollable Team Cards Section */
+
+/* Container for the scrollable cards */
+.team-cards-container {
+  position: relative; /* Ensures child elements are positioned relative to this container */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Prevents line breaks for horizontal scrolling */
+  padding: 1rem 0; /* Padding above and below the cards */
+  scroll-snap-type: x mandatory; /* Forces snapping behavior for horizontal scroll */
+}
+
+/* Custom scrollbar styles for better UI */
+.team-cards-container::-webkit-scrollbar {
+  margin-top: 50px; /* Positions scrollbar away from content */
+  height: 2px; /* Sets scrollbar thickness */
+}
+
+/* Custom scrollbar thumb style */
+.team-cards-container::-webkit-scrollbar-thumb {
+  background-color: #ed8936; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for thumb */
+}
+
+/* Team Cards Styles */
+
+/* Flex container for team cards */
+.team-cards {
+  display: inline-flex; /* Inline flex layout to align cards horizontally */
+  gap: 1rem; /* Space between cards */
+  justify-content: center; /* Center content horizontally */
+}
+
+/* Individual Team Card Styles */
+
+/* Styles for each individual team card */
+.team-card {
+  flex: 0 0 auto; /* Prevents shrinking or growing of cards */
+  width: 250px; /* Fixed width for the cards */
+  background-color: #fff; /* White background for the card */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+  border-radius: 10px; /* Rounded corners */
+  text-align: center; /* Centers text inside the card */
+  padding: 1.5rem 1rem; /* Inner space within the card */
+  box-sizing: border-box; /* Ensures padding is included in width/height */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition effects */
+  scroll-snap-align: center; /* Centers the card on scroll */
+  position: relative; /* Allows for pseudo-elements to be positioned relative to the card */
+  cursor: pointer; /* Pointer cursor for clickable effect */
+}
+
+/* Hover effects for team card */
+.team-card:hover {
+  transform: translateY(-10px) scale(1.05); /* Moves and scales card on hover */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Increases shadow for hover effect */
+  background-color: rgba(237, 137, 54, 0.25); /* Adds subtle background color */
+}
+
+/* Decorative line that appears on hover */
+.team-card:hover::before {
+  content: ""; /* Empty content to create a line */
+  position: absolute; /* Positions relative to card */
+  bottom: -4px; /* Position below the card */
+  left: 50%; /* Centers the line */
+  width: 60%; /* Line width */
+  height: 4px; /* Line height */
+  background-color: #ed8936; /* Line color */
+  transform: translateX(-50%); /* Centers the line */
+  border-radius: 2px; /* Rounded corners for line */
+}
+
+/* Team Member Image Styles */
+
+/* Image container for the team member's image */
+.team-image img {
+  width: 100px; /* Image width */
+  height: 100px; /* Image height */
+  border-radius: 50%; /* Makes image circular */
+  object-fit: cover; /* Ensures image retains aspect ratio */
+  margin-bottom: 1rem; /* Space below the image */
+}
+
+/* Team Member Info Styles */
+
+/* Name of the team member */
+.team-info h3 {
+  font-size: 1.2rem; /* Font size for name */
+  margin: 0.5rem 0; /* Space above and below name */
+}
+
+/* Role or position of the team member */
+.team-info p {
+  font-size: 0.9rem; /* Font size for position */
+  color: #666; /* Light gray color */
+}
+
+/* Custom Utility Styles*/
+
+/* Ensures images or other elements are displayed as inline-block */
+.aboutus-member-image {
+  display: inline-block !important; /* Forces display as inline-block */
+} 
