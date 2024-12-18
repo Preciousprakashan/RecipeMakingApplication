@@ -67,7 +67,6 @@ const listRecipies = async (req, res) => {
     normalizedDbRecipes.push(...recipeFromApi.data.recipes);
       res.status(200).send({message:"successfull", recipes:normalizedDbRecipes });
   }catch(err) {
-    console.log(err)
       res.status(404).send({message:"Error in getting recipies"});
   }
 }
@@ -91,7 +90,6 @@ const getRecipeById = async(req, res) => {
       }else{
          recipe = await RecipeModel.findById(id);
          // Find other related recipes in the same category
-         console.log(recipe)
          relatedRecipes = await RecipeModel.find({
           category: recipe.category,  // Same category as the current recipe
           _id: { $ne: id }      // Exclude the current recipe
@@ -242,7 +240,6 @@ const getRecipeByCategory = async(req, res) => {
       // recipeDetails.push(...recipesFromApi.data.results);
       res.status(200).send({message:"successfull", recipeDetails });
   }catch(err) {
-    console.log(err)
       res.status(404).send({message:"error in getting recipies"});
   }
 }
@@ -252,7 +249,6 @@ const getRecipeByCategory = async(req, res) => {
 const getRecipesPopular = async(req, res) => {
   try {
     const userId = req.query.userId;
-    console.log(userId)
       if(userId){
           let recipeDetails = await RecipeModel.find({veryPopular : true});
           if(!recipeDetails) {
@@ -262,7 +258,6 @@ const getRecipesPopular = async(req, res) => {
           const recipesWithLikeStatus = await Promise.all(
             recipeDetails.map(async (recipe) => {
                 // Check if the recipe is in the wishlist
-                console.log(recipe)
                 const isLiked = await Wishlist.exists({ userId, savedRecipies: { $elemMatch: { recipeId: recipe._id } } });// Match recipeId in the array of objects
                 return {
                     ...recipe.toObject(),
@@ -271,7 +266,6 @@ const getRecipesPopular = async(req, res) => {
             })
         );
           recipeDetails = recipesWithLikeStatus;
-          console.log(recipeDetails)
           return res.status(200).send({message:"successfull", recipeDetails});
   }else{
       const recipeDetails = await RecipeModel.find({veryPopular : true});
@@ -281,7 +275,6 @@ const getRecipesPopular = async(req, res) => {
       return res.status(200).send({message:"successfull", recipeDetails});
   }
   }catch(err) {
-    console.log(err)
       res.status(404).send({message:"error in getting recipies"});
   }
 }
@@ -297,12 +290,10 @@ const getRecipeByName = async(req, res) => {
       if(!recipeDetails) {
         return res.status(403).send({message:"No recipies available"});
       }
-      console.log(recipeDetails)
       // For each recipe, check if it is liked by the user
       const recipesWithLikeStatus = await Promise.all(
         recipeDetails.map(async (recipe) => {
             // Check if the recipe is in the wishlist
-            console.log(recipe)
             const isLiked = await Wishlist.exists({ userId, savedRecipies: { $elemMatch: { recipeId: recipe._id } } });// Match recipeId in the array of objects
             return {
                 ...recipe.toObject(),
@@ -311,7 +302,6 @@ const getRecipeByName = async(req, res) => {
         })
     );
       recipeDetails = recipesWithLikeStatus;
-      console.log(recipeDetails)
       return res.status(200).send({message:"successfull", recipeDetails});
   }else {
     const recipeDetails = await RecipeModel.find({title : { $regex: new RegExp('.*' + title + '.*', 'i') }});

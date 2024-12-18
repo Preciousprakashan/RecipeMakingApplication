@@ -38,20 +38,16 @@ const addWishlistRecipe = async(req, res) => {
           } else {
             // Otherwise, convert the string to an ObjectId
             // Convert string recipeId to ObjectId (Mongoose uses this type)
-            console.log(id)
-            console.log('hello')
+            
   if (typeof id == 'string') {
     
     recipeId = new mongoose.Types.ObjectId(id);  // Convert string to ObjectId
   }
-            // recipeId = new mongoose.Types.ObjectId(id);  // This works only if it's a valid ObjectId
-            console.log(recipeId)
           
             responseData = await recipeModel.findById(recipeId);
             if (!responseData) {
               return res.status(404).send('Recipe not found');
             }
-            console.log(responseData)
             recipe = {
               userId:user._id,
               savedRecipies:[
@@ -82,7 +78,6 @@ const addWishlistRecipe = async(req, res) => {
         // Checking if the recipe exists in the savedRecipies array before attempting to remove it
         const recipeExists = wishlist.savedRecipies.some(rec => rec.recipeId == recipeIdToRemove);
         let updatedWishlist;
-        // console.log(recipeExists)
         if (recipeExists) {
           // Recipe exists, now remove it
            updatedWishlist = await WishlistModel.updateOne(
@@ -117,7 +112,6 @@ const addWishlistRecipe = async(req, res) => {
 
         
     }catch (err) {
-      console.log(err)
         res.status(404).send({message:"error in saving"});
     }
 } 
@@ -127,16 +121,13 @@ const addWishlistRecipe = async(req, res) => {
 const listWishlistRecipe = async(req, res) => {
   try {
     const user = req.user.user;
-    console.log(user)
     let recipies = await WishlistModel.findOne({userId:user._id});
     if(!recipies){
       return res.status(403).send({message:"No saved recipies"});
     }
            
-    console.log(recipies);
     res.status(200).send({message:"successfull",recipies});
   }catch(err) {
-    console.log(err);
     res.status(404).send({message:"error in getting recipies"});
   }
 }
