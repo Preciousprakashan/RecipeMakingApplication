@@ -5,15 +5,21 @@ import { IoTimerSharp } from "react-icons/io5";
 import { PiForkKnifeFill } from "react-icons/pi";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import HeartAnimation from '../HeartAnimation/HeartAnimation'
-const EditorsChoiceCard = ({ id, isLiked, onLikeToggle }) => {
+import { useNavigate } from 'react-router-dom';
+const EditorsChoiceCard = ({ id, isLiked, onLikeToggle, title, readyInMinutes, vegetarian, description, image }) => {
+  const navigate = useNavigate();
   return (
     <div className='editors-card'>
-      <Card.Root maxW="sm" overflow="hidden" border={'none'} width={'17rem'} backgroundColor={"transparent"}>
+      <Card.Root maxW="sm" overflow="hidden" border={'none'} width={'17rem'} backgroundColor={"transparent"} >
         <div className="image-container">
           <Image
-            src="/assets/food.png"
-            alt="Green double couch with wooden legs"
+            // src="/assets/food.png"
+            src={image}
+            alt="recipe image"
             borderRadius={'20px'}
+            width={'100%'}
+            height={'14rem'}
+            // fit={'fill'}
           />
           {/* <MdOutlineFavoriteBorder className='like-icon' size={'1.8rem'} /> */}
           {/* <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='red'/>
@@ -23,11 +29,10 @@ const EditorsChoiceCard = ({ id, isLiked, onLikeToggle }) => {
           </div>
         </div>
         <Card.Body marginTop={'16px'}>
-          <Card.Title fontSize={'medium'}>Mixed Tropical Fruit Salad with Superfood Boosts </Card.Title>
-          {/* <Card.Description>
-          This sofa is perfect for modern tropical spaces, baroque inspired
-          spaces.
-        </Card.Description> */}
+          <Card.Title fontSize={'medium'} onClick={()=>navigate('/recipe',{state:id})} style={{cursor:'pointer'}}>{title}</Card.Title>
+          <Card.Description>
+          {description}
+        </Card.Description>
           {/* <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
           $450
         </Text> */}
@@ -36,11 +41,11 @@ const EditorsChoiceCard = ({ id, isLiked, onLikeToggle }) => {
           <div className='recipe-info'>
             <div style={{ display: 'flex', alignItems: 'center', flexDirection:'row'}}>
               <IoTimerSharp className="custom-icon" style={{ fontSize: '24px' }} />
-              <p style={{ fontSize: '14px', margin: 0 }}>30 minutes</p>
+              <p style={{ fontSize: '14px', margin: 0 }}>{readyInMinutes} minutes</p>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', flexDirection:'row'}}>
               <PiForkKnifeFill className="custom-icon" style={{ fontSize: '24px' }} />
-              <p style={{ fontSize: '14px', margin: 0 }}>Vegetarian</p>
+              <p style={{ fontSize: '14px', margin: 0 }}>{vegetarian ? 'Vegetarian' : 'Non-Veg'}</p>
             </div>
           </div>
         </Card.Footer>

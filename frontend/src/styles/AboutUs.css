@@ -10,6 +10,7 @@
 
 /* Header Section Styling */
 .about-header {
+
   position: relative; /* Position relative for overlay */
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
               url("../../public/assets/1.jpg") no-repeat center center/cover; /* Background with gradient */
@@ -24,6 +25,7 @@
 }
 
 /* Content Wrapper */
+
 .content-wrapper {
   text-align: center; /* Center text */
   max-width: 800px; /* Max width */
@@ -311,6 +313,7 @@ span[data-scrolldown="true"] {
 
 /* Our Mission Section */
 .our-mission {
+
   display: flex; /* Use flexbox for alignment */
   flex-direction: column; /* Stack elements vertically */
   align-items: center; /* Center content */
@@ -321,6 +324,7 @@ span[data-scrolldown="true"] {
   background-position: center; /* Center the background */
   background-repeat: no-repeat; /* Avoid background repetition */
   color: #fff; /* White text color for contrast */
+
 }
 
 .mission-header {
@@ -497,6 +501,7 @@ span[data-scrolldown="true"] {
 
 /* Newsletter Section */
 .newsletter {
+
   margin: 0% auto; /* Center the section horizontally */
   width: 80%; /* Set width */
   background-color: #f8f9fa; /* Set background color */
@@ -517,6 +522,7 @@ span[data-scrolldown="true"] {
   height: auto; /* Maintain aspect ratio */
   margin-bottom: 20px; /* Add margin below the logo */
   display: inline-block !important; /* Ensure inline display */
+
 }
 
 .newsletter-header h2 {

@@ -36,7 +36,7 @@ const recipeData = mongoose.Schema({
             image:String
         }
     ],
-    cookingTime: {
+    readyInMinutes: {
         type:Number,
         required:true
     },

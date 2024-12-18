@@ -4,14 +4,20 @@ import { Card } from "@chakra-ui/react"
 import { AvatarRoot, AvatarImage, AvatarFallback } from '@chakra-ui/react';
 import './Cards.css'
 import { Button } from "@chakra-ui/react"
-const Cards = () => {
+import { useNavigate } from 'react-router-dom';
+const Cards = ({name, image}) => {
+  const navigate = useNavigate();
+  const handleCategory = () => {
+    // alert('hii');
+    navigate('/recipe-by-category',{state:{name, image}});
+  }
   return (
-    <div className='card-layout'>
+    <div className='card-layout' onClick={handleCategory}>
         <Card.Root 
         padding={"1.5rem"}
               width="14rem"
               height="20rem"
-              backgroundColor={'#EFEFEF'} 
+              backgroundColor={'#EFEFEF'}
               _hover={{ bg: "#FFAD65", 
                         // transform: "scale(1.05)", // Slightly scale the card
                         // boxShadow: "lg",  // Apply a larger shadow
@@ -23,13 +29,14 @@ const Cards = () => {
       <Card.Body gap="2">
 
 
-      <img className="cardImage" src="/assets/breakfast.png" alt="food image" />
+      {/* <img className="cardImage" src="/assets/breakfast.png" alt="food image" /> */}
+      <img className="cardImage" src={image} alt="food image"/>
         {/* <AvatarRoot size="2xl" borderRadius="full">
             <AvatarImage src="/assets/image.png" alt="Nue Camp" />
             <AvatarFallback>NC</AvatarFallback>
         </AvatarRoot> */}
 
-        <Card.Title mt="2" marginTop={"11rem"}>Nue Camp</Card.Title>
+        <Card.Title mt="2" marginTop={"11rem"}>{name}</Card.Title>
         <Card.Description
         >
           This is the card body. Lorem ipsum dolor sit amet, consectetur

@@ -8,7 +8,6 @@ const authMiddleware = (requiredRole) => {
                     return res.status(401).json({message:'No token, Authorization Denied'});
                 }
                 try {
-                    console.log(token)
                     jwt.verify(token, process.env.JWT_SECRET_KEY,  (err, decoded) => {
                         if(err) {
                             return res.status(403).json({message:'Invalid or Expired token'});

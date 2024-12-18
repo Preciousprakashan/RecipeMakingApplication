@@ -1,42 +1,112 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../components/NavBar/NavBar'
 import Heading from '../components/Heading/Heading'
 import Cards from '../components/Card/Cards'
 import EditorsChoiceCard from '../components/EditorsChoiceCard/EditorsChoiceCard'
 import Footer from '../components/Foooter/Footer'
 import '../styles/style.css'
+import { use } from 'react'
+import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 const HomePage = () => {
   // const [likes, setLikes] = useState([]);
-  const handleLikeToggle = (id, like) => {
-    console.log(like, !like)
-    console.log(id)
-    setRecipeData(recipeData.map((recipe) => (recipe.id === id ? { ...recipe, liked: !like } : { ...recipe })))
-    console.log(recipeData)
+  const handleLikeToggle = async(id,apiId, currentLikeStatus) => {
+    const Token = localStorage.getItem('access_token');
+    if(!Token){
+      alert('Login First to like recipies');
+      return
+    }  
+    console.log(Token);
+    console.log(currentLikeStatus, !currentLikeStatus)
+    let recipeId = id;
+    if(!id) 
+      recipeId = apiId
+    console.log(recipeId)
+    try{
+        await axios.post('http://localhost:5001/recipe/add-wishlist',
+          {recipeId},
+        // Pass headers as the third argument
+        {
+              headers: {
+                  'Authorization': `Bearer ${Token}`, // Attach Bearer token
+                  'Content-Type': 'application/json' // Optional, for POST/PUT requests
+         }
+    
+        } );
+      }catch(err) {
+        console.log(err);
+      }
+    
+    // Update the state
+    setRecipes((prevRecipes) =>
+        prevRecipes.map((recipe) =>
+            recipe._id === recipeId ? { ...recipe, isLiked: !currentLikeStatus } : recipe
+        )
+    );
+    // setRecipeData(recipeData.map((recipe) => (recipe.id === id ? { ...recipe, liked: !like } : { ...recipe })))
+    // console.log(recipeData)
   }
-
-  const [recipeData, setRecipeData] = useState([
-    {
-      id: 1,
-      name: "laddoo",
-      liked: true
-    },
-    {
-      id: 2,
-      name: "laddoo",
-      liked: true
-    },
-    {
-      id: 3,
-      name: "laddoo",
-      liked: false
-    },
-    {
-      id: 4,
-      name: "laddoo",
-      liked: true
-    }
-  ])
-
+  const [recipes, setRecipes] = useState([]);
+  // const [recipeData, setRecipeData] = useState([
+  //   {
+  //     id: 1,
+  //     name: "laddoo",
+  //     liked: true
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "laddoo",
+  //     liked: true
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "laddoo",
+  //     liked: false
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "laddoo",
+  //     liked: true
+  //   }
+  // ])
+  //manual data for categories 
+  const categories = [
+    {categoryName:'Main Course',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Side Dish',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Dessert',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Appetizer',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Salad',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Bread',image:'/assets/c_bread.png'},
+    {categoryName:'Breakfast',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Soup',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Beverage',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Sauce',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Marinade',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Fingerfood',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Brsnackead',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Drink',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+  ]
+  useEffect( () => {
+      try {
+        const getPopularRecipes = async () => {
+              const token = localStorage.getItem('access_token');
+                  let user = "";
+                  if (token) 
+                     user = jwtDecode(token);
+              
+                  const userId = user ? user.user._id : null;
+              console.log(userId)
+              const response = await axios.get('http://localhost:5001/recipe/popular-recipies',{
+                params:{userId}
+              });
+              setRecipes(response.data.recipeDetails)
+              console.log(response.data.recipeDetails)
+      }
+      getPopularRecipes();
+      }catch(err) {
+        console.log(err)
+      }
+  },[])
   return (
     <>
       <div className='home-page'>
@@ -46,26 +116,30 @@ const HomePage = () => {
         <div className="grp-cards1">
           <h2>Categories</h2>
           <div className="card-collection">
-            <Cards />
-            <Cards />
-            <Cards />
-            <Cards />
-
+          {categories.map((category, index) => 
+              <Cards key={index} name={category.categoryName} image={category.image} />
+          )}
           </div>
 
           <h2>Editor's Choice</h2>
           <div className='card-collection'>
+            {recipes.map((recipe, index) =>
+              <EditorsChoiceCard
+                    key={index} id={recipe._id}
+                    title={recipe.title} readyInMinutes={recipe.readyInMinutes}
+                    vegetarian={recipe.vegetarian} image={recipe.image}
+                    description={recipe.descriptions} isLiked={recipe.isLiked}
+                    onLikeToggle={() => handleLikeToggle(recipe._id,recipe.id, recipe.isLiked)}
+              />
+            )}
+          </div>
+          {/* <div className='card-collection'>
             {recipeData.map((recipe, index) =>
               <EditorsChoiceCard
               key={index} id={recipe.id} isLiked={recipe.liked} onLikeToggle={() => handleLikeToggle(recipe.id, recipe.liked)} />
             )}
-            {/* <EditorsChoiceCard/>
-            <EditorsChoiceCard/>
-            <EditorsChoiceCard/>
-            <EditorsChoiceCard/>
-            <EditorsChoiceCard/>
-            <EditorsChoiceCard/> */}
-          </div>
+          </div> */}
+          
         </div>
         <Footer />
       </div>
