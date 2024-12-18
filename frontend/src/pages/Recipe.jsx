@@ -32,7 +32,7 @@ const Recipe = () => {
     useEffect(() => {
         //get recipe  by id
         const getRecipeById = async() => {
-            const response = await axios.get(`http://localhost:5000/recipe/recipe-details/${id}`);
+            const response = await axios.get(`http://localhost:5001/recipe/recipe-details/${id}`);
             console.log(response.data.recipeData.recipe)
             setRecipe(response.data.recipeData.recipe)
         }
