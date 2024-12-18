@@ -41,7 +41,10 @@ const RecipeByCategory = () => {
           <NavBar />
 
           <div className='category-name'>
-            <h1>{category}</h1>
+            <h1>
+              <span className="first-word">{category.split(' ')[0]}</span>
+              {` ${category.split(' ').slice(1).join(' ')}`}
+            </h1>
           </div>
         </div>
         <div className="category-container">
