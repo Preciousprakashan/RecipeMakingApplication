@@ -6,10 +6,10 @@ import RecipeCard from '../components/RecipeCard/RecipeCard';
 import { Button } from '@chakra-ui/react';
 import Footer from '../components/Foooter/Footer';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const RecipeDetailsPage = () => {
-  
+
   const [query, setQuery] = useState(''); // State for the search bar value
   const [searchType, setSearchType] = useState('ingredients'); // State for the filter type ('ingredients' or 'recipes')
   const [ingredients, setIngredients] = useState([]);
@@ -18,24 +18,24 @@ const RecipeDetailsPage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-      const fetchAllRecipies = async() => {
-          const data = await axios.get('http://localhost:5001/recipe/list-recipies');
-          console.log(data.data.recipes);
-          setRecipes(data.data.recipes);
-      }
-      fetchAllRecipies();
-  },[]);
+    const fetchAllRecipies = async () => {
+      const data = await axios.get('http://localhost:5001/recipe/list-recipies');
+      console.log(data.data.recipes);
+      setRecipes(data.data.recipes);
+    }
+    fetchAllRecipies();
+  }, []);
 
   const handleInputChange = async (event) => {
     setQuery(event.target.value);
     const val = event.target.value;
-    try{
+    try {
       //fetching ingredients from the spoonacular api
       const data = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=aa480a40418f4af290be28aa5e1d11e5&query=${val}&number=2`);//10
       const ingredientName = data.data.results.map((item) => item.name);
       setRelatedIngredients(ingredientName);
       console.log(ingredientName);
-    }catch(err) {
+    } catch (err) {
       console.log(err);
     }
 
@@ -53,72 +53,72 @@ const RecipeDetailsPage = () => {
       prevIngredients.filter((item) => item !== ingredient)
     );
   };
-  const handleLikeToggle = async(id, currentLikeStatus) => {
+  const handleLikeToggle = async (id, currentLikeStatus) => {
     const Token = localStorage.getItem('access_token');
-    if(!Token){
+    if (!Token) {
       alert('Login First to like recipies');
       return
-    }  
+    }
     console.log(Token);
     console.log(currentLikeStatus, !currentLikeStatus)
     // let recipeId = id;
     // if(!id) 
     //   recipeId = apiId
     // console.log(recipeId)
-    try{
-        await axios.post('http://localhost:5001/recipe/add-wishlist',
-          // Pass headers as the third argument
-          {recipeId:id},
-          {
-              headers: {
-                  'Authorization': `Bearer ${Token}`, // Attach Bearer token
-                  'Content-Type': 'application/json' // Optional, for POST/PUT requests
-         }
-    
-        } );
-      }catch(err) {
-        console.log(err);
-      }
-    
+    try {
+      await axios.post('http://localhost:5001/recipe/add-wishlist',
+        // Pass headers as the third argument
+        { recipeId: id },
+        {
+          headers: {
+            'Authorization': `Bearer ${Token}`, // Attach Bearer token
+            'Content-Type': 'application/json' // Optional, for POST/PUT requests
+          }
+
+        });
+    } catch (err) {
+      console.log(err);
+    }
+
     // Update the state
     setRecipes((prevRecipes) =>
-        prevRecipes.map((recipe) =>
-            recipe._id === id ? { ...recipe, isLiked: !currentLikeStatus } : recipe
-        )
+      prevRecipes.map((recipe) =>
+        recipe._id === id ? { ...recipe, isLiked: !currentLikeStatus } : recipe
+      )
     );
-   
+
   }
-  const handleSearch = async() => {
+  const handleSearch = async () => {
     const token = localStorage.getItem('access_token');
     // const decoded = jwt.verify(token, '4acd3d37df8639623b63dccd21024ee2c10d9f5b426be11457109a90063b0f10');
     let user = "";
-    if (token) 
-       user = jwtDecode(token);
+    if (token)
+      user = jwtDecode(token);
 
     const userId = user ? user.user._id : null;
-    if(searchType === 'ingredients'){ 
+    if (searchType === 'ingredients') {
       console.log(ingredients);
-      const data = await axios.get('http://localhost:5001/recipe/search-recipies',{
-          params:{
-            ingredients,
-            userId:userId
-          },
-        
+      const data = await axios.get('http://localhost:5001/recipe/search-recipies', {
+        params: {
+          ingredients,
+          userId: userId
+        },
+
       })
       console.log(data.data.recipes);
       setRecipes(data.data.recipes);
     }
-    else{
+    else {
       console.log(query);
-      const data = await axios.get('http://localhost:5001/recipe/recipe-by-name',{
-        params:{
-          title:query,
-          userId:userId
+      const data = await axios.get('http://localhost:5001/recipe/recipe-by-name', {
+        params: {
+          title: query,
+          userId: userId
         }
-    })
-    setRecipes(data.data.recipeDetails);
+      })
+      setRecipes(data.data.recipeDetails);
     }
-    
+
   }
 
 
@@ -144,39 +144,39 @@ const RecipeDetailsPage = () => {
 
           {/* Single Search Bar */}
           <div className="search-container">
-          {/* List of selected ingredients */}
-          {searchType === 'ingredients' && (
-        <div className="ingredients">
+            {/* List of selected ingredients */}
+            {searchType === 'ingredients' && (
+              <div className="ingredients">
 
-          {ingredients.map((ingredient, index) => (
-            <div key={index} className="ingredient-item">
-              {ingredient}
-              <span
-                className="remove-ingredient"
-                onClick={() => handleRemoveIngredient(ingredient)}
-              >   
-                ×
-              </span>
-            </div>
-          ))}
+                {ingredients.map((ingredient, index) => (
+                  <div key={index} className="ingredient-item">
+                    {ingredient}
+                    <span
+                      className="remove-ingredient"
+                      onClick={() => handleRemoveIngredient(ingredient)}
+                    >
+                      ×
+                    </span>
+                  </div>
+                ))}
 
-        </div>
-      )}
+              </div>
+            )}
             <div className='searching-details'>
-                <input
-                  type="text"
-                  className="search-input"
-                  placeholder={
-                    searchType === 'ingredients'
-                      ? 'Search or add an ingredient...'
-                      : 'Search recipes by name...'
-                  }
-                  value={query}
-                  onChange={handleInputChange}
-                />
-                <button className="search-button" onClick={handleSearch}>
-                  <IoSearch />
-                </button>
+              <input
+                type="text"
+                className="search-input"
+                placeholder={
+                  searchType === 'ingredients'
+                    ? 'Search or add an ingredient...'
+                    : 'Search recipes by name...'
+                }
+                value={query}
+                onChange={handleInputChange}
+              />
+              <button className="search-button1" onClick={handleSearch}>
+                <IoSearch />
+              </button>
             </div>
           </div>
 
@@ -202,16 +202,16 @@ const RecipeDetailsPage = () => {
         </div>
       </div>
 
-      
-        <div className="recipies">
+
+      <div className="recipies">
         {recipes.map((recipe, index) => (
           <RecipeCard key={index} id={recipe.id} title={recipe.title}
-                  image={recipe.image} vegetarian={recipe.vegetarian}
-                  readyInMinutes={recipe.readyInMinutes} liked={recipe.isLiked} 
-                  onLikeToggle={() => handleLikeToggle(recipe.id, recipe.isLiked)} />
+            image={recipe.image} vegetarian={recipe.vegetarian}
+            readyInMinutes={recipe.readyInMinutes} liked={recipe.isLiked}
+            onLikeToggle={() => handleLikeToggle(recipe.id, recipe.isLiked)} />
         ))}
-        </div>
-      
+      </div>
+
 
 
       <Footer />
