@@ -51,29 +51,7 @@ const HomePage = () => {
     // console.log(recipeData)
   }
   const [recipes, setRecipes] = useState([]);
-  // const [recipeData, setRecipeData] = useState([
-  //   {
-  //     id: 1,
-  //     name: "laddoo",
-  //     liked: true
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "laddoo",
-  //     liked: true
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "laddoo",
-  //     liked: false
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "laddoo",
-  //     liked: true
-  //   }
-  // ])
-  //manual data for categories 
+
   const categories = [
     {categoryName:'Main Course',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
     {categoryName:'Side Dish',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
