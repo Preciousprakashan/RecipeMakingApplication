@@ -93,7 +93,7 @@ function App() {
           />
           {/* settings page */}
           <Route 
-            path="/wishlist" 
+            path="/settings" 
             element={<PrivateRoute roleRequired="user" element={SettingPage} />} 
            />
 
