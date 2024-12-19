@@ -23,10 +23,8 @@ const RecipeByCategory = () => {
   useEffect(() => {
     try {
       const fetchRecipeByCategory = async () => {
-        console.log(category)
         const response = await axios.get(`${baseUrl}/recipe-by-category`,
         {params:{category}});
-          console.log(response.data.recipeDetails);
           setRecipes(response.data.recipeDetails);
       }
       fetchRecipeByCategory();
@@ -37,7 +35,6 @@ const RecipeByCategory = () => {
   return (
     <>
       <div className="category-page">
-        {/* <div className='category-contents'> */}
         <div className='nav-heading-container'>
           <NavBar />
 
@@ -51,7 +48,6 @@ const RecipeByCategory = () => {
         <div className="category-container">
           <img className='img-center' src={image} alt="1.jpg" />
         </div>
-        {/* </div> */}
 
       </div>
 

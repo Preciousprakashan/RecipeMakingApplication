@@ -160,26 +160,7 @@ const Loginpage = () => {
               mt: 2,
             }}
           >
-            {/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Checkbox
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                sx={{ padding: '0', color: '#333' }}
-              />
-              <Typography sx={{ ml: 1, fontSize: '14px', color: '#555' }}>
-                Remember me
-              </Typography>
-            </Box> */}
-            {/* <Link
-              href="#"
-              underline="none"
-              sx={{
-                fontSize: '14px',
-                color: '#7a7a7a',
-              }}
-            >
-              Forgot password?
-            </Link> */}
+            
           </Box>
 
           <Button
@@ -203,25 +184,7 @@ const Loginpage = () => {
             Login
           </Button>
 
-          {/* <Button
-            variant="outlined"
-            fullWidth
-            startIcon={<GoogleIcon />}
-            sx={{
-              mb: 2,
-              padding: '10px',
-              color: '#333',
-              borderRadius: '8px',
-              fontWeight: 'bold',
-              borderColor: '#ccc',
-              '&:hover': {
-                backgroundColor: '#f1f1f1',
-              },
-            }}
-          >
-            Sign in with Google
-          </Button> */}
-
+        
           <Typography
             sx={{
               fontSize: '14px',

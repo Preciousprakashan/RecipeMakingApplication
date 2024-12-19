@@ -6,6 +6,7 @@ import "../styles/AddRecipe.css";
 
 const AddRecipeForm = ({ initialRecipe, setEditingRecipe, setRecipes }) => {
   const [recipeImage, setRecipeImage] = useState(null);
+  const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   const [ingredients, setIngredients] = useState([
     { name: "", unit: "", amount: "", image: null },
   ]);
@@ -106,8 +107,8 @@ const AddRecipeForm = ({ initialRecipe, setEditingRecipe, setRecipes }) => {
 
       // Check if we're updating or adding a new recipe
       const url = initialRecipe
-        ? `http://localhost:5000/recipe/update/${initialRecipe._id}`
-        : "http://localhost:5000/recipe/add-recipe";
+        ? `${baseUrl}/update/${initialRecipe._id}`
+        : `${baseUrl}/add-recipe`;
 
       const method = initialRecipe ? "put" : "post";
 

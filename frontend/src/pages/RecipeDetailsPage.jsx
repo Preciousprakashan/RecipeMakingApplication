@@ -21,7 +21,6 @@ const RecipeDetailsPage = () => {
   useEffect(() => {
       const fetchAllRecipies = async() => {
           const data = await axios.get(`${baseUrl}/list-recipies`);
-          console.log(data.data.recipes);
           setRecipes(data.data.recipes);
       }
       fetchAllRecipies();
@@ -35,7 +34,6 @@ const RecipeDetailsPage = () => {
       const data = await axios.get(`https://api.spoonacular.com/food/ingredients/search?apiKey=${apiKey}&query=${val}&number=2`);//10
       const ingredientName = data.data.results.map((item) => item.name);
       setRelatedIngredients(ingredientName);
-      console.log(ingredientName);
     } catch (err) {
       console.log(err);
     }
@@ -60,13 +58,7 @@ const RecipeDetailsPage = () => {
       alert('Login First to like recipies');
       return
     }
-    console.log(Token);
-    console.log(currentLikeStatus, !currentLikeStatus)
-    console.log(id)
-    // let recipeId = id;
-    // if(!id) 
-    //   recipeId = apiId
-    // console.log(recipeId)
+    
     try{
         await axios.post(`${baseUrl}/add-wishlist`,
           // Pass headers as the third argument
@@ -92,14 +84,12 @@ const RecipeDetailsPage = () => {
   }
   const handleSearch = async() => {
     const token = localStorage.getItem('accessToken');
-    // const decoded = jwt.verify(token, '4acd3d37df8639623b63dccd21024ee2c10d9f5b426be11457109a90063b0f10');
     let user = "";
     if (token)
       user = jwtDecode(token);
 
     const userId = user ? user.user._id : null;
     if (searchType === 'ingredients') {
-      console.log(ingredients);
       const data = await axios.get(`${baseUrl}/search-recipies`,{
           params:{
             ingredients,
@@ -107,18 +97,15 @@ const RecipeDetailsPage = () => {
           },
         
       })
-      console.log(data.data.recipes);
       setRecipes(data.data.recipes);
     }
     else {
-      console.log(query);
       const data = await axios.get(`${baseUrl}/recipe-by-name`,{
         params:{
           title:query,
           userId:userId
         }
       })
-      console.log(data.data.recipeDetails)
       setRecipes(data.data.recipeDetails);
     }
 

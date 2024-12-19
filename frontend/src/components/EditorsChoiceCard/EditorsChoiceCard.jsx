@@ -13,17 +13,13 @@ const EditorsChoiceCard = ({ id, isLiked, onLikeToggle, title, readyInMinutes, v
       <Card.Root maxW="sm" overflow="hidden" border={'none'} width={'17rem'} backgroundColor={"transparent"} >
         <div className="image-container">
           <Image
-            // src="/assets/food.png"
             src={image}
             alt="recipe image"
             borderRadius={'20px'}
             width={'100%'}
             height={'14rem'}
-            // fit={'fill'}
           />
-          {/* <MdOutlineFavoriteBorder className='like-icon' size={'1.8rem'} /> */}
-          {/* <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='red'/>
-              <MdOutlineFavorite className='like-icon' size={'1.8rem'} color='#EFEFEF'/> */}
+          
           <div className="like-icon">
             <HeartAnimation className='like-icon' id={id} liked={isLiked} onLikeToggle={onLikeToggle} />
           </div>
@@ -33,9 +29,7 @@ const EditorsChoiceCard = ({ id, isLiked, onLikeToggle, title, readyInMinutes, v
           <Card.Description>
           {description}
         </Card.Description>
-          {/* <Text textStyle="2xl" fontWeight="medium" letterSpacing="tight" mt="2">
-          $450
-        </Text> */}
+          
         </Card.Body>
         <Card.Footer marginTop={'20px'}>
           <div className='recipe-info'>

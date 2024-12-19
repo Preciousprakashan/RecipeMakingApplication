@@ -53,8 +53,6 @@ const SignUppage = () => {
       if (response.data) {
         setSuccess('Registration successful! You can now log in.');
         setError('');
-        // Optionally store the token in localStorage
-        // localStorage.setItem('token', response.data.token);
       }
     } catch (err) {
       // Handle error response

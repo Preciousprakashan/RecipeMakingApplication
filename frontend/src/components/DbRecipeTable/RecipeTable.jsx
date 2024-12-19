@@ -2,16 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AddRecipeForm from "../../pages/AddRecipe"; // Assuming AddRecipeForm is the form component
 import "./RecipeTable.css";
+import { useNavigate } from "react-router-dom";
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
   const [editingRecipe, setEditingRecipe] = useState(null); // Track the recipe being edited
-
+  const navigate = useNavigate();
+  const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
   useEffect(() => {
     // Fetch recipes when the component is mounted
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/recipe/dbRecipe");
+        const response = await axios.get(`${baseUrl}/dbRecipe`);
         if (response.data.success) {
           setRecipes(response.data.data);
         } else {
@@ -28,7 +30,7 @@ const RecipeList = () => {
   const handleDelete = async (id) => {
     try {
       // Send DELETE request to backend to delete the recipe
-      const response = await axios.delete(`http://localhost:5000/recipe/delete/${id}`);
+      const response = await axios.delete(`${baseUrl}/delete/${id}`);
       
       if (response.status === 200) {
         // Remove deleted recipe from the state
@@ -44,6 +46,7 @@ const RecipeList = () => {
   // Function to handle editing a recipe
   const handleEdit = (recipe) => {
     setEditingRecipe(recipe); // Set the recipe to be edited
+    navigate('/admin-page')
   };
 
   return (

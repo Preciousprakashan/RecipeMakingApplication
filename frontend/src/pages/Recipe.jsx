@@ -39,7 +39,6 @@ const Recipe = () => {
     const [relatedRecipes, setRelatedRecipes] = useState([]);
     const [extendedIngredients, setExtendedIngredients] = useState([]);
     const {userId, token} = useContext(UserContext);
-    console.log(userId)
     const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
     useEffect(() => {
@@ -49,7 +48,6 @@ const Recipe = () => {
             if (token) {
                 userId = jwtDecode(localStorage.getItem('accessToken')).user._id;
             }
-            console.log(userId)
             const response = await axios.get(`${baseUrl}/recipe-details/${id}`,{params:{userId}});
             if(response.data.recipeData.recipe.ingredients){
                 setIngredients(response.data.recipeData.recipe.ingredients)
@@ -58,8 +56,6 @@ const Recipe = () => {
             }
             
             setInstructions(response.data.recipeData.recipe.analyzedInstructions)
-            console.log(response.data.recipeData.recipe)
-            console.log(response.data.recipeData.relatedRecipes)
             setRecipe(response.data.recipeData.recipe)
             setRelatedRecipes(response.data.recipeData.relatedRecipes)
         }
@@ -78,13 +74,7 @@ const Recipe = () => {
             alert('Login First to like recipies');
             return
         }
-        console.log(Token);
-        console.log(currentLikeStatus, !currentLikeStatus);
-        console.log(id)
-        // let recipeId = id;
-        // if(!id) 
-        //   recipeId = apiId
-        // console.log(recipeId)
+        
         try {
             await axios.post(`${baseUrl}/add-wishlist`,
                 // Pass headers as the third argument
@@ -116,9 +106,6 @@ const Recipe = () => {
     };
 
 
-    // const columns = 3;
-
-    // const ingredientsToShow = isIngredientsExpanded ? ingredients : ingredients.slice(0, isMobile ? 7 : ingredients.length); // Show only 5 ingredients initially
 
     return (
         <>
@@ -140,7 +127,6 @@ const Recipe = () => {
                 <div className="recipe-main-description">
                     <p>
                         {recipe.descriptions ? recipe.descriptions : recipe.summary  }
-                        {/* A refreshing twist on a classic favorite! This Healthy Taco Salad combines */}
                         {isDescriptionExpanded ? (
                             <>
                                 {""}
@@ -187,7 +173,7 @@ const Recipe = () => {
                         ))}
                     </div>
 
-                    <TextToSpeech targetSelector="#instructions" />
+                    <TextToSpeech targetSelector="#instructions"/>
                     <div className="recipe-main-description-instructions" id="instructions">
                         <p style={{ marginTop: '20px', marginBottom: '20px' }}>{recipe.instructions}</p>
 

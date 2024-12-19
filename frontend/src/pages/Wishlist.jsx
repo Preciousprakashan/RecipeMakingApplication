@@ -21,13 +21,11 @@ const Wishlist = () => {
     const fetchAllRecipies = async() => {
         const data = await axios.get(`${baseUrl}/wishlist-recipies`,
             {
-            // params:{userId},
             headers: {
                 'Authorization': `Bearer ${Token}`, // Attach Bearer token
                 'Content-Type': 'application/json' // Optional, for POST/PUT requests
                      }
           });
-        console.log(data.data.recipies.savedRecipies);
         setRecipes(data.data.recipies.savedRecipies);
     }
     fetchAllRecipies();
@@ -39,11 +37,8 @@ const handleLikeToggle = async(id) => {
       alert('Login First to like recipies');
       return
     }
-    console.log(Token);
     let recipeId = id;
-    // if(!id) 
-    //   recipeId = apiId
-    // console.log(recipeId)
+    
     try{
         const data = await axios.post(`${baseUrl}/add-wishlist`,
           {recipeId},
@@ -55,23 +50,17 @@ const handleLikeToggle = async(id) => {
          }
     
         } );
-        console.log(data)
         if(data){
           const response = await axios.get(`${baseUrl}/wishlist-recipies`,
             {
-            // params:{userId},
             headers: {
               'Authorization': `Bearer ${Token}`, // Attach Bearer token
               'Content-Type': 'application/json' // Optional, for POST/PUT requests
             }
           });
-        console.log(response.data.recipies.savedRecipies);
         setRecipes(response.data.recipies.savedRecipies);
       }
-      // Update the state
-      // console.log(data.data.wishlistRecipes)
-
-      // setRecipes(data.data.wishlistRecipes)
+      
     } catch (err) {
       console.log(err);
     }

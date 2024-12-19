@@ -7,21 +7,17 @@ import Footer from '../components/Foooter/Footer'
 import '../styles/style.css'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
-import { UserContext } from '../context/UserProvider';
 
 const HomePage = () => {
   // const [likes, setLikes] = useState([]);
   const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
-  const { userId, role, token } = useContext(UserContext); // Accessing user data from UserContext
   const handleLikeToggle = async(id,apiId, currentLikeStatus) => {
     const Token = localStorage.getItem('accessToken');
     if(!Token){
       alert('Login First to like recipies');
       return
     }  
-    console.log(token);
-    console.log(userId, role);
-    console.log(currentLikeStatus, !currentLikeStatus);
+   
     let recipeId = id;
     if(!id) 
       recipeId = apiId
@@ -47,27 +43,16 @@ const HomePage = () => {
             recipe._id === recipeId ? { ...recipe, isLiked: !currentLikeStatus } : recipe
         )
     );
-    // setRecipeData(recipeData.map((recipe) => (recipe.id === id ? { ...recipe, liked: !like } : { ...recipe })))
-    // console.log(recipeData)
+    
   }
   const [recipes, setRecipes] = useState([]);
   
   //manual data for categories 
   const categories = [
-    {categoryName:'Main Course',image:'../../assets/main-course.svg'},
-    // {categoryName:'Side Dish',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Dessert',image:'../../assets/dessert.svg'},
-    // {categoryName:'Appetizer',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    // {categoryName:'Salad',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    // {categoryName:'Bread',image:'/assets/c_bread.png'},
-    // {categoryName:'Breakfast',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    // {categoryName:'Soup',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    // {categoryName:'Beverage',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    // {categoryName:'Sauce',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    // {categoryName:'Marinade',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    // {categoryName:'Fingerfood',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    // {categoryName:'Brsnackead',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Drink',image:'../../assets/drinks.svg'},
+    {categoryName:'Main Course',image:''},
+    {categoryName:'Dessert',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+   
+    {categoryName:'Drink',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
   ]
   useEffect( () => {
       try {
@@ -96,12 +81,7 @@ const HomePage = () => {
         <Heading />
 
         <div className="grp-cards1">
-          {/* <h2>Categories</h2>
-          <div className="card-collection">
-          {categories.map((category, index) => 
-              <Cards key={index} name={category.categoryName} image={category.image} />
-          )}
-          </div> */}
+         
 
           <h2>Editor's Choice</h2>
           <div className='card-collection'>
@@ -115,12 +95,6 @@ const HomePage = () => {
               />
             )}
           </div>
-          {/* <div className='card-collection'>
-            {recipeData.map((recipe, index) =>
-              <EditorsChoiceCard
-              key={index} id={recipe.id} isLiked={recipe.liked} onLikeToggle={() => handleLikeToggle(recipe.id, recipe.liked)} />
-            )}
-          </div> */}
           
         </div>
         <Footer />

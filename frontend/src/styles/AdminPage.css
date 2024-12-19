@@ -80,7 +80,7 @@
   
   .header {
     display: flex;
-    /* align-items: center; */
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
   }
@@ -110,7 +110,7 @@
   /* Sidebar Responsiveness */
   @media (max-width: 768px) {
     .sidebar {
-      width: 80%;
+      width: 0;
     }
   
     .content {

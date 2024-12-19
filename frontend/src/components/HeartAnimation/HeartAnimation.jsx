@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./HeartAnimation.css";
 
 const HeartAnimation = ({id, liked, onLikeToggle}) => {
-  const [checked, setChecked] = useState(false);
   return (
       <div className="Boxshadow">
         <input
