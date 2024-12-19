@@ -1,182 +1,69 @@
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    /* font-family: 'Arial', sans-serif; */
-    background-color: #f9f9f9;
-}
-
-/* Layout */
-.manage-recipes {
-    display: flex;
-    height: 100vh;
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #f4efe7;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+/* Recipe List Container */
+.recipe-list-container {
     padding: 20px;
-    border-right: 1px solid #e0e0e0;
-}
-
-.profile {
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .recipe-list-container h2 {
     text-align: center;
-    margin-bottom: 30px;
-}
-
-.profile .avatar {
-    width: 80px;
-    height: 80px;
-    background-color: #ccc;
-    border-radius: 50%;
-    margin: 0 auto 10px;
-}
-
-.profile h3 {
-    font-size: 18px;
-    color: #333;
-}
-
-.profile p {
-    font-size: 14px;
-    color: #ff9900;
-}
-
-.sidebar nav ul {
-    list-style: none;
-    width: 100%;
-}
-
-.sidebar nav ul li {
-    padding: 15px;
-    cursor: pointer;
-    color: #333;
-    font-weight: bold;
-    text-align: left;
-}
-
-.sidebar nav ul li.active,
-.sidebar nav ul li:hover {
-    background-color: #ff9900;
-    color: #fff;
-    border-radius: 5px;
-}
-
-.logout {
-    margin-top: auto;
-    padding: 10px 15px;
-    background-color: transparent;
-    border: 1px solid #333;
-    color: #333;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.logout:hover {
-    background-color: #333;
-    color: #fff;
-}
-
-/* Content */
-.content {
-    flex: 1;
-    padding: 20px;
-    
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
-}
-
-header h1 {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.add-recipe-btn {
-    background-color: #ff9900;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.add-recipe-btn:hover {
-    background-color: #cc7a00;
-}
-
-.recipe-table {
-    max-height: 90%;
-    overflow-y: auto;
-}
-
-/* Table */
-table {
+  }
+  
+  /* Recipe Table */
+  .recipe-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-
-}
-
-table th,
-table td {
-    padding: 15px;
+    margin-top: 20px;
+  }
+  
+  .recipe-table th,
+  .recipe-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
     text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-table th {
-    background-color: #f5f5f5;
-    position: sticky; /* Sticky header for better UX */
-    top:0;
-    z-index: 1;
-}
-
-table tr:hover {
-    background-color: #f9f9f9;
-}
-
-table img {
-    width: 50px;
-    height: 50px;
+    vertical-align: middle;
+  }
+  
+  .recipe-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .recipe-table td img {
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 8px;
-}
-
-.edit-btn,
-.delete-btn {
-    background: none;
+  }
+  
+  .recipe-table td {
+    font-size: 0.9em;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
     border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 18px;
-}
-
-.edit-btn {
-    color: #007bff;
-}
-
-.delete-btn {
-    color: #ff4d4d;
-}
-
-.edit-btn:hover {
-    color: #0056b3;
-}
-
-.delete-btn:hover {
-    color: #cc0000;
-}
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }

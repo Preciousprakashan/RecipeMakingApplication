@@ -1,51 +1,101 @@
-import React from 'react';
-import { FaTrashAlt, FaEdit } from 'react-icons/fa'; // Import icons
-import './RecipeTable.css'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import AddRecipeForm from "../../pages/AddRecipe"; // Assuming AddRecipeForm is the form component
+import "./RecipeTable.css";
 
-const RecipeTable = () => {
-  const recipes = [
-    { name: 'Salad', image: 'salad.jpg', time: '10 min', likes: 60 },
-    { name: 'Soup', image: 'soup.jpg', time: '30 min', likes: 50 },
-    { name: 'Ice cream', image: 'icecream.jpg', time: '60 min', likes: 100 },
-    { name: 'Biriyani', image: 'biriyani.jpg', time: '90 min', likes: 150 },
-    { name: 'Noodles', image: 'noodles.jpg', time: '15 min', likes: 250 },
-    { name: 'Pizza', image: 'pizza.jpg', time: '20 min', likes: 30 },
-    { name: 'Burger', image: 'burger.jpg', time: '15 min', likes: 100 },
-    { name: 'Ice cream', image: 'icecream.jpg', time: '60 min', likes: 100 },
-    { name: 'Biriyani', image: 'biriyani.jpg', time: '90 min', likes: 150 },
-    { name: 'Noodles', image: 'noodles.jpg', time: '15 min', likes: 250 },
-  ];
+const RecipeList = () => {
+  const [recipes, setRecipes] = useState([]);
+  const [editingRecipe, setEditingRecipe] = useState(null); // Track the recipe being edited
+
+  useEffect(() => {
+    // Fetch recipes when the component is mounted
+    const fetchRecipes = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/recipe/dbRecipe");
+        if (response.data.success) {
+          setRecipes(response.data.data);
+        } else {
+          console.error("Error fetching recipes:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      // Send DELETE request to backend to delete the recipe
+      const response = await axios.delete(`http://localhost:5000/recipe/delete/${id}`);
+      
+      if (response.status === 200) {
+        // Remove deleted recipe from the state
+        setRecipes(recipes.filter((recipe) => recipe._id !== id));
+        alert("Recipe deleted successfully!");
+      }
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+      alert("Failed to delete recipe.");
+    }
+  };
+
+  // Function to handle editing a recipe
+  const handleEdit = (recipe) => {
+    setEditingRecipe(recipe); // Set the recipe to be edited
+  };
 
   return (
-    
-      <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Image</th>
-              <th>Cooking time</th>
-              <th>Likes</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recipes.map((recipe, index) => (
-              <tr key={index}>
-                <td>{recipe.name}</td>
-                <td>
-                  <img src={`images/${recipe.image}`} alt={recipe.name} />
-                </td>
-                <td>{recipe.time}</td>
-                <td>{recipe.likes}</td>
-                <td>
-                  <button className="edit-btn"> <FaEdit /></button>
-                  <button className="delete-btn"><FaTrashAlt /></button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <div className="recipe-list-container">
+      <h2>Recipe List</h2>
+      
+      {/* Show the AddRecipeForm for editing if editingRecipe is set */}
+      {editingRecipe ? (
+        <AddRecipeForm
+          initialRecipe={editingRecipe} // Pass the initial recipe data
+          setEditingRecipe={setEditingRecipe} // Allow the form to clear the editing state
+          setRecipes={setRecipes} // Update the recipes list after editing
+        />
+      ) : (
+        <div>
+          {recipes.length === 0 ? (
+            <p>No recipes found.</p>
+          ) : (
+            <table className="recipe-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Recipe</th>
+                  <th>Category</th>
+                  <th>Ingredients</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recipes.map((recipe) => (
+                  <tr key={recipe._id}>
+                    <td>
+                      <img src={recipe.image} alt={recipe.title} />
+                    </td>
+                    <td>{recipe.title}</td>
+                    <td>{recipe.category.join(", ")}</td>
+                    <td>{recipe.ingredients.map((ingredient) => ingredient.name).join(", ")}</td>
+                    <td>
+                      <div className="button-group">
+                        <button onClick={() => handleEdit(recipe)}>Update</button>
+                        <button onClick={() => handleDelete(recipe._id)}>Delete</button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
 
-export default RecipeTable;
+export default RecipeList;

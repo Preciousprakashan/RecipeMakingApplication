@@ -2,49 +2,115 @@
 const RecipeModel = require('../models/recipeData')
 const Wishlist = require('../models/wishlistData');
 const axios = require('axios');
+const { v2: cloudinary } = require("cloudinary");
+require('dotenv').config();
 //for admin
 // add recipe
-const addRecipe = async (req, res) => {
-    try {
-      const recipeData = req.body;
-      // Validate required fields
-      if (
-        !recipeData.title ||
-        !recipeData.category ||
-        !recipeData.descriptions ||
-        !recipeData.instructions ||
-        !recipeData.ingredients ||
-        !recipeData.readyInMinutes ||
-        !recipeData.servings
-      ) {
-        return res.status(400).json({ error: 'All fields are required.' });
-      }
-  
-      // Create and save the recipe
-      const newRecipe = new RecipeModel(recipeData);
-      await newRecipe.save();
-      res.status(201).json({ message: 'Recipe added successfully!', recipe: newRecipe });
-    } catch (error) {
-      res.status(500).json({ error: 'Error adding recipe' });
-    }
-  }
 
-//for admin
-// edit a recipe
-const editRecipe = async(req, res) => {
+// Cloudinary Configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+
+const addRecipe = async (req, res) => {
+
   try {
-    const requestData = req.body;
-    const id = req.params.id;
+    const { title, category, descriptions, instructions, vegetarian, readyInMinutes, servings, veryPopular } =
+      req.body;
+   
+    // Validate and parse ingredients
+    let ingredients = [];
+    try {
+      ingredients = JSON.parse(req.body.ingredients || "[]"); // Safely parse JSON
+    } catch (error) {
+      return res.status(400).json({ success: false, message: "Invalid ingredients JSON format" });
+    }
+
+    // Upload recipe image to Cloudinary
+    const recipeImage = req.files["recipeImage"]?.[0];
+    const recipeImageResult = await cloudinary.uploader.upload(recipeImage.path, {
+      folder: "recipes",
+    });
+
+    // Upload ingredient images to Cloudinary
+    const ingredientImages = req.files["ingredientImages"] || [];
+    const ingredientImageResults = await Promise.all(
+      ingredientImages.map((file) =>
+        cloudinary.uploader.upload(file.path, { folder: "ingredients" })
+      )
+    );
+
+    // Map uploaded ingredient images to ingredient data
+    ingredients = ingredients.map((ingredient, index) => ({
+      ...ingredient,
+      image: ingredientImageResults[index]?.secure_url || "",
+    }));
+
+    // Create a new recipe object
+    const newRecipe = new RecipeModel({
+      title,
+      category: category.split(","),
+      descriptions,
+      instructions,
+      vegetarian: vegetarian === "true", // Handle boolean input
+      readyInMinutes,
+      servings,
+      image: recipeImageResult.secure_url, // Recipe image URL
+      ingredients, // Array of ingredients with image URLs
+      veryPopular: veryPopular === "true",
+    });
+
+    // Save to MongoDB
+    await newRecipe.save();
+
+    res.status(200).json({ success: true, data: newRecipe });
+  } catch (error) {
+    console.error("Error adding recipe:", error);
+    res.status(500).json({ success: false, message: "Failed to add recipe." });
+  }
+}
+
+// Delete Recipe Function
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the recipe in the database by ID
     const recipe = await RecipeModel.findById(id);
-    if(!recipe) {
-      return res.status(403).send({message:"Recipe does not exist"});
-    } 
-    const updatedRecipe = await RecipeModel.findByIdAndUpdate(id, requestData);
-    res.status(200).send({message:"Recipe successfully updated"});
-  }catch (err) {
-    res.status(404).send({message:"error in updation"});
+
+    if (!recipe) {
+      return res.status(404).json({ success: false, message: "Recipe not found" });
+    }
+
+    // Delete the recipe image from Cloudinary
+    if (recipe.image) {
+      const publicId = recipe.image.split("/").pop().split(".")[0]; // Extract public_id
+      await cloudinary.uploader.destroy(publicId); // Delete the image from Cloudinary
+    }
+
+    // Delete all ingredient images from Cloudinary
+    if (recipe.ingredients && recipe.ingredients.length > 0) {
+      for (let ingredient of recipe.ingredients) {
+        if (ingredient.image) {
+          const ingredientPublicId = ingredient.image.split("/").pop().split(".")[0]; // Extract public_id
+          await cloudinary.uploader.destroy(ingredientPublicId); // Delete ingredient image from Cloudinary
+        }
+      }
+    }
+
+    // Delete the recipe from MongoDB
+    await RecipeModel.findByIdAndDelete(id);
+
+    res.status(200).json({ success: true, message: "Recipe deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting recipe:", error);
+    res.status(500).json({ success: false, message: "Failed to delete recipe." });
   }
-  }
+};
+
 
 //admin, user
 // get all recipies
@@ -364,6 +430,84 @@ const getRecipeByName = async(req, res) => {
 }
 
 
-module.exports = {addRecipe, getRecipeByIngredients, editRecipe, listRecipies,
-                   getRecipeById, getRecipeByCategory, getRecipesPopular,
-                    getRecipeByName}
+
+const dbRecipe= async(req,res)=>{
+  try {
+    const recipes = await RecipeModel.find(); // Fetch all recipes from the database
+    res.json({
+      success: true,
+      data: recipes,
+    });
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch recipes. Please try again later.",
+    });
+  }
+}
+
+//To Edit the recipe
+const updateRecipe = async (req, res) => {
+  try {
+    const recipeId = req.params.id;  // Get recipe ID from URL parameters
+    const { title, category, descriptions, instructions, vegetarian, readyInMinutes, servings, veryPopular, ingredients } = req.body;
+
+    // Validate and parse ingredients
+    let parsedIngredients = [];
+    try {
+      parsedIngredients = JSON.parse(ingredients || "[]");  // Safely parse ingredients JSON
+    } catch (error) {
+      return res.status(400).json({ success: false, message: "Invalid ingredients JSON format" });
+    }
+
+    // Find the existing recipe
+    const existingRecipe = await RecipeModel.findById(recipeId);
+    if (!existingRecipe) {
+      return res.status(404).json({ success: false, message: "Recipe not found" });
+    }
+
+    // Handle the recipe image update (if a new image is uploaded)
+    let recipeImageUrl = existingRecipe.image;  // Keep the old image if no new one is uploaded
+    if (req.files && req.files.recipeImage) {
+      const recipeImage = req.files["recipeImage"][0];
+      const result = await cloudinary.uploader.upload(recipeImage.path, { folder: "recipes" });
+      recipeImageUrl = result.secure_url;  // Update the recipe image URL
+    }
+
+    // Handle the ingredient image updates (if new ingredient images are uploaded)
+    let updatedIngredientImages = existingRecipe.ingredients;
+    if (req.files && req.files.ingredientImages) {
+      const ingredientImages = req.files["ingredientImages"] || [];
+      updatedIngredientImages = parsedIngredients.map((ingredient, index) => ({
+        ...ingredient,
+        image: ingredientImages[index]?.secure_url || ingredient.image,  // Update with new image URL
+      }));
+    }
+
+    // Update the existing recipe fields with the provided data (or keep the old ones if not provided)
+    existingRecipe.title = title || existingRecipe.title;
+    existingRecipe.category = category ? category.split(",") : existingRecipe.category;
+    existingRecipe.descriptions = descriptions || existingRecipe.descriptions;
+    existingRecipe.instructions = instructions || existingRecipe.instructions;
+    existingRecipe.vegetarian = vegetarian === "true" ? true : false;
+    existingRecipe.readyInMinutes = readyInMinutes || existingRecipe.readyInMinutes;
+    existingRecipe.servings = servings || existingRecipe.servings;
+    existingRecipe.veryPopular = veryPopular === "true" ? true : false;
+    existingRecipe.image = recipeImageUrl;
+    existingRecipe.ingredients = updatedIngredientImages;
+
+    // Save the updated recipe
+    await existingRecipe.save();
+
+    res.status(200).json({ success: true, data: existingRecipe });
+  } catch (error) {
+    console.error("Error updating recipe:", error);
+    res.status(500).json({ success: false, message: "Failed to update recipe." });
+  }
+};
+
+module.exports = {addRecipe, getRecipeByIngredients, listRecipies,deleteRecipe,updateRecipe,
+  getRecipeById, getRecipeByCategory, getRecipesPopular,
+   getRecipeByName, dbRecipe}
+   

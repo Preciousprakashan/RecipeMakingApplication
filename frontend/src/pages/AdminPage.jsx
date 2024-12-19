@@ -18,6 +18,10 @@ const AdminPage = () => {
 
     return (
         <div className={`manage-recipes ${isSidebarOpen ? '' : 'collapsed-sidebar'}`}>
+            {/* Logout Button */}
+            <button className="logout-btn">Logout</button>
+
+            {/* Sidebar */}
             <aside className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
                 <div className="profile">
                     <div className="avatar"></div>
@@ -31,9 +35,9 @@ const AdminPage = () => {
                         <li>Settings</li>
                     </ul>
                 </nav>
-                <button className="logout">Logout</button>
             </aside>
 
+            {/* Main Content */}
             <main className="content">
                 <header className="header">
                     <div className="menu-toggle">
@@ -43,11 +47,12 @@ const AdminPage = () => {
                             <MenuIcon onClick={toggleSidebar} />
                         )}
                     </div>
-                    <h1>Recipe List</h1>
+                </header>
+                <div className="recipe-actions">
                     <Button onClick={handleOpen} variant="contained" color="primary">
                         Add New Recipe
                     </Button>
-                </header>
+                </div>
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -56,9 +61,13 @@ const AdminPage = () => {
                 >
                     <Box className="modal-box">
                         <iframe
-                            src="/Add" // Replace with your URL
+                            src="/Add"
                             title="Add New Recipe"
-                            style={{ width: '100%', height: '100%', border: 'none' }}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                border: 'none',
+                            }}
                         ></iframe>
                     </Box>
                 </Modal>

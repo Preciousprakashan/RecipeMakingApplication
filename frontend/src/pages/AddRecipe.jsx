@@ -1,189 +1,308 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import '../styles/AddRecipe.css'; // Import the CSS file
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../styles/AddRecipe.css";
 
-const AddRecipe = () => {
-    const [recipeData, setRecipeData] = useState({
-        recipe: '',
-        category: '',
-        descriptions: '',
-        instructions: '',
-        analyzedInstructions: [{ number: 1, step: '' }],
-        vegetarian: false,
-        ingredients: [{ name: '', unit: '', amount: 0, image: '' }],
-        cookingTime: 0,
-        servings: 0,
+
+
+const AddRecipeForm = ({ initialRecipe, setEditingRecipe, setRecipes }) => {
+  const [recipeImage, setRecipeImage] = useState(null);
+  const [ingredients, setIngredients] = useState([
+    { name: "", unit: "", amount: "", image: null },
+  ]);
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    descriptions: "",
+    instructions: "",
+    analyzedInstructions: "",
+    vegetarian: false,
+    readyInMinutes: "",
+    servings: "",
+    veryPopular: false,
+  });
+
+  // Load data for updating recipe if recipeToEdit is provided
+  useEffect(() => {
+    if (initialRecipe) {
+      setFormData({
+        title: initialRecipe.title,
+        category: initialRecipe.category.join(", "),
+        descriptions: initialRecipe.descriptions,
+        instructions: initialRecipe.instructions,
+        analyzedInstructions: initialRecipe.analyzedInstructions,
+        vegetarian: initialRecipe.vegetarian,
+        readyInMinutes: initialRecipe.readyInMinutes,
+        servings: initialRecipe.servings,
+        veryPopular: initialRecipe.veryPopular,
+      });
+
+      setIngredients(
+        initialRecipe.ingredients.map((ingredient) => ({
+          name: ingredient.name,
+          unit: ingredient.unit,
+          amount: ingredient.amount,
+          image: null, // We don't pre-load ingredient images for update
+        }))
+      );
+      setRecipeImage(initialRecipe.recipeImage); // Set the existing recipe image if any
+    }
+  }, [initialRecipe]);
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
     });
+  };
 
-    const [message, setMessage] = useState('');
+  const handleRecipeImageChange = (e) => {
+    setRecipeImage(e.target.files[0]);
+  };
 
-    const handleRecipeChange = (field, value) => {
-        setRecipeData({ ...recipeData, [field]: value });
-    };
+  const handleIngredientChange = (index, field, value) => {
+    const updatedIngredients = [...ingredients];
+    updatedIngredients[index][field] = field === "image" ? value : value;
+    setIngredients(updatedIngredients);
+  };
 
-    const handleIngredientChange = (index, field, value) => {
-        const updatedIngredients = recipeData.ingredients.map((ingredient, i) =>
-            i === index ? { ...ingredient, [field]: value } : ingredient
-        );
-        setRecipeData({ ...recipeData, ingredients: updatedIngredients });
-    };
+  const handleAddIngredient = () => {
+    setIngredients([
+      ...ingredients,
+      { name: "", unit: "", amount: "", image: null },
+    ]);
+  };
 
-    const addIngredient = () => {
-        setRecipeData({
-            ...recipeData,
-            ingredients: [...recipeData.ingredients, { name: '', unit: '', amount: 0, image: '' }],
-        });
-    };
+  const handleRemoveIngredient = (index) => {
+    const updatedIngredients = ingredients.filter((_, i) => i !== index);
+    setIngredients(updatedIngredients);
+  };
 
-    const removeIngredient = (index) => {
-        const updatedIngredients = recipeData.ingredients.filter((_, i) => i !== index);
-        setRecipeData({ ...recipeData, ingredients: updatedIngredients });
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const submissionData = new FormData();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+      // Append recipe image
+      if (recipeImage) {
+        submissionData.append("recipeImage", recipeImage);
+      }
 
-        try {
-            const { data } = await axios.post('http://localhost:5001/api/recipes/add', recipeData);
-            setMessage(data.message);
-            setRecipeData({
-                recipe: '',
-                category: '',
-                descriptions: '',
-                instructions: '',
-                analyzedInstructions: [{ number: 1, step: '' }],
-                vegetarian: false,
-                ingredients: [{ name: '', unit: '', amount: 0, image: '' }],
-                cookingTime: 0,
-                servings: 0,
-            });
-        } catch (error) {
-            console.error(error);
-            setMessage('Error adding recipe.');
+      // Append ingredient images
+      ingredients.forEach((ingredient, index) => {
+        if (ingredient.image) {
+          submissionData.append("ingredientImages", ingredient.image);
         }
-    };
+      });
 
-    return (
-        <div className="add-recipe-container">
-            <h1>Add Recipe</h1>
-            {message && <p className="message">{message}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Recipe Name:</label>
-                    <input
-                        type="text"
-                        value={recipeData.recipe}
-                        onChange={(e) => handleRecipeChange('recipe', e.target.value)}
-                        required
-                    />
-                </div>
+      // Append ingredient data as a JSON string
+      submissionData.append("ingredients", JSON.stringify(ingredients));
 
-                <div>
-                    <label>Category:</label>
-                    <input
-                        type="text"
-                        value={recipeData.category}
-                        onChange={(e) => handleRecipeChange('category', e.target.value)}
-                        required
-                    />
-                </div>
+      // Append other fields
+      Object.keys(formData).forEach((key) => {
+        submissionData.append(key, formData[key]);
+      });
 
-                <div>
-                    <label>Descriptions:</label>
-                    <textarea
-                        value={recipeData.descriptions}
-                        onChange={(e) => handleRecipeChange('descriptions', e.target.value)}
-                        required
-                    />
-                </div>
+      // Check if we're updating or adding a new recipe
+      const url = initialRecipe
+        ? `http://localhost:5000/recipe/update/${initialRecipe._id}`
+        : "http://localhost:5000/recipe/add-recipe";
 
-                <div>
-                    <label>Instructions:</label>
-                    <textarea
-                        value={recipeData.instructions}
-                        onChange={(e) => handleRecipeChange('instructions', e.target.value)}
-                        required
-                    />
-                </div>
+      const method = initialRecipe ? "put" : "post";
 
-                <div>
-                    <label>Cooking Time (minutes):</label>
-                    <input
-                        type="number"
-                        value={recipeData.cookingTime}
-                        onChange={(e) => handleRecipeChange('cookingTime', e.target.value)}
-                        required
-                    />
-                </div>
+      // Submit the form
+      const response = await axios({
+        method,
+        url,
+        data: submissionData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-                <div>
-                    <label>Servings:</label>
-                    <input
-                        type="number"
-                        value={recipeData.servings}
-                        onChange={(e) => handleRecipeChange('servings', e.target.value)}
-                        required
-                    />
-                </div>
+      alert(`Recipe ${initialRecipe ? "updated" : "added"} successfully!`);
+      console.log(response.data);
+    
+    } catch (error) {
+      console.error("Error adding/updating recipe:", error);
+      alert("Failed to add/update recipe.");
+    }
+  };
 
-                <div>
-                    <label>Vegetarian:</label>
-                    <input
-                        type="checkbox"
-                        checked={recipeData.vegetarian}
-                        onChange={(e) => handleRecipeChange('vegetarian', e.target.checked)}
-                    />
-                </div>
-
-                <div className="ingredients-section">
-                    <h3>Ingredients</h3>
-                    {recipeData.ingredients.map((ingredient, index) => (
-                        <div key={index} className="ingredient-row">
-                            <input
-                                type="text"
-                                placeholder="Ingredient Name"
-                                value={ingredient.name}
-                                onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-                                required
-                            />
-                            <input
-                                type="text"
-                                placeholder="Unit (e.g., grams, cups)"
-                                value={ingredient.unit}
-                                onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                                required
-                            />
-                            <input
-                                type="number"
-                                placeholder="Amount"
-                                value={ingredient.amount}
-                                onChange={(e) => handleIngredientChange(index, 'amount', e.target.value)}
-                                required
-                            />
-                            <input
-                                type="text"
-                                placeholder="Image URL (optional)"
-                                value={ingredient.image}
-                                onChange={(e) => handleIngredientChange(index, 'image', e.target.value)}
-                            />
-                            <button
-                                type="button"
-                                className="remove-ingredient-button"
-                                onClick={() => removeIngredient(index)}
-                            >
-                                Remove Ingredient
-                            </button>
-                        </div>
-                    ))}
-                    <button type="button" onClick={addIngredient}>
-                        Add Ingredient
-                    </button>
-                </div>
-
-                <button type="submit">Add Recipe</button>
-            </form>
+  return (
+    <div className="add-recipe-form-container">
+      <h2 className="form-title">
+        {initialRecipe ? "Update Recipe" : "Add New Recipe"}
+      </h2>
+      <form className="add-recipe-form" onSubmit={handleSubmit} encType="multipart/form-data">
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            value={formData.title}
+            onChange={handleInputChange}
+            required
+          />
         </div>
-    );
+
+        <div className="form-group">
+          <label htmlFor="category">Category (comma-separated)</label>
+          <input
+            type="text"
+            name="category"
+            id="category"
+            value={formData.category}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="descriptions">Descriptions</label>
+          <textarea
+            name="descriptions"
+            id="descriptions"
+            value={formData.descriptions}
+            onChange={handleInputChange}
+            required
+          ></textarea>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="instructions">Instructions</label>
+          <textarea
+            name="instructions"
+            id="instructions"
+            value={formData.instructions}
+            onChange={handleInputChange}
+            required
+          ></textarea>
+        </div>
+
+        <div className="form-group checkbox-group">
+          <label htmlFor="vegetarian">
+            <input
+              type="checkbox"
+              name="vegetarian"
+              id="vegetarian"
+              checked={formData.vegetarian}
+              onChange={handleInputChange}
+            />
+            Vegetarian
+          </label>
+        </div>
+
+        {/* Checkbox for Very Popular */}
+        <div className="form-group checkbox-group">
+          <label htmlFor="veryPopular">
+            <input
+              type="checkbox"
+              name="veryPopular"
+              id="veryPopular"
+              checked={formData.veryPopular}
+              onChange={handleInputChange}
+            />
+            Very Popular
+          </label>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="readyInMinutes">Cooking Time (in minutes)</label>
+          <input
+            type="number"
+            name="readyInMinutes"
+            id="readyInMinutes"
+            value={formData.readyInMinutes}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="servings">Servings</label>
+          <input
+            type="number"
+            name="servings"
+            id="servings"
+            value={formData.servings}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="recipeImage">Recipe Image</label>
+          <input
+            type="file"
+            name="recipeImage"
+            id="recipeImage"
+            onChange={handleRecipeImageChange}
+            accept="image/*"
+          />
+        </div>
+
+        <div className="ingredient-section">
+          <h3>Ingredients</h3>
+          {ingredients.map((ingredient, index) => (
+            <div key={index} className="ingredient-form-group">
+              <div className="form-group">
+                <label htmlFor={`ingredient-name-${index}`}>Ingredient Name</label>
+                <input
+                  type="text"
+                  id={`ingredient-name-${index}`}
+                  value={ingredient.name}
+                  onChange={(e) => handleIngredientChange(index, "name", e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor={`ingredient-unit-${index}`}>Unit</label>
+                <input
+                  type="text"
+                  id={`ingredient-unit-${index}`}
+                  value={ingredient.unit}
+                  onChange={(e) => handleIngredientChange(index, "unit", e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor={`ingredient-amount-${index}`}>Amount</label>
+                <input
+                  type="number"
+                  id={`ingredient-amount-${index}`}
+                  value={ingredient.amount}
+                  onChange={(e) => handleIngredientChange(index, "amount", e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor={`ingredient-image-${index}`}>Ingredient Image</label>
+                <input
+                  type="file"
+                  id={`ingredient-image-${index}`}
+                  onChange={(e) => handleIngredientChange(index, "image", e.target.files[0])}
+                  accept="image/*"
+                />
+              </div>
+              <button
+                type="button"
+                className="remove-ingredient-btn"
+                onClick={() => handleRemoveIngredient(index)}
+              >
+                Remove Ingredient
+              </button>
+            </div>
+          ))}
+          <button type="button" className="add-ingredient-btn" onClick={handleAddIngredient}>
+            Add Ingredient
+          </button>
+        </div>
+
+        <button type="submit" className="submit-btn">
+          {initialRecipe ? "Update Recipe" : "Add Recipe"}
+        </button>
+      </form>
+    </div>
+  );
 };
 
-export default AddRecipe;
+export default AddRecipeForm;
