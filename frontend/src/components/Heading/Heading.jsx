@@ -11,8 +11,7 @@ const Heading = () => {
             <div className='details'>
                 {/* <div className="inner-div"> */}
                     <h1>Delicious <br/><span>Recipes</span></h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Find quick, flavorful recipes that bring joy to your kitchen. Simple, tasty, and perfect for any occasion!</p>
                     <Button className='recipe-button' onClick={()=>{navigate('/recipe-details')}}>View Recipies <IoIosPlayCircle/></Button>
                 {/* </div> */}
                 </div>
