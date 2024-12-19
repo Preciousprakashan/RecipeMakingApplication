@@ -40,7 +40,7 @@ const NavBar = () => {
             <b>Delizia</b>
           </div>
 
-          <div >
+          <div className='nav-link-cont'>
             <ul className='ul-list'>
               <li><a href="/" className='link'>Home</a></li>
               <li><a href="/recipe-details" className='link'>Recipies</a></li>
