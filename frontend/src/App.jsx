@@ -22,6 +22,7 @@ import SearchRecipe from './pages/SearchRecipe';
 import AboutUs from './pages/AboutUs';
 import { UserProvider } from './context/UserProvider';
 import PrivateRoute from './components/PrivateRoutes/PrivateRoutes';
+import SettingPage from './pages/SettingPage';
 
 function App() {
   // const [ingredients, setIngredients] = useState('');
@@ -91,7 +92,10 @@ function App() {
             element={<PrivateRoute roleRequired="user" element={Wishlist} />} 
           />
           {/* settings page */}
-
+          <Route 
+            path="/wishlist" 
+            element={<PrivateRoute roleRequired="user" element={SettingPage} />} 
+           />
 
           {/* admin */}
           <Route 

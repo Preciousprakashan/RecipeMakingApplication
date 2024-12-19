@@ -9,6 +9,7 @@ import RecipeCard from '../components/RecipeCard/RecipeCard';
 import { Button } from '@chakra-ui/react';
 import Footer from '../components/Foooter/Footer';
 import { FcLike } from "react-icons/fc";
+import { AiFillHeart } from 'react-icons/ai';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 const Wishlist = () => {
@@ -30,14 +31,14 @@ const Wishlist = () => {
         setRecipes(data.data.recipies.savedRecipies);
     }
     fetchAllRecipies();
-},[]);
+  }, []);
 
 const handleLikeToggle = async(id) => {
   const Token = localStorage.getItem('accessToken');
     if(!Token){
       alert('Login First to like recipies');
       return
-    }  
+    }
     console.log(Token);
     let recipeId = id;
     // if(!id) 
@@ -60,44 +61,45 @@ const handleLikeToggle = async(id) => {
             {
             // params:{userId},
             headers: {
-                'Authorization': `Bearer ${Token}`, // Attach Bearer token
-                'Content-Type': 'application/json' // Optional, for POST/PUT requests
-                     }
+              'Authorization': `Bearer ${Token}`, // Attach Bearer token
+              'Content-Type': 'application/json' // Optional, for POST/PUT requests
+            }
           });
         console.log(response.data.recipies.savedRecipies);
         setRecipes(response.data.recipies.savedRecipies);
-        }
-        // Update the state
-        // console.log(data.data.wishlistRecipes)
-
-        // setRecipes(data.data.wishlistRecipes)
-      }catch(err) {
-        console.log(err);
       }
-    
-}
+      // Update the state
+      // console.log(data.data.wishlistRecipes)
+
+      // setRecipes(data.data.wishlistRecipes)
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
   return (
-    <div>
+    <>
+
+      <div className="wishlist-container">
+        <NavBar />
         <div className="wishlist-page">
-            <NavBar/>
-            
-    
-       <div className="wishlist">
-       <FcLike size={'1.8rem'} color='#EFEFEF'/>
+          <div className="wishlist">
+            <AiFillHeart className="wishlist-icon" />
             <h1>Wishlist</h1>
-       </div>
+          </div>
         </div>
-        <h2>Your Favourites</h2>
+        <h2 className="wishlist-h2">Your Favourites</h2>
         <div className="recipies">
-                {recipes.map((recipe, index) => (
-                  <RecipeCard key={index} id={recipe._id} title={recipe.title}
-                          image={recipe.image} vegetarian={recipe.vegetarian}
-                          readyInMinutes={recipe.readyInMinutes} liked={true} 
-                          onLikeToggle={() => handleLikeToggle(recipe.recipeId)} />
-                ))}
-                </div>
-        <Footer/>
-    </div>
+          {recipes.map((recipe, index) => (
+            <RecipeCard key={index} id={recipe._id} title={recipe.title}
+              image={recipe.image} vegetarian={recipe.vegetarian}
+              readyInMinutes={recipe.readyInMinutes} liked={true}
+              onLikeToggle={() => handleLikeToggle(recipe.recipeId)} />
+          ))}
+        </div>
+      </div>
+      <Footer />
+    </>
   )
 }
 

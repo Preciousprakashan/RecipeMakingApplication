@@ -343,14 +343,83 @@ h2 {
 
 
 
+
+
+
+
+
 /*  Wishlist Page */
 
-.wishlist-page {
-  width: 100%;
-  /* height: 28rem; */
-  padding: 0;
-  margin: 0;
+/* General container styles */
+.wishlist-container {
+  margin-top: 15px;
+  font-family: Arial, sans-serif; /* Set font */
+  line-height: 1.6; /* Line height for readability */
+  color: #333; /* Text color */
+}
 
+.wishlist-page {
+  padding-top: 125px;
+  width: 100%;
+  height: auto;
+}
+
+/* Header Title */
+.wishlist h1 {
+  font-size: 3.5rem; /* Large font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 20px; /* Margin below */
+  letter-spacing: 2px; /* Space between letters */
+  animation: fadeInDown 1s ease-in-out; /* Animation */
+  text-align: center; /* Center the heading */
+}
+
+/* Responsive header for smaller devices */
+@media (max-width: 768px) {
+  .wishlist h1 {
+    font-size: 2.5rem; /* Reduce font size for smaller screens */
+    letter-spacing: 1px; /* Reduce spacing */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist h1 {
+    font-size: 2rem; /* Reduce font size further for mobile */
+  }
+}
+
+.wishlist-h2 {
+  text-align: center;
+  font-size: 2.5rem; /* Large font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 20px; /* Margin below */
+  color: #ed8936;
+  position: relative; /* For positioning the pseudo-element */
+}
+
+.wishlist-h2::after {
+  content: ''; 
+  position: absolute;
+  left: 50%; 
+  bottom: -3px; /* Distance from the text */
+  transform: translateX(-50%); /* Center it horizontally */
+  width: 30%; /* Width of the underline (adjust as needed) */
+  height: 4px; /* Thickness of the underline */
+  background-color: #ed8936; /* Color of the underline */
+  border-radius: 2px; /* Rounds the edges of the underline */
+}
+
+/* Responsive font size for H2 */
+@media (max-width: 768px) {
+  .wishlist-h2 {
+    font-size: 2rem; /* Adjust font size for tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-h2 {
+    font-size: 1.8rem; /* Smaller font size for mobile */
+  }
 }
 
 .wishlist-page .wishlist {
@@ -361,6 +430,70 @@ h2 {
   padding: 4rem;
 }
 
+/* Adjust padding for smaller devices */
+@media (max-width: 768px) {
+  .wishlist-page .wishlist {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-page .wishlist {
+    padding: 1rem;
+  }
+}
+
+/* Default style for the icon */
+.wishlist-icon {
+  transition: color 0.3s ease; /* Smooth transition for color change */
+  font-size: 3.8rem; 
+  color: #e36a6a;
+  animation: fadeInDown 1.5s ease-in-out; /* Animation */ 
+}
+
+/* Hover effect to fill the color */
+.wishlist-icon:hover {
+  color: #ff0400; /* Change to the color you desire on hover */
+}
+
+/* Make the icon responsive */
+@media (max-width: 768px) {
+  .wishlist-icon {
+    font-size: 3rem; /* Slightly smaller icon size for tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-icon {
+    font-size: 2.5rem; /* Smaller icon size for mobile */
+  }
+}
+
+/* Responsive container layout */
+.wishlist-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .wishlist-container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-container {
+    padding: 0 10px;
+  }
+}
+
+
+
+
+
+
 /* recipe by category */
 
 .category-page {
@@ -368,15 +501,18 @@ h2 {
   height: 30rem;
   padding-bottom: 4rem;
   margin: 0;
-  background-color: #FFAD65;
-  border-bottom-left-radius: 40rem;
-  border-bottom-right-radius: 40rem;
-  
+  background-color:transparent;
   margin-bottom: 8rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1430' height='835' viewBox='0 0 1430 835' fill='none'%3E%3Cpath d='M-10 -26H1430V717.332C885.399 877.384 508.5 870.5 -10 717.332V-26Z' fill='%23FBD690'/%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  position: relative;
+  margin-bottom: 200px;
 }
 
+
 .category-container {
-  /* background-color: red; */
   padding: 0;
   margin: 0;
   padding-top: 5rem;
@@ -385,45 +521,28 @@ h2 {
   height: 80%;
   flex-direction: column;
   align-items: center;
-  /* margin-top: -150px; */
-  /* display: flex;
-    justify-content: center;
-    align-items: flex-end; */
-  /* height: 80%; */
-  /* padding: 4rem; */
-  /* padding: 4rem; */
-  /* margin-top: 12rem; */
 
 }
 
+
 .nav-heading-container {
-  /* height: 74%;
-  width: 100%; */
-  /* background: #FFAD65; */
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   width: 100%;
-
-  /* margin: 10px; */
-  /* padding-top: 70px; */
-  /* curved edge at the bottom */
-  /* mask: radial-gradient(80% 100% at 50% -78%,#0000 calc(100% - 2px),#000); */
-  /* rounded edge at the top */
-  /* clip-path: ellipse(80% 100% at top); */
+  color: black;
 }
 
 .category-container img {
-
+  margin-top: -25px;
   border-radius: 40rem;
-  /* align-self: start; */
-  height: 16rem;
-  width: 16rem;
+  height: 20rem;
+  width: 20rem;
   position: relative;
-
-  /* margin: 10rem; */
+  filter: drop-shadow(-10px 10px 10px rgba(0, 0, 0, 0.3)); /* Left-bottom shadow */
 }
+
 
 .nav-heading-container .category-name {
   padding-top: 6rem;
@@ -431,6 +550,13 @@ h2 {
   justify-content: center;
 }
 
-.nav-heading-container .category-name h1 {
-  color: white;
+.category-name h1 {
+  font-weight: 600;
+  padding-top: 100px;
+  color: black; /* Default text color */
 }
+
+.category-name h1 .first-word {
+  color: white; /* First word color */
+}
+
