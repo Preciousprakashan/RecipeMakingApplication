@@ -173,21 +173,18 @@ body {
 
 
 .recipe-main-conatiner-description {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8); 
+    background-image: url('ingredients.svg'); 
+    background-size: cover; 
+    background-blend-mode: overlay; 
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     width: 75%;
     border-radius: 40px;
     height: auto;
     padding: 50px;
-    position: absolute;
-    top: calc(450px);
-    left: 50%;
-    transform: translate(-50%);
-    background-color: rgba(255, 255, 255, 0.8); /* Adds transparency to the white background */
-    background-image: url('ingredients.svg'); /* Replace with your image path */
-    background-size: cover; /* Ensures the image covers the entire div */
-    background-blend-mode: overlay; /* Blends the background color and image */
-    
+    position: relative; /* Use relative to stay in document flow */
+    margin: -150px auto; /* Adds space around the container */
+    margin-bottom: 30px;
 }
 
 .recipe-main-description-title {
@@ -422,5 +419,51 @@ ul {
 
     .ingredient img {
         margin-right: 0;
+    }
+}
+
+
+
+.similar-h2 {
+    text-align: center;
+    font-size: 2.5rem; /* Large font size */
+    font-weight: bold; /* Bold text */
+    color: #ed8936;
+    position: relative; /* For positioning the pseudo-element */
+}
+
+/* Add responsiveness to the text size and underline width */
+.similar-h2::after {
+    content: ''; 
+    position: absolute;
+    left: 50%; 
+    bottom: -3px; /* Distance from the text */
+    transform: translateX(-50%); /* Center it horizontally */
+    width: 5%; /* Width of the underline (adjust as needed) */
+    height: 4px; /* Thickness of the underline */
+    background-color: #ed8936; /* Color of the underline */
+    border-radius: 2px; /* Rounds the edges of the underline */
+}
+
+/* Media query for tablets and medium screens */
+@media (max-width: 768px) {
+    .similar-h2 {
+        font-size: 2rem; /* Smaller font size */
+    }
+
+    .similar-h2::after {
+        width: 15%; /* Increase the width of the underline for medium screens */
+    }
+}
+
+/* Media query for small screens (phones) */
+@media (max-width: 480px) {
+    .similar-h2 {
+        font-size: 1.5rem; /* Even smaller font size for small screens */
+    }
+
+    .similar-h2::after {
+        width: 20%; /* Make the underline a bit wider for small screens */
+        height: 3px; /* Adjust thickness of the underline for small screens */
     }
 }

@@ -9,8 +9,9 @@
     transition: background-color 0.1s ease, font-weight 0.1s ease;
   }
   
-  .container {
-    margin-top: 50px;
+  .container-texttospeech{
+    margin-top: 30px;
+    margin-bottom: 30px;
     position: relative;
     width: 100%;
     height: auto;
