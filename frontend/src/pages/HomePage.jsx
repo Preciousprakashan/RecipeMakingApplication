@@ -54,9 +54,9 @@ const HomePage = () => {
   
   //manual data for categories 
   const categories = [
-    {categoryName:'Main Course',image:''},
+    {categoryName:'Main Course',image:'../../assets/main-course.svg'},
     // {categoryName:'Side Dish',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Dessert',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Dessert',image:'../../assets/dessert.svg'},
     // {categoryName:'Appetizer',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
     // {categoryName:'Salad',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
     // {categoryName:'Bread',image:'/assets/c_bread.png'},
@@ -67,7 +67,7 @@ const HomePage = () => {
     // {categoryName:'Marinade',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
     // {categoryName:'Fingerfood',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
     // {categoryName:'Brsnackead',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Drink',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Drink',image:'../../assets/drinks.svg'},
   ]
   useEffect( () => {
       try {
