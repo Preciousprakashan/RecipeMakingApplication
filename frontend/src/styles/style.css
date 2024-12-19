@@ -127,10 +127,12 @@ h2 {
 }
 
 .recipies {
+  margin-top: 30px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 30px;
 }
 
 .ingredients {

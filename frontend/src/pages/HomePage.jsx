@@ -51,43 +51,22 @@ const HomePage = () => {
     // console.log(recipeData)
   }
   const [recipes, setRecipes] = useState([]);
-  // const [recipeData, setRecipeData] = useState([
-  //   {
-  //     id: 1,
-  //     name: "laddoo",
-  //     liked: true
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "laddoo",
-  //     liked: true
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "laddoo",
-  //     liked: false
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "laddoo",
-  //     liked: true
-  //   }
-  // ])
+  
   //manual data for categories 
   const categories = [
-    {categoryName:'Main Course',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Side Dish',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    {categoryName:'Main Course',image:''},
+    // {categoryName:'Side Dish',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
     {categoryName:'Dessert',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Appetizer',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Salad',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Bread',image:'/assets/c_bread.png'},
-    {categoryName:'Breakfast',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Soup',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Beverage',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Sauce',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Marinade',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Fingerfood',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
-    {categoryName:'Brsnackead',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Appetizer',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Salad',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Bread',image:'/assets/c_bread.png'},
+    // {categoryName:'Breakfast',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Soup',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Beverage',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Sauce',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Marinade',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Fingerfood',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
+    // {categoryName:'Brsnackead',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
     {categoryName:'Drink',image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRctW6VehR_7hZs1Otw73v-3P_SyJ5S0yzGug&s'},
   ]
   useEffect( () => {
@@ -117,12 +96,12 @@ const HomePage = () => {
         <Heading />
 
         <div className="grp-cards1">
-          <h2>Categories</h2>
+          {/* <h2>Categories</h2>
           <div className="card-collection">
           {categories.map((category, index) => 
               <Cards key={index} name={category.categoryName} image={category.image} />
           )}
-          </div>
+          </div> */}
 
           <h2>Editor's Choice</h2>
           <div className='card-collection'>
