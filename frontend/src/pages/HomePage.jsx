@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import NavBar from '../components/NavBar/NavBar'
 import Heading from '../components/Heading/Heading'
 import Cards from '../components/Card/Cards'
@@ -7,17 +7,21 @@ import Footer from '../components/Foooter/Footer'
 import '../styles/style.css'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
+import { UserContext } from '../context/UserProvider';
+
 const HomePage = () => {
   // const [likes, setLikes] = useState([]);
   const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const { userId, role, token } = useContext(UserContext); // Accessing user data from UserContext
   const handleLikeToggle = async(id,apiId, currentLikeStatus) => {
     const Token = localStorage.getItem('accessToken');
     if(!Token){
       alert('Login First to like recipies');
       return
     }  
-    console.log(Token);
-    console.log(currentLikeStatus, !currentLikeStatus)
+    console.log(token);
+    console.log(userId, role);
+    console.log(currentLikeStatus, !currentLikeStatus);
     let recipeId = id;
     if(!id) 
       recipeId = apiId

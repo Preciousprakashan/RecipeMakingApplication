@@ -29,8 +29,11 @@ const Loginpage = () => {
         console.log(response.data.role)
         if(response.data.role === 'admin') {
             navigate('/admin-page'); // Redirect to protected route after login
+            window.location.reload();
         } else {
             navigate('/')
+            window.location.reload();
+
         }
       }
       localStorage.setItem('access_token',response.access_token);
@@ -167,7 +170,7 @@ const Loginpage = () => {
                 Remember me
               </Typography>
             </Box> */}
-            <Link
+            {/* <Link
               href="#"
               underline="none"
               sx={{
@@ -176,7 +179,7 @@ const Loginpage = () => {
               }}
             >
               Forgot password?
-            </Link>
+            </Link> */}
           </Box>
 
           <Button
@@ -200,7 +203,7 @@ const Loginpage = () => {
             Login
           </Button>
 
-          <Button
+          {/* <Button
             variant="outlined"
             fullWidth
             startIcon={<GoogleIcon />}
@@ -217,7 +220,7 @@ const Loginpage = () => {
             }}
           >
             Sign in with Google
-          </Button>
+          </Button> */}
 
           <Typography
             sx={{

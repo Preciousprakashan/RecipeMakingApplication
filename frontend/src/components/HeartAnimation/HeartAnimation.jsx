@@ -8,7 +8,7 @@ const HeartAnimation = ({id, liked, onLikeToggle}) => {
         <input
           type="checkbox"
           id={id}
-          // key={id}
+          key={id}
           className="checkbox"
           checked={liked}
           onChange={() => onLikeToggle(id, !liked)}

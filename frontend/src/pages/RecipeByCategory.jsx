@@ -11,6 +11,8 @@ import { Button } from '@chakra-ui/react';
 import Footer from '../components/Foooter/Footer';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+
+
 const RecipeByCategory = () => {
   const location = useLocation();
   const [category, setCategory] = useState(location.state.name);
@@ -19,8 +21,8 @@ const RecipeByCategory = () => {
   const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   useEffect(() => {
-    try{
-      const fetchRecipeByCategory = async() => {
+    try {
+      const fetchRecipeByCategory = async () => {
         console.log(category)
         const response = await axios.get(`${baseUrl}/recipe-by-category`,
         {params:{category}});
@@ -28,36 +30,36 @@ const RecipeByCategory = () => {
           setRecipes(response.data.recipeDetails);
       }
       fetchRecipeByCategory();
-    }catch(err) {
+    } catch (err) {
       console.log(err);
     }
-  },[])
+  }, [])
   return (
     <>
-        <div className="category-page">
-            {/* <div className='category-contents'> */}
-                <div className='nav-heading-container'>
-                      <NavBar/>
+      <div className="category-page">
+        {/* <div className='category-contents'> */}
+        <div className='nav-heading-container'>
+          <NavBar />
 
-                  <div className='category-name'>
-                      <h1>{category}</h1>
-                  </div>
-                </div>
-                <div className="category-container">
-                      <img className='img-center' src={image} alt="1.png" />
-                 </div>
-    {/* </div> */}
-    
+          <div className='category-name'>
+            <h1>{category}</h1>
+          </div>
         </div>
-       
-        <div className="recipies">
+        <div className="category-container">
+          <img className='img-center' src={image} alt="1.jpg" />
+        </div>
+        {/* </div> */}
+
+      </div>
+
+      <div className="recipies">
         {recipes.map((recipe, index) => {
-              return <RecipeCard key={index} title={recipe.title} readyInMinutes={recipe.readyInMinutes} vegetarian={recipe.vegetarian} image={recipe.image}/>
-        },[])}
-           
+          return <RecipeCard key={index} title={recipe.title} readyInMinutes={recipe.readyInMinutes} vegetarian={recipe.vegetarian} image={recipe.image} />
+        }, [])}
 
-        </div>
-        <Footer/>
+
+      </div>
+      <Footer />
     </>
   )
 }

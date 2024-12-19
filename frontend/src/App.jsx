@@ -20,70 +20,93 @@ import Recipe from './pages/Recipe';
 import AddRecipe from './pages/AddRecipe';
 import SearchRecipe from './pages/SearchRecipe';
 import AboutUs from './pages/AboutUs';
+import { UserProvider } from './context/UserProvider';
+import PrivateRoute from './components/PrivateRoutes/PrivateRoutes';
 
 function App() {
-  const [ingredients, setIngredients] = useState('');
-  const [recipes, setRecipes] = useState([]);
-  const [recipe, setRecipe] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  // const [ingredients, setIngredients] = useState('');
+  // const [recipes, setRecipes] = useState([]);
+  // const [recipe, setRecipe] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState('');
 
-  const handleSearch = async () => {
-    if (!ingredients.trim()) {
-      return;
-    }
+  // const handleSearch = async () => {
+  //   if (!ingredients.trim()) {
+  //     return;
+  //   }
 
-    setLoading(true);
-    setError('');
+  //   setLoading(true);
+  //   setError('');
 
-    try {
-      // Make a request to the Node.js backend
-      const response = await axios.get(`http://localhost:5000/recipes`, {
-        params: { ingredients },
-      });
+  //   try {
+  //     // Make a request to the Node.js backend
+  //     const response = await axios.get(`http://localhost:5001/recipes`, {
+  //       params: { ingredients },
+  //     });
 
-      // Store the recipes data in the state
-      console.log(response.data);
-      setRecipes(response.data);
-    } catch (err) {
-      setError('Error fetching recipes');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     // Store the recipes data in the state
+  //     console.log(response.data);
+  //     setRecipes(response.data);
+  //   } catch (err) {
+  //     setError('Error fetching recipes');
+  //     console.error(err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const handleViewRecipe = async(id) => {
-    console.log(id);
-    try{
-      const response = await axios.get('http://localhost:5000/get-recipe-by-id/'+id);
-      // if(response){
-        console.log("hii")
-        console.log(response)
-        setRecipe(response.data);
-      // }
-    }catch(err){
-        console.log(err);
-      }
-    }
+  // const handleViewRecipe = async(id) => {
+  //   console.log(id);
+  //   try{
+  //     const response = await axios.get('http://localhost:5001/get-recipe-by-id/'+id);
+  //     // if(response){
+  //       console.log("hii")
+  //       console.log(response)
+  //       setRecipe(response.data);
+  //     // }
+  //   }catch(err){
+  //       console.log(err);
+  //     }
+  //   }
    
   return (
-    <div className="App">
+    <UserProvider>
+        <div className="App">
 
-    <Routes>
-      <Route path='/' element={<HomePage/>}/>
-      <Route path='/recipe-details' element={<RecipeDetailsPage/>}/>
-      <Route path='/login' element={<Loginpage/>}/>
-      <Route path='/sign-up' element={<SignUppage/>}/>
-      <Route path='/wishlist' element={<Wishlist/>}/>
-      <Route path='/recipe-by-category' element={<RecipeByCategory/>}/>
-      <Route path='/admin-page' element={<AdminPage/>}/>
-      <Route path='/recipe' element={<Recipe/>}/>
-      <Route path="/searchRecipe" element={<SearchRecipe />} />
-      <Route path="/add" element={<AddRecipe />} />
-      <Route path="/aboutus" element={<AboutUs/>} />
-    </Routes>
-    </div>
+        <Routes>
+          <Route path='/' element={<HomePage/>}/>
+          <Route path='/recipe-details' element={<RecipeDetailsPage/>}/>
+          <Route path='/login' element={<Loginpage/>}/>
+          <Route path='/sign-up' element={<SignUppage/>}/>
+          <Route path='/recipe-by-category' element={<RecipeByCategory/>}/>
+          <Route path='/recipe' element={<Recipe/>}/>
+          {/* <Route path="/searchRecipe" element={<SearchRecipe />} /> */}
+          <Route path="/aboutus" element={<AboutUs/>} />
+
+           {/* Private Routes (Protected) */}
+
+            {/* user */}
+            <Route 
+            path="/wishlist" 
+            element={<PrivateRoute roleRequired="user" element={Wishlist} />} 
+          />
+          {/* settings page */}
+
+
+          {/* admin */}
+          <Route 
+            path="/admin-page" 
+            element={<PrivateRoute roleRequired="admin" element={AdminPage} />} 
+          />
+          <Route 
+            path="/add" 
+            element={<PrivateRoute roleRequired="admin" element={AddRecipe} />} 
+          />
+          
+
+        </Routes>
+        </div>
+    </UserProvider>
   );
 }
 

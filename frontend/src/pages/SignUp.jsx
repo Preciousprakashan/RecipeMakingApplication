@@ -2,16 +2,77 @@ import React, { useState } from 'react';
 import { TextField, Button, Typography, Box, Grid, Link } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Link as RouterLink } from 'react-router-dom';
+import axios from 'axios';
 
 const SignUppage = () => {
+  const [fullName, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  const handleSignUp = (e) => {
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const handleSignUp = async(e) => {
     e.preventDefault();
-    console.log('Username:', username, 'Email:', email, 'Password:', password, 'Confirm Password:', confirmPassword);
+    console.log('Fullname:', fullName,'Username:', username, 'Email:', email, 'Password:', password, 'Confirm Password:', confirmPassword);
+// Validate that all fields are filled
+    if (!fullName || !username || !email || !password || !confirmPassword) {
+      setError('All fields are required!');
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    // Validate password and confirm password match
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    // Reset error and show success message
+    setError('');
+    setSuccess('Registration successful!');
+
+    // You can send the form data to an API or do additional handling here
+    try {
+      // Send the registration data to the backend API
+      const response = await axios.post(`${baseUrl}/register`, {
+        fullName,
+        userName:username,
+        emailId:email,
+        password
+      });
+      
+      // Success response
+      if (response.data) {
+        setSuccess('Registration successful! You can now log in.');
+        setError('');
+        // Optionally store the token in localStorage
+        // localStorage.setItem('token', response.data.token);
+      }
+    } catch (err) {
+      // Handle error response
+      if (err.response) {
+        setError(err.response.data.message || 'An error occurred');
+      } else {
+        setError('Something went wrong, please try again later');
+      }
+      setSuccess('');
+    }
+
+    // Clear the form fields
+    setFullName('');
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+  
   };
 
   return (
@@ -92,13 +153,28 @@ const SignUppage = () => {
           >
             SIGN UP
           </Typography>
-
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {success && <p style={{ color: 'green' }}>{success}</p>}
+          <TextField
+            label="Fullname"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={fullName}
+            required
+            onChange={(e) => setFullName(e.target.value)}
+            sx={{
+              backgroundColor: '#E7E4AB',
+              borderRadius: '8px',
+            }}
+          />
           <TextField
             label="Username"
             variant="outlined"
             fullWidth
             margin="normal"
             value={username}
+            required
             onChange={(e) => setUsername(e.target.value)}
             sx={{
               backgroundColor: '#E7E4AB',
@@ -112,6 +188,7 @@ const SignUppage = () => {
             fullWidth
             margin="normal"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
             sx={{
               backgroundColor: '#E7E4AB',
@@ -126,6 +203,7 @@ const SignUppage = () => {
             fullWidth
             margin="normal"
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
             sx={{
               backgroundColor: '#E7E4AB',
@@ -140,6 +218,7 @@ const SignUppage = () => {
             fullWidth
             margin="normal"
             value={confirmPassword}
+            required
             onChange={(e) => setConfirmPassword(e.target.value)}
             sx={{
               backgroundColor: '#E7E4AB',
@@ -168,7 +247,7 @@ const SignUppage = () => {
             Sign up
           </Button>
 
-          <Button
+          {/* <Button
             variant="outlined"
             fullWidth
             startIcon={<GoogleIcon />}
@@ -185,7 +264,7 @@ const SignUppage = () => {
             }}
           >
             Sign in with Google
-          </Button>
+          </Button> */}
 
           <Typography
             sx={{

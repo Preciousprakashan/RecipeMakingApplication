@@ -67,6 +67,7 @@ const listRecipies = async (req, res) => {
     normalizedDbRecipes.push(...recipeFromApi.data.recipes);
       res.status(200).send({message:"successfull", recipes:normalizedDbRecipes });
   }catch(err) {
+    console.log(err)
       res.status(404).send({message:"Error in getting recipies"});
   }
 }
@@ -77,6 +78,9 @@ const listRecipies = async (req, res) => {
 const getRecipeById = async(req, res) => {
   try {
       const id = req.params.id;
+      const userId = req.query.userId;
+      console.log(id)
+      console.log(req.query.userId)
       let recipe, response, relatedRecipes;
         // MongoDB ObjectId: 24-character hexadecimal string
       if(!/^[a-fA-F0-9]{24}$/.test(id)) {// Checks if it's a valid MongoDB ObjectId
@@ -101,9 +105,19 @@ const getRecipeById = async(req, res) => {
       if(!recipe) {
         return res.status(403).send({message:"Recipe does not exist"});
       }
-       
+      //if a user is logged in
+      if(userId){
+          const isLiked = await Wishlist.exists({ userId, savedRecipies: { $elemMatch: { recipeId: recipe._id } } });// Match recipeId in the array of objects
+          console.log(isLiked)
+          
+          const recipeObj = recipe.toObject(); // Convert Mongoose document to plain object
+          recipeObj.isLiked = isLiked ? true : false;
+          recipe = recipeObj;
+      }
+      console.log(recipe)
       res.status(200).send({message:"successfull", recipeData:{recipe,relatedRecipes}});
   }catch(err) {
+    console.log(err)
       res.status(404).send({message:"error in getting recipe details"});
   }
 }
@@ -127,12 +141,19 @@ const getRecipeByIngredients = async (req, res) => {
             }
           }
         },
+          {
+            // Add 'id' field with the same value as '_id' (converted to string)
+            $addFields: {
+              id: { $toString: "$_id" }
+            }
+        },
         {
           // Project to include the list of matched ingredients and calculate missed ingredients
           $project: {
             title: 1,
             ingredients: 1,
             image:1,
+            id:1,
             usedIngredients: {
               $filter: {
                 input: "$ingredients",
@@ -209,9 +230,34 @@ const getRecipeByIngredients = async (req, res) => {
         }
       );
       const recipeFromAPI = response.data;
+      console.log(recipes);
       recipes.push(...recipeFromAPI);
+
+      //get like status of recipies
+    //   const recipesWithLikeStatus = await Promise.all(
+    //     recipes.map(async (recipe) => {
+    //         // Check if the recipe is from your database or external
+    //         const recipeId = recipe._id || recipe.id;  // If _id exists (MongoDB), use it; otherwise, use recipe.id (for external)
+    
+    //         // Check if the recipe is in the wishlist
+    //         let isLiked = false;
+    //         if (recipeId) {
+    //             isLiked = await Wishlist.exists({
+    //                 userId,
+    //                 savedRecipies: { $elemMatch: { recipeId: recipeId } } // Match recipeId in the array of objects
+    //             });
+    //         }
+    
+    //         return {
+    //             ...recipe.toObject(),  // Convert Mongoose document to plain object
+    //             isLiked: !!isLiked,    // Add a boolean flag to show if it's liked
+    //         };
+    //     })
+    // );
+    
       res.json({ message:'successfull', recipes });
     } catch (error) {
+      console.log(error)
       res.status(500).json({ error: 'Error searching for recipes' });
     }
   }
@@ -297,10 +343,12 @@ const getRecipeByName = async(req, res) => {
             const isLiked = await Wishlist.exists({ userId, savedRecipies: { $elemMatch: { recipeId: recipe._id } } });// Match recipeId in the array of objects
             return {
                 ...recipe.toObject(),
+                id: recipe._id.toString(),
                 isLiked: !!isLiked, // Add a boolean flag to show if it's liked
             };
         })
     );
+      
       recipeDetails = recipesWithLikeStatus;
       return res.status(200).send({message:"successfull", recipeDetails});
   }else {

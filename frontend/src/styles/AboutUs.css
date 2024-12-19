@@ -11,7 +11,7 @@
 .about-header {
   position: relative;
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("../../public/assets/1.jpg") no-repeat center center/cover;
+    url("../../assets/1.jpg") no-repeat center center/cover;
   color: white;
   height: 100vh;
   width: 100%;
@@ -319,7 +319,7 @@ span[data-scrolldown="true"] {
   align-items: center;
   padding: 50px 20px;
   background-color: #ffffff;
-  background-image: url('../../public/assets/bg2.jpg');
+  background-image: url('../../assets/bg2.jpg');
   /* Background PNG Image */
   background-size: cover;
   background-position: center;
@@ -536,7 +536,7 @@ span[data-scrolldown="true"] {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   position: relative;
   bottom: -50px;
-  background-image: url('../../public/assets/bg.jpg');/* Background PNG Image */
+  background-image: url('../../assets/bg.jpg');/* Background PNG Image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import "../styles/Recipe.css";
 import HeartAnimation from "../components/HeartAnimation/HeartAnimation";
 import TextToSpeech from '../components/TextToSpeech/TextToSpeech';
 import CopyToClipboard from '../components/CopytoClipboard/CopyToClipboard';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../context/UserProvider';
+import { jwtDecode } from 'jwt-decode';
+import RecipeCard from '../components/RecipeCard/RecipeCard';
 
 const Ingredient = ({ name, count, image }) => {
     return (
@@ -26,21 +29,31 @@ const Recipe = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Check initial screen size
     // Update isMobile state on window resize
     const location = useLocation();
-    console.log(location.state)
+    console.log(location.state);
     const id = location.state;
     const [recipe, setRecipe] = useState({});
     const [ingredients, setIngredients] = useState([]); 
     const [instructions, setInstructions] = useState([]);
+    const [relatedRecipes, setRelatedRecipes] = useState([]);
+    const {userId, token} = useContext(UserContext);
+    console.log(userId)
     const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
     
     useEffect(() => {
         //get recipe  by id
         const getRecipeById = async() => {
-            const response = await axios.get(`${baseUrl}/recipe/recipe-details/${id}`);
+            let userId = null;
+            if(token){
+                 userId = jwtDecode(localStorage.getItem('accessToken')).user._id;
+            }
+            console.log(userId)
+            const response = await axios.get(`${baseUrl}/recipe-details/${id}`,{params:{userId}});
             setIngredients(response.data.recipeData.recipe.ingredients)
             setInstructions(response.data.recipeData.recipe.analyzedInstructions)
             console.log(response.data.recipeData.recipe)
+            console.log(response.data.recipeData.relatedRecipes)
             setRecipe(response.data.recipeData.recipe)
+            setRelatedRecipes(response.data.recipeData.relatedRecipes)
         }
         getRecipeById();
         const handleResize = () => {
@@ -51,6 +64,41 @@ const Recipe = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const handleLikeToggle = async(id, currentLikeStatus) => {
+        const Token = localStorage.getItem('accessToken');
+        if(!Token){
+          alert('Login First to like recipies');
+          return
+        }
+        console.log(Token);
+        console.log(currentLikeStatus, !currentLikeStatus)
+        console.log(id)
+        // let recipeId = id;
+        // if(!id) 
+        //   recipeId = apiId
+        // console.log(recipeId)
+        try{
+            await axios.post(`${baseUrl}/add-wishlist`,
+              // Pass headers as the third argument
+              {recipeId:id},
+              {
+                  headers: {
+                      'Authorization': `Bearer ${Token}`, // Attach Bearer token
+                      'Content-Type': 'application/json' // Optional, for POST/PUT requests
+             }
+        
+            } );
+          }catch(err) {
+            console.log(err);
+          }
+        
+        // Update the state
+        setRecipe((recipe) =>
+            recipe._id === id ? { ...recipe, isLiked: !currentLikeStatus } : recipe
+          )
+        
+    
+      }
     const handleToggleDescription = () => {
         setIsDescriptionExpanded(!isDescriptionExpanded);
     };
@@ -81,6 +129,7 @@ const Recipe = () => {
     const ingredientsToShow = isIngredientsExpanded ? ingredients : ingredients.slice(0, isMobile ? 7 : ingredients.length); // Show only 5 ingredients initially
 
     return (
+        <>
         <div id="recipe-main-conatiner">
             <div className="recipe-main-conatiner-image">
                 <img src={recipe.image} alt="Recipe" />
@@ -88,7 +137,7 @@ const Recipe = () => {
                 {/* Container for Close button and Favorite Button */}
                 <div className="button-container">
                     <a className="close-button" href="/">Close</a>
-                    <HeartAnimation />
+                    <HeartAnimation id={recipe._id} liked={recipe.isLiked} onLikeToggle={() => handleLikeToggle(recipe._id, recipe.isLiked)}/>
                 </div>
             </div>
             <div className="recipe-main-conatiner-description">
@@ -240,9 +289,18 @@ const Recipe = () => {
                             Serve with lime wedges, Greek yogurt or sour cream, and salsa or your preferred dressing.
                         </li>
                     </ul> */}
-                </div>
             </div>
         </div>
+                </div>
+            <div className="recipies">
+        {relatedRecipes.map((recipe, index) => (
+          <RecipeCard key={index} id={recipe._id} title={recipe.title}
+            image={recipe.image} vegetarian={recipe.vegetarian}
+            readyInMinutes={recipe.readyInMinutes} liked={recipe.isLiked}
+            onLikeToggle={() => handleLikeToggle(recipe._id, recipe.isLiked)} />
+        ))}
+      </div>
+      </>
     );
 };
 
