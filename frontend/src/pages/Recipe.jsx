@@ -187,7 +187,7 @@ const Recipe = () => {
                         ))}
                     </div>
 
-
+                    <TextToSpeech targetSelector="#instructions" />
                     <div className="recipe-main-description-instructions" id="instructions">
                         <p style={{ marginTop: '20px', marginBottom: '20px' }}>{recipe.instructions}</p>
 
