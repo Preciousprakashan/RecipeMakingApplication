@@ -72,8 +72,7 @@ function App() {
    
   return (
     <UserProvider>
-        <div className="App">
-
+        
         <Routes>
           <Route path='/' element={<HomePage/>}/>
           <Route path='/recipe-details' element={<RecipeDetailsPage/>}/>
@@ -109,7 +108,7 @@ function App() {
           
 
         </Routes>
-        </div>
+        
     </UserProvider>
   );
 }

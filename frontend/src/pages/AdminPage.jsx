@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import RecipeTable from '../components/DbRecipeTable/RecipeTable';
 import '../components/DbRecipeTable/RecipeTable.css';
 import Box from '@mui/material/Box';
@@ -7,32 +7,38 @@ import Modal from '@mui/material/Modal';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import '../styles/AdminPage.css';
+import { UserContext } from '../context/UserProvider';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AdminPage = () => {
     const [open, setOpen] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State to toggle sidebar
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    // const {  logout } = useContext(UserContext);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
+    const navigate = useNavigate();
+    const handleLogout = () => {
+         localStorage.removeItem('accessToken');
+         navigate('/login');
+    }
     return (
         <div className={`manage-recipes ${isSidebarOpen ? '' : 'collapsed-sidebar'}`}>
             {/* Logout Button */}
-            <button className="logout-btn">Logout</button>
+            
 
             {/* Sidebar */}
             <aside className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
                 <div className="profile">
                     <div className="avatar"></div>
-                    <h3>John</h3>
+                    {/* <h3>John</h3> */}
                     <p>Admin</p>
                 </div>
                 <nav>
                     <ul>
-                        <li>Home</li>
                         <li className="active">Manage recipes</li>
-                        <li>Settings</li>
+                        {/* <li>Settings</li> */}
+                        <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>
                     </ul>
                 </nav>
             </aside>
@@ -42,7 +48,7 @@ const AdminPage = () => {
                 <header className="header">
                     <div className="menu-toggle">
                         {isSidebarOpen ? (
-                            <CloseIcon onClick={toggleSidebar} />
+                            <CloseIcon style={{color:"red"}}onClick={toggleSidebar} />
                         ) : (
                             <MenuIcon onClick={toggleSidebar} />
                         )}

@@ -6,7 +6,10 @@ import { PiForkKnifeFill } from "react-icons/pi";
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import './RecipeCard.css'
 import HeartAnimation from '../HeartAnimation/HeartAnimation';
-const RecipeCard = ({id, title, readyInMinutes, vegetarian, image, liked, onLikeToggle }) => {
+import { useNavigate } from 'react-router-dom';
+const RecipeCard = ({id, title, readyInMinutes, vegetarian,isExternal, image, liked, onLikeToggle }) => {
+  const navigate = useNavigate();
+  console.log(isExternal);
   return (
     <div className='editors-card recipe-card'>
         <Card.Root maxW="sm" overflow="hidden" border={'none'} boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"  width={'18rem'}>
@@ -27,7 +30,7 @@ const RecipeCard = ({id, title, readyInMinutes, vegetarian, image, liked, onLike
               </div>  
      </div>
       <Card.Body>
-        <Card.Title fontSize={'medium'}>{title}</Card.Title>
+        <Card.Title fontSize={'medium'} onClick={()=>navigate('/recipe',{state:id})}>{title}</Card.Title>
         {/* <Card.Description>
           This sofa is perfect for modern tropical spaces, baroque inspired
           spaces.

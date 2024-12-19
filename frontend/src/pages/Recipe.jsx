@@ -35,6 +35,7 @@ const Recipe = () => {
     const [ingredients, setIngredients] = useState([]); 
     const [instructions, setInstructions] = useState([]);
     const [relatedRecipes, setRelatedRecipes] = useState([]);
+    const [extendedIngredients, setExtendedIngredients] = useState([]);
     const {userId, token} = useContext(UserContext);
     console.log(userId)
     const baseUrl = import.meta.env.VITE_REACT_APP_BASE_URL;
@@ -48,7 +49,12 @@ const Recipe = () => {
             }
             console.log(userId)
             const response = await axios.get(`${baseUrl}/recipe-details/${id}`,{params:{userId}});
-            setIngredients(response.data.recipeData.recipe.ingredients)
+            if(response.data.recipeData.recipe.ingredients){
+                setIngredients(response.data.recipeData.recipe.ingredients)
+            }else {
+                setExtendedIngredients(response.data.recipeData.recipe.extendedIngredients)
+            }
+            
             setInstructions(response.data.recipeData.recipe.analyzedInstructions)
             console.log(response.data.recipeData.recipe)
             console.log(response.data.recipeData.relatedRecipes)
@@ -71,7 +77,7 @@ const Recipe = () => {
           return
         }
         console.log(Token);
-        console.log(currentLikeStatus, !currentLikeStatus)
+        console.log(currentLikeStatus, !currentLikeStatus);
         console.log(id)
         // let recipeId = id;
         // if(!id) 
@@ -124,9 +130,9 @@ const Recipe = () => {
     //     { name: 'Cilantro', count: 1, image: 'Cilantro.jpg' }
     // ];
 
-    const columns = 3;
+    // const columns = 3;
 
-    const ingredientsToShow = isIngredientsExpanded ? ingredients : ingredients.slice(0, isMobile ? 7 : ingredients.length); // Show only 5 ingredients initially
+    // const ingredientsToShow = isIngredientsExpanded ? ingredients : ingredients.slice(0, isMobile ? 7 : ingredients.length); // Show only 5 ingredients initially
 
     return (
         <>
@@ -147,7 +153,7 @@ const Recipe = () => {
 
                 <div className="recipe-main-description">
                     <p>
-                        {recipe.descriptions}
+                        {recipe.descriptions ? recipe.descriptions : recipe.summary  }
                         {/* A refreshing twist on a classic favorite! This Healthy Taco Salad combines */}
                         {isDescriptionExpanded ? (
                             <>
@@ -169,51 +175,7 @@ const Recipe = () => {
                         )}
                     </p>
                 </div>
-                {/* <div className="recipe-main-description-spec">
-                    <div className="grid"> */}
-
-                        {/* Carbs */}
-                        {/* <div className="flex gap-4">
-                            <div className="recipe-box-ds"> */}
-                                {/* <i className="fas fa-bread-slice"></i> Icon for Carbs */}
-                            {/* </div>
-                            <span>100g Carbs</span>
-                        </div> */}
-
-                        {/* Protein */}
-                        {/* <div className="flex gap-4">
-                            <div className="recipe-box-ds">
-                                <i className="fas fa-dumbbell"></i> {/* Icon for Protein */}
-                            {/* </div>
-                            <span>20g Protein</span>
-                        </div> */} 
-
-                        {/* Calories */}
-                        {/* <div className="flex gap-4">
-                            <div className="recipe-box-ds">
-                                <i className="fas fa-fire"></i> {/* Icon for Calories */}
-                            {/* </div>
-                            <span>20g Cal</span>
-                        </div> */}
-
-                        {/* Fats */}
-                        {/* <div className="flex gap-4">
-                            <div className="recipe-box-ds"> */}
-                                {/* <i className="fas fa-pizza-slice"></i> Icon for Fats */}
-                            {/* </div>
-                            <span>10g Fats</span>
-                        </div> */}
-
-                        {/* Fiber */}
-                        {/* <div className="flex gap-4"> */}
-                            {/* <div className="recipe-box-ds"> */}
-                                {/* <i className="fas fa-leaf"></i> Icon for Fiber */}
-                            {/* </div> */}
-                            {/* <span>5g Fiber</span> */}
-                        {/* </div> */}
-
-                    {/* </div> */}
-                {/* </div> */}
+               
                 {/* Ingredients Section */}
                 <div className='recipe-main-description-ingredients'>
                     <div className='recipe-main-description-ingredients-title'>
@@ -221,12 +183,20 @@ const Recipe = () => {
                     </div>
 
                     <div className="container-recipe">
-                        {ingredients.map((ingredient, index) => (
+                        { ingredients && ingredients.map((ingredient, index) => (
                             <Ingredient
                                 key={index}
                                 name={ingredient.name}
                                 count={ingredient.amount}
                                 image={ingredient.image}
+                            />
+                        ))}
+                        { extendedIngredients && extendedIngredients.map((ingredient, index) => (
+                            <Ingredient
+                                key={index}
+                                name={ingredient.name}
+                                count={ingredient.amount}
+                                image={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
                             />
                         ))}
                     </div>
@@ -292,14 +262,14 @@ const Recipe = () => {
             </div>
         </div>
                 </div>
-            <div className="recipies">
+            {/* <div className="recipies">
         {relatedRecipes.map((recipe, index) => (
           <RecipeCard key={index} id={recipe._id} title={recipe.title}
             image={recipe.image} vegetarian={recipe.vegetarian}
             readyInMinutes={recipe.readyInMinutes} liked={recipe.isLiked}
             onLikeToggle={() => handleLikeToggle(recipe._id, recipe.isLiked)} />
         ))}
-      </div>
+      </div> */}
       </>
     );
 };

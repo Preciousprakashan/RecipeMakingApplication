@@ -91,7 +91,7 @@ const handleLikeToggle = async(id) => {
         <h2 className="wishlist-h2">Your Favourites</h2>
         <div className="recipies">
           {recipes.map((recipe, index) => (
-            <RecipeCard key={index} id={recipe._id} title={recipe.title}
+            <RecipeCard key={index} id={recipe.recipeId} isExternal={recipe.isExternal} title={recipe.title}
               image={recipe.image} vegetarian={recipe.vegetarian}
               readyInMinutes={recipe.readyInMinutes} liked={true}
               onLikeToggle={() => handleLikeToggle(recipe.recipeId)} />

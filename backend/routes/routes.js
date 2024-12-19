@@ -31,7 +31,7 @@ router.get('/view-profile', authMiddleware('user'), viewProfile);
 router.put('/update-profile', authMiddleware('user'), updateProfile);
 
 router.post('/add-recipe',uploadFields,addRecipe);
-router.get('/dbRecipe',dbRecipe)
+router.get('/dbRecipe',dbRecipe);
 router.delete('/delete/:id', deleteRecipe);
 router.put("/update/:id", updateRecipe);
 

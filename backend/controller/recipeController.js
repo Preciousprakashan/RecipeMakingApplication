@@ -141,52 +141,63 @@ const listRecipies = async (req, res) => {
 
 // get recipies by id 
 
-const getRecipeById = async(req, res) => {
+const getRecipeById = async (req, res) => {
   try {
-      const id = req.params.id;
-      const userId = req.query.userId;
-      console.log(id)
-      console.log(req.query.userId)
-      let recipe, response, relatedRecipes;
-        // MongoDB ObjectId: 24-character hexadecimal string
-      if(!/^[a-fA-F0-9]{24}$/.test(id)) {// Checks if it's a valid MongoDB ObjectId
-          response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`,{
-      
-          params: {
-            apiKey: process.env.SPOONACULAR_API_KEY
-          },
+    const id = req.params.id;
+    const userId = req.query.userId;
+    console.log(id);
+    console.log(req.query.userId);
+    let recipe, response, relatedRecipes;
+
+    // MongoDB ObjectId: 24-character hexadecimal string
+    if (!/^[a-fA-F0-9]{24}$/.test(id)) { // Checks if it's a valid MongoDB ObjectId
+      response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
+        params: {
+          apiKey: process.env.SPOONACULAR_API_KEY
+        },
       });
       recipe = response.data;
-      }else{
-         recipe = await RecipeModel.findById(id);
-         // Find other related recipes in the same category
-         relatedRecipes = await RecipeModel.find({
-          category: recipe.category,  // Same category as the current recipe
-          _id: { $ne: id }      // Exclude the current recipe
-        }).limit(5);  // Limit to 5 related recipes
-        }
-        // recipe['relatedRecipies'] = relatedRecipes ;
-        // console.log(relatedRecipes);
-        Object.assign(recipe, { relatedRecipes: relatedRecipes});
-      if(!recipe) {
-        return res.status(403).send({message:"Recipe does not exist"});
+    } else {
+      recipe = await RecipeModel.findById(id);
+      // If no recipe is found in MongoDB, return an error
+      if (!recipe) {
+        return res.status(403).send({ message: "Recipe does not exist" });
       }
-      //if a user is logged in
-      if(userId){
-          const isLiked = await Wishlist.exists({ userId, savedRecipies: { $elemMatch: { recipeId: recipe._id } } });// Match recipeId in the array of objects
-          console.log(isLiked)
-          
-          const recipeObj = recipe.toObject(); // Convert Mongoose document to plain object
-          recipeObj.isLiked = isLiked ? true : false;
-          recipe = recipeObj;
-      }
-      console.log(recipe)
-      res.status(200).send({message:"successfull", recipeData:{recipe,relatedRecipes}});
-  }catch(err) {
-    console.log(err)
-      res.status(404).send({message:"error in getting recipe details"});
+
+      // Find other related recipes in the same category
+      relatedRecipes = await RecipeModel.find({
+        category: recipe.category,  // Same category as the current recipe
+        _id: { $ne: id }      // Exclude the current recipe
+      }).limit(5);  // Limit to 5 related recipes
+
+      // Convert Mongoose document to a plain JavaScript object if necessary
+      recipe = recipe.toObject ? recipe.toObject() : recipe;
+    }
+
+    // Add related recipes to the recipe object
+    Object.assign(recipe, { relatedRecipes: relatedRecipes });
+
+    // If a user is logged in, check if the recipe is liked
+    if (userId) {
+      const isLiked = await Wishlist.exists({
+        userId,
+        savedRecipies: { $elemMatch: { recipeId: recipe._id } } // Match recipeId in the array of objects
+      });
+      console.log(isLiked);
+
+      // Add `isLiked` field to recipe object
+      recipe.isLiked = isLiked ? true : false;
+    }
+
+    console.log(recipe);
+    res.status(200).send({ message: "success", recipeData: { recipe, relatedRecipes } });
+
+  } catch (err) {
+    console.log(err);
+    res.status(404).send({ message: "Error in getting recipe details" });
   }
-}
+};
+
 
 
 // get recipies by incredients
@@ -210,7 +221,8 @@ const getRecipeByIngredients = async (req, res) => {
           {
             // Add 'id' field with the same value as '_id' (converted to string)
             $addFields: {
-              id: { $toString: "$_id" }
+              id: { $toString: "$_id" },
+              // isExternal: false
             }
         },
         {

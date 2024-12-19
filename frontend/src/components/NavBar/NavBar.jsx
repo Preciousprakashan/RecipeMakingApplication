@@ -26,7 +26,7 @@ const NavBar = () => {
     // localStorage.removeItem('user');  // Optionally remove user info
     // setIsLoggedIn(false);  // Update the state to reflect that user is logged out
     // window.location.reload();
-    history.push('/');  // Redirect to login page
+    navigate('/login');  // Redirect to login page
 };
   return (
     <div className='outer-nav'>
