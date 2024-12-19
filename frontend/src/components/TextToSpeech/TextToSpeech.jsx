@@ -103,7 +103,7 @@ const TextToSpeech = ({ targetSelector }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container-texttospeech">
       <CopyToClipboard targetSelector="#instructions" />
       <div
         className={`btn ${isSpeaking ? (isPaused ? "play" : "pause") : "play"}`}
