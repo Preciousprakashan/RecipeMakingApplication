@@ -9,7 +9,6 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { userId, role, logout } = useContext(UserContext);
   const [id, setId] = useState(userId);
-  console.log(userId)
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
   }

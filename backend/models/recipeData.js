@@ -29,7 +29,6 @@ const recipeData = mongoose.Schema({
     },
     ingredients: [
         {
-            // IngredientId:{type:Number,re},
             name:String,
             unit:String,
             amount:Number,
@@ -46,7 +45,6 @@ const recipeData = mongoose.Schema({
     },
     veryPopular:  {
         type:Boolean,
-        // required:true
     },
     image:{
         type:String

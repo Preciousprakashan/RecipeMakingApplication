@@ -111,7 +111,6 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
-
 //admin, user
 // get all recipies
 
@@ -145,8 +144,6 @@ const getRecipeById = async (req, res) => {
   try {
     const id = req.params.id;
     const userId = req.query.userId;
-    console.log(id);
-    console.log(req.query.userId);
     let recipe, response, relatedRecipes;
 
     // MongoDB ObjectId: 24-character hexadecimal string
@@ -183,13 +180,11 @@ const getRecipeById = async (req, res) => {
         userId,
         savedRecipies: { $elemMatch: { recipeId: recipe._id } } // Match recipeId in the array of objects
       });
-      console.log(isLiked);
 
       // Add `isLiked` field to recipe object
       recipe.isLiked = isLiked ? true : false;
     }
 
-    console.log(recipe);
     res.status(200).send({ message: "success", recipeData: { recipe, relatedRecipes } });
 
   } catch (err) {
@@ -308,31 +303,8 @@ const getRecipeByIngredients = async (req, res) => {
         }
       );
       const recipeFromAPI = response.data;
-      console.log(recipes);
       recipes.push(...recipeFromAPI);
 
-      //get like status of recipies
-    //   const recipesWithLikeStatus = await Promise.all(
-    //     recipes.map(async (recipe) => {
-    //         // Check if the recipe is from your database or external
-    //         const recipeId = recipe._id || recipe.id;  // If _id exists (MongoDB), use it; otherwise, use recipe.id (for external)
-    
-    //         // Check if the recipe is in the wishlist
-    //         let isLiked = false;
-    //         if (recipeId) {
-    //             isLiked = await Wishlist.exists({
-    //                 userId,
-    //                 savedRecipies: { $elemMatch: { recipeId: recipeId } } // Match recipeId in the array of objects
-    //             });
-    //         }
-    
-    //         return {
-    //             ...recipe.toObject(),  // Convert Mongoose document to plain object
-    //             isLiked: !!isLiked,    // Add a boolean flag to show if it's liked
-    //         };
-    //     })
-    // );
-    
       res.json({ message:'successfull', recipes });
     } catch (error) {
       console.log(error)
@@ -347,21 +319,10 @@ const getRecipeByCategory = async(req, res) => {
   try {
       const category = req.query.category;
       const recipeDetails = await RecipeModel.find({category :{ $elemMatch: { $regex: new RegExp('^' + category + '$', 'i') }}});
-      // const recipesFromApi = await axios.get(
-      //   `https://api.spoonacular.com/recipes/complexSearch/`,
-      //   {
-      //     params: {
-      //       type:category,
-      //       addRecipeInformation:true,
-      //       number: 5, // Number of recipes to return
-      //       apiKey: process.env.SPOONACULAR_API_KEY,
-      //     },
-      //   }
-      // );
+      
       if(!recipeDetails) {
         return res.status(403).send({message:"No recipies available"});
       }
-      // recipeDetails.push(...recipesFromApi.data.results);
       res.status(200).send({message:"successfull", recipeDetails });
   }catch(err) {
       res.status(404).send({message:"error in getting recipies"});

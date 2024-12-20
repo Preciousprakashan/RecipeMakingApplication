@@ -12,8 +12,14 @@ const RecipeList = () => {
   useEffect(() => {
     // Fetch recipes when the component is mounted
     const fetchRecipes = async () => {
+      const Token = localStorage.getItem('accessToken');
       try {
-        const response = await axios.get(`${baseUrl}/dbRecipe`);
+        const response = await axios.get(`${baseUrl}/dbRecipe`,   {
+          headers: {
+              'Authorization': `Bearer ${Token}`, // Attach Bearer token
+              'Content-Type': 'application/json' // Optional, for POST/PUT requests
+                   }
+        });
         if (response.data.success) {
           setRecipes(response.data.data);
         } else {
@@ -29,8 +35,14 @@ const RecipeList = () => {
 
   const handleDelete = async (id) => {
     try {
+      const Token = localStorage.getItem('accessToken');
       // Send DELETE request to backend to delete the recipe
-      const response = await axios.delete(`${baseUrl}/delete/${id}`);
+      const response = await axios.delete(`${baseUrl}/delete/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${Token}`, // Attach Bearer token
+          'Content-Type': 'application/json' // Optional, for POST/PUT requests
+               }
+      });
       
       if (response.status === 200) {
         // Remove deleted recipe from the state

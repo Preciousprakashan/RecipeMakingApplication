@@ -41,26 +41,6 @@ const Recipe = () => {
         setIsIngredientsExpanded(!isIngredientsExpanded);
     };
 
-    const ingredients = [
-        { name: 'Tortilla Chips', count: 2, image: 'trotilla-chips.jpg' },
-        { name: 'Avocado', count: 1, image: 'Avocado.jpg' },
-        { name: 'Red Cabbage', count: 1, image: 'RedCabbage.jpg' },
-        { name: 'Peanuts', count: 1, image: 'peanut.jpg' },
-        { name: 'Red Onions', count: 1, image: 'Red Onions.jpg' },
-        { name: 'Ground Beef or Chicken', count: 200, image: 'ground_beef.jpg' },
-        { name: 'Lettuce', count: 1, image: 'Lettuce.jpg' },
-        { name: 'Tomatoes', count: 2, image: 'tomatos.jpg' },
-        { name: 'Cheddar Cheese', count: 50, image: 'CheddarCheese.jpg' },
-        { name: 'Sour Cream', count: 1, image: 'SourCream.jpg' },
-        { name: 'Lime', count: 1, image: 'Lime.jpg' },
-        { name: 'Taco Seasoning', count: 1, image: 'Taco_Seasoning.jpg' },
-        { name: 'Olives', count: 1, image: 'Olives.jpg' },
-        { name: 'Cilantro', count: 1, image: 'Cilantro.jpg' }
-    ];
-
-    const columns = 3;
-
-    const ingredientsToShow = isIngredientsExpanded ? ingredients : ingredients.slice(0, isMobile ? 7 : ingredients.length); // Show only 5 ingredients initially
 
     return (
         <div id="recipe-main-conatiner">
@@ -153,7 +133,7 @@ const Recipe = () => {
                     </div>
 
                     <div className="container-recipe">
-                        {ingredientsToShow.map((ingredient, index) => (
+                        {ingredients.map((ingredient, index) => (
                             <Ingredient
                                 key={index}
                                 name={ingredient.name}

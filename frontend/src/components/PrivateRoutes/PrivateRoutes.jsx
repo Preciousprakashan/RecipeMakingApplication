@@ -8,7 +8,6 @@ const PrivateRoute = ({ element: Element, roleRequired, ...rest }) => {
   const userId = jwtDecode(localStorage.getItem('accessToken')).user._id;
   const role = jwtDecode(localStorage.getItem('accessToken')).user.role;
 
-console.log(userId)
   if (!userId) {
     // Redirect to login page if user is not logged in
     return <Navigate to="/login" />;

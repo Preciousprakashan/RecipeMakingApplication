@@ -9,11 +9,9 @@ const Heading = () => {
     <div className="outer-head">
         <div className='heading'>
             <div className='details'>
-                {/* <div className="inner-div"> */}
                     <h1>Delicious <br/><span>Recipes</span></h1>
                     <p>Find quick, flavorful recipes that bring joy to your kitchen. Simple, tasty, and perfect for any occasion!</p>
                     <Button className='recipe-button' onClick={()=>{navigate('/recipe-details')}}>View Recipies <IoIosPlayCircle/></Button>
-                {/* </div> */}
                 </div>
             <div className='home-image'>
                 <img src="/assets/homepage-image.png" alt="dish" />

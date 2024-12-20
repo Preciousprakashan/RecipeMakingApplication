@@ -8,7 +8,6 @@ import HeartAnimation from '../HeartAnimation/HeartAnimation';
 import { useNavigate } from 'react-router-dom';
 const RecipeCard = ({id, title, readyInMinutes, vegetarian,isExternal, image, liked, onLikeToggle }) => {
   const navigate = useNavigate();
-  console.log(isExternal);
   return (
     <div className='editors-card recipe-card'>
         <Card.Root maxW="sm" overflow="hidden" border={'none'} boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"  width={'18rem'}>

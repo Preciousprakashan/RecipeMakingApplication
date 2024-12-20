@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 const Cards = ({name, image}) => {
   const navigate = useNavigate();
   const handleCategory = () => {
-    // alert('hii');
     navigate('/recipe-by-category',{state:{name, image}});
   }
   return (
