@@ -16,10 +16,9 @@ const Footer = () => {
 
           {/* Categories Section */}
           <div className="categories">
-            <a href="#" className="category-link">About</a>
-            <a href="#" className="category-link">Recipies</a>
-            <a href="#" className="category-link">Contact</a>
-
+            <a href="/" className='category-link'>Home</a>
+            <a href="/aboutus" className="category-link">About Us</a>
+            <a href="/recipe-details" className="category-link">Recipies</a>
           </div>
 
           {/* Logo and Social Media Section */}

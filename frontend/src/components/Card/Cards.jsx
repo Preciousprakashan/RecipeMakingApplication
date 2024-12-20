@@ -5,48 +5,32 @@ import { AvatarRoot, AvatarImage, AvatarFallback } from '@chakra-ui/react';
 import './Cards.css'
 import { Button } from "@chakra-ui/react"
 import { useNavigate } from 'react-router-dom';
-const Cards = ({name, image}) => {
+const Cards = ({ name, image, description }) => {
   const navigate = useNavigate();
   const handleCategory = () => {
-    navigate('/recipe-by-category',{state:{name, image}});
+    // alert('hii');
+    navigate('/recipe-by-category', { state: { name, image, description } });
   }
   return (
-    <div className='card-layout' onClick={handleCategory}>
-        <Card.Root 
-        padding={"1.5rem"}
-              width="14rem"
-              height="20rem"
-              backgroundColor={'#EFEFEF'}
-              _hover={{ bg: "#FFAD65", 
-                        // transform: "scale(1.05)", // Slightly scale the card
-                        // boxShadow: "lg",  // Apply a larger shadow
-                     }} 
-              transition="all 0.3s ease-in-out" // Smooth transition for all properties
-              cursor="pointer"
-              borderTopLeftRadius={"4rem"} 
-              borderBottomRightRadius={"4rem"}>
-      <Card.Body gap="2">
+    <>
+      <div className='card-layout' onClick={handleCategory}>
+        <div className="category-card">
+          <div className="category-card-body">
+            <img className="category-card-image" src={image} alt="food image" />
 
+            <h2 className="category-card-title">{name}</h2>
 
-      {/* <img className="cardImage" src="/assets/breakfast.png" alt="food image" /> */}
-      <img className="cardImage" src={image} alt="food image"/>
-        {/* <AvatarRoot size="2xl" borderRadius="full">
-            <AvatarImage src="/assets/image.png" alt="Nue Camp" />
-            <AvatarFallback>NC</AvatarFallback>
-        </AvatarRoot> */}
+            <p className="category-card-description">{description}</p>
+          </div>
 
-        <Card.Title mt="2" marginTop={"11rem"}>{name}</Card.Title>
-        <Card.Description
-        >
-          This is the card body. Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit.
-        </Card.Description>
-      </Card.Body>
-      <Card.Footer justifyContent="center">{/* flex-end */}
-        {/* <Button>View Recipies</Button> */}
-      </Card.Footer>
-    </Card.Root>
-    </div>
+          <div className="category-card-footer">
+            {/* Uncomment if you want a button in the footer */}
+            {/* <button className="category-card-button">View Recipes</button> */}
+          </div>
+        </div>
+
+      </div>
+    </>
   )
 }
 
