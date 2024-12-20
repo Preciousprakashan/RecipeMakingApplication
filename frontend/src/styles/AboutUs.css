@@ -82,6 +82,7 @@ span[data-scrolldown="true"] {
   justify-content: center; /* Center content */
   position: relative; /* Relative positioning */
   margin: 0 auto; /* Center horizontally */
+  cursor: pointer;
 }
 
 /* Scroll Mouse Point Animation */
