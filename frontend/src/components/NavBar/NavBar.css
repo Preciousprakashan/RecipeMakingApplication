@@ -44,6 +44,7 @@
     align-items: center;
     justify-content: left;
     flex-direction: row;
+    gap: 10px;
 }
 
 .login {
@@ -92,11 +93,12 @@
     margin: 0px !important;
     align-items: center;
     justify-content: space-between;
+    gap:1rem;
 }
 
-.ul-list li {
+/* .ul-list li {
     padding-left: 1rem;
-}
+} */
 
 .search-icon {
     padding-right: 1rem;
