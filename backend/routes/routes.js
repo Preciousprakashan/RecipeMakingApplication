@@ -25,9 +25,9 @@ router.get('/wishlist-recipies', authMiddleware('user'), listWishlistRecipe);
 router.get('/view-profile', authMiddleware('user'), viewProfile);
 router.put('/update-profile', authMiddleware('user'), updateProfile);
 
-router.post('/add-recipe', uploadFields, addRecipe);
+router.post('/add-recipe',authMiddleware('admin'), uploadFields, addRecipe);
 router.get('/dbRecipe', authMiddleware('admin'), dbRecipe);
 router.delete('/delete/:id', authMiddleware('admin'), deleteRecipe);
-router.put("/update/:id",authMiddleware('admin'), updateRecipe);
+router.put("/update/:id",authMiddleware('admin'), uploadFields, updateRecipe);
 
 module.exports = router;

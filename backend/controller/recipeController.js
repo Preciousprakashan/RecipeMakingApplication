@@ -423,6 +423,7 @@ const dbRecipe= async(req,res)=>{
 //To Edit the recipe
 const updateRecipe = async (req, res) => {
   try {
+    console.log(req.body)
     const recipeId = req.params.id;  // Get recipe ID from URL parameters
     const { title, category, descriptions, instructions, vegetarian, readyInMinutes, servings, veryPopular, ingredients } = req.body;
 

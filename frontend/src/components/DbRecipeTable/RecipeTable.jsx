@@ -58,7 +58,7 @@ const RecipeList = () => {
   // Function to handle editing a recipe
   const handleEdit = (recipe) => {
     setEditingRecipe(recipe); // Set the recipe to be edited
-    navigate('/admin-page')
+    navigate('/admin-page');
   };
 
   return (

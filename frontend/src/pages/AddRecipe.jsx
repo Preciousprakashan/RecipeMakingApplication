@@ -111,18 +111,18 @@ const AddRecipeForm = ({ initialRecipe, setEditingRecipe, setRecipes }) => {
         : `${baseUrl}/add-recipe`;
 
       const method = initialRecipe ? "put" : "post";
-
+      const Token = localStorage.getItem('accessToken');
       // Submit the form
       const response = await axios({
         method,
         url,
         data: submissionData,
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { 'Authorization': `Bearer ${Token}`, // Attach Bearer token
+           "Content-Type": "multipart/form-data" },
       });
 
       alert(`Recipe ${initialRecipe ? "updated" : "added"} successfully!`);
-      console.log(response.data);
-    
+      window.location.reload();
     } catch (error) {
       console.error("Error adding/updating recipe:", error);
       alert("Failed to add/update recipe.");
